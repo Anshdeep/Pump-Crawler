@@ -1,0 +1,347 @@
+{
+  "Atlas Copco": {
+    "compressor_type": "Medical Compressors",
+    "manufacturer_info": {
+      "name": "Atlas Copco",
+      "country": "Sweden",
+      "website": "atlascopco.com"
+    },
+    "models": [
+      {
+        "model_name": "GA 5 MED",
+        "series": "GA MED",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 219
+      },
+      {
+        "model_name": "GA 7 MED",
+        "series": "GA MED",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 220
+      },
+      {
+        "model_name": "GA 11 MED",
+        "series": "GA MED",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 221
+      },
+      {
+        "model_name": "GA 15 MED",
+        "series": "GA MED",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 222
+      },
+      {
+        "model_name": "GA 18 MED",
+        "series": "GA MED",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 223
+      }
+    ]
+  },
+  "Ingersoll Rand": {
+    "compressor_type": "Gas Compressors",
+    "manufacturer_info": {
+      "name": "Ingersoll Rand",
+      "country": "USA",
+      "website": "irco.com"
+    },
+    "models": [
+      {
+        "model_name": "TURBO-AIR",
+        "series": "Centrifugal Compressors",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 201
+      },
+      {
+        "model_name": "MSG",
+        "series": "Centrifugal Compressors",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 202
+      },
+      {
+        "model_name": "Centac",
+        "series": "Centrifugal Compressors",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 203
+      }
+    ]
+  },
+  "Siemens Energy": {
+    "compressor_type": "Refrigeration Compressors",
+    "manufacturer_info": {
+      "name": "Siemens Energy",
+      "country": "Germany",
+      "website": "siemens-energy.com"
+    },
+    "models": [
+      {
+        "model_name": "STC-SV",
+        "series": "STC Series",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 194
+      },
+      {
+        "model_name": "STC-SV (08MV 4A)",
+        "series": "STC Series",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 195
+      }
+    ]
+  },
+  "Ariel Corporation": {
+    "compressor_type": "Gas Compressors",
+    "manufacturer_info": {
+      "name": "Ariel Corporation",
+      "country": "USA",
+      "website": "arielcorp.com"
+    },
+    "models": [
+      {
+        "model_name": "JGN",
+        "series": "Small Line",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 196
+      },
+      {
+        "model_name": "JGQ",
+        "series": "Small Line",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 197
+      },
+      {
+        "model_name": "JGM",
+        "series": "Small Line",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 198
+      },
+      {
+        "model_name": "JGP",
+        "series": "Small Line",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 199
+      },
+      {
+        "model_name": "JG",
+        "series": "Small Line",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 200
+      }
+    ]
+  },
+  "Bauer Compressors": {
+    "compressor_type": "Gas Compressors",
+    "manufacturer_info": {
+      "name": "Bauer Compressors",
+      "country": "Germany",
+      "website": "bauer-kompressoren.de"
+    },
+    "models": [
+      {
+        "model_name": "15.11",
+        "series": "",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 204
+      },
+      {
+        "model_name": "18.1",
+        "series": "",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 205
+      },
+      {
+        "model_name": "BM Series",
+        "series": "BM Series",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 206
+      },
+      {
+        "model_name": "K 22",
+        "series": "K 22 – K 28 Series",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 207
+      },
+      {
+        "model_name": "K 28",
+        "series": "K 22 – K 28 Series",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 208
+      }
+    ]
+  },
+  "Magnuson Products LLC": {
+    "compressor_type": "Turbochargers/Superchargers",
+    "manufacturer_info": {
+      "name": "Magnuson Products LLC",
+      "country": "United States",
+      "website": "magnusonsuperchargers.com"
+    },
+    "models": [
+      {
+        "model_name": "TVS2650",
+        "series": "TVS",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 209
+      }
+    ]
+  },
+  "Vortech Engineering, Inc.": {
+    "compressor_type": "Turbochargers/Superchargers",
+    "manufacturer_info": {
+      "name": "Vortech Engineering, Inc.",
+      "country": "United States",
+      "website": "vortechsuperchargers.com"
+    },
+    "models": [
+      {
+        "model_name": "V-1 T-Trim",
+        "series": "V-1",
+        "product_url": "http://www.vortechsuperchargers.com/product.php?p=4",
+        "is_duplicate": false,
+        "model_id": 210
+      },
+      {
+        "model_name": "V-7 YSI-B",
+        "series": "V-7",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 211
+      },
+      {
+        "model_name": "V-13 94C",
+        "series": "V-13",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 212
+      }
+    ]
+  },
+  "ProCharger": {
+    "compressor_type": "Turbochargers/Superchargers",
+    "manufacturer_info": {
+      "name": "ProCharger",
+      "country": "United States",
+      "website": "procharger.com"
+    },
+    "models": [
+      {
+        "model_name": "F-1C",
+        "series": "RACE",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 213
+      },
+      {
+        "model_name": "F-1R",
+        "series": "RACE",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 214
+      },
+      {
+        "model_name": "F-1X",
+        "series": "RACE",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 215
+      },
+      {
+        "model_name": "F-2",
+        "series": "RACE",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 216
+      },
+      {
+        "model_name": "F-3D-102",
+        "series": "RACE",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 217
+      }
+    ]
+  },
+  "Air Squared": {
+    "compressor_type": "Medical Compressors",
+    "manufacturer_info": {
+      "name": "Air Squared",
+      "country": "USA",
+      "website": "airsquared.com"
+    },
+    "models": [
+      {
+        "model_name": "P09H015B-BLDC-LC",
+        "series": "Liquid-Cooled Series",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 218
+      }
+    ]
+  },
+  "CompAir": {
+    "compressor_type": "Medical Compressors",
+    "manufacturer_info": {
+      "name": "CompAir",
+      "country": "Germany",
+      "website": "compair.com"
+    },
+    "models": [
+      {
+        "model_name": "L07",
+        "series": "L Series",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 224
+      },
+      {
+        "model_name": "L11",
+        "series": "L Series",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 225
+      },
+      {
+        "model_name": "L15",
+        "series": "L Series",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 226
+      },
+      {
+        "model_name": "L22",
+        "series": "L Series",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 227
+      },
+      {
+        "model_name": "C35-10",
+        "series": "C Series",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 228
+      }
+    ]
+  }
+}

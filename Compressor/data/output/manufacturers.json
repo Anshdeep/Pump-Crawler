@@ -1,0 +1,87 @@
+{
+  "Air Compressors": [
+    {
+      "name": "Atlas Copco",
+      "country": "Sweden",
+      "website": "atlascopco.com"
+    },
+    {
+      "name": "Ingersoll Rand",
+      "country": "United States",
+      "website": "ingersollrand.com"
+    },
+    {
+      "name": "Siemens Energy",
+      "country": "Germany",
+      "website": "siemens-energy.com"
+    }
+  ],
+  "Refrigeration Compressors": [
+    {
+      "name": "Atlas Copco",
+      "country": "Sweden",
+      "website": "atlascopco.com"
+    },
+    {
+      "name": "Ingersoll Rand",
+      "country": "United States",
+      "website": "ingersollrand.com"
+    },
+    {
+      "name": "Siemens Energy",
+      "country": "Germany",
+      "website": "siemens-energy.com"
+    }
+  ],
+  "Gas Compressors": [
+    {
+      "name": "Ariel Corporation",
+      "country": "USA",
+      "website": "arielcorp.com"
+    },
+    {
+      "name": "Ingersoll Rand",
+      "country": "USA",
+      "website": "irco.com"
+    },
+    {
+      "name": "Bauer Compressors",
+      "country": "Germany",
+      "website": "bauer-kompressoren.de"
+    }
+  ],
+  "Turbochargers/Superchargers": [
+    {
+      "name": "Magnuson Products LLC",
+      "country": "United States",
+      "website": "magnusonsuperchargers.com"
+    },
+    {
+      "name": "Vortech Engineering, Inc.",
+      "country": "United States",
+      "website": "vortechsuperchargers.com"
+    },
+    {
+      "name": "ProCharger",
+      "country": "United States",
+      "website": "procharger.com"
+    }
+  ],
+  "Medical Compressors": [
+    {
+      "name": "Air Squared",
+      "country": "USA",
+      "website": "airsquared.com"
+    },
+    {
+      "name": "Atlas Copco",
+      "country": "Sweden",
+      "website": "atlascopco.com"
+    },
+    {
+      "name": "CompAir",
+      "country": "Germany",
+      "website": "compair.com"
+    }
+  ]
+}
