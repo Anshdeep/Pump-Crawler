@@ -40,7 +40,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 import database.connection as connection
 import database.crud as crud
-from database.models import Model, CompressorType, Manufacturer, TechnicalAttribute
+from database.models import Model, CompressorType, Manufacturer, TechnicalAttribute, CrawlHistory
 
 
 # ── FastAPI App Configuration ──────────────────────────────────────────────
@@ -99,6 +99,24 @@ def run_crawling_background(compressor_type: str | None, no_cache: bool):
         config.CACHE_ENABLED = False
         
     db = next(connection.get_db())
+    
+    # Create CrawlHistory record and get initial counts
+    from database.models import CrawlHistory
+    from datetime import datetime as dt
+    
+    history_record = CrawlHistory(
+        started_at=dt.now(),
+        status="active",
+        compressor_type=CRAWL_PROGRESS["compressor_type"],
+        log_message="Crawler background task started."
+    )
+    db.add(history_record)
+    db.commit()
+    db.refresh(history_record)
+    
+    initial_mfrs = db.query(Manufacturer).count()
+    initial_models = db.query(Model).count()
+    
     try:
         # Load compressor types
         compressors = load_compressors(None)
@@ -136,9 +154,27 @@ def run_crawling_background(compressor_type: str | None, no_cache: bool):
             enriched_records=with_attrs
         )
         
+        # Calculate discovered telemetry metrics
+        final_mfrs = db.query(Manufacturer).count()
+        final_models = db.query(Model).count()
+        
+        history_record.status = "completed"
+        history_record.completed_at = dt.now()
+        history_record.new_manufacturers_count = max(0, final_mfrs - initial_mfrs)
+        history_record.new_models_count = max(0, final_models - initial_models)
+        history_record.total_specs_enriched = with_attrs
+        history_record.log_message = f"Crawl compiled successfully. Discovered {history_record.new_manufacturers_count} manufacturers and {history_record.new_models_count} models."
+        db.commit()
+        
     except Exception as e:
         print(f"[BG Crawl Error] {e}")
         _update_progress("Failed", 0, f"Error occurred: {str(e)}")
+        
+        history_record.status = "failed"
+        history_record.completed_at = dt.now()
+        history_record.log_message = f"Error: {str(e)}"
+        db.commit()
+        
     finally:
         CRAWL_PROGRESS["active"] = False
         db.close()
@@ -175,6 +211,26 @@ def start_crawl_pipeline(
     # Launch background job
     background_tasks.add_task(run_crawling_background, compressor_type, no_cache)
     return {"status": "started", "message": "Crawler pipeline started successfully in background."}
+
+
+@app.get("/api/crawl/history", tags=["Crawler"])
+def get_crawl_history(db: Session = Depends(connection.get_db)):
+    """Retrieve historical logs for all background crawl runs."""
+    history = db.query(CrawlHistory).order_by(CrawlHistory.started_at.desc()).all()
+    return [
+        {
+            "id": h.id,
+            "started_at": h.started_at.isoformat() if h.started_at else None,
+            "completed_at": h.completed_at.isoformat() if h.completed_at else None,
+            "status": h.status,
+            "compressor_type": h.compressor_type,
+            "new_manufacturers_count": h.new_manufacturers_count,
+            "new_models_count": h.new_models_count,
+            "total_specs_enriched": h.total_specs_enriched,
+            "log_message": h.log_message
+        }
+        for h in history
+    ]
 
 
 @app.get("/api/compressors", tags=["Data"])

@@ -76,3 +76,16 @@ class TechnicalAttribute(Base):
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
     model = relationship("Model", back_populates="technical_attributes")
+
+class CrawlHistory(Base):
+    __tablename__ = "crawl_history"
+
+    id = Column(Integer, primary_key=True, index=True)
+    started_at = Column(DateTime(timezone=True), server_default=func.now())
+    completed_at = Column(DateTime(timezone=True), nullable=True)
+    status = Column(String(50), nullable=False) # "active", "completed", "failed"
+    compressor_type = Column(String(100), nullable=True)
+    new_manufacturers_count = Column(Integer, default=0)
+    new_models_count = Column(Integer, default=0)
+    total_specs_enriched = Column(Integer, default=0)
+    log_message = Column(Text, nullable=True)

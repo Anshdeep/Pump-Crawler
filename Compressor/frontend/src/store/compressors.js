@@ -20,6 +20,7 @@ export const useCompressorStore = defineStore('compressors', {
       enriched_records: 0,
     },
     crawlLoading: false,
+    crawlHistory: [],
   }),
   
   actions: {
@@ -62,6 +63,15 @@ export const useCompressorStore = defineStore('compressors', {
       }
     },
 
+    async fetchCrawlHistory() {
+      try {
+        const res = await axios.get('/api/crawl/history')
+        this.crawlHistory = res.data
+      } catch (err) {
+        console.error('Failed to fetch crawl history:', err)
+      }
+    },
+
     async triggerCrawl(compressorType = null, noCache = false) {
       this.crawlLoading = true
       try {
@@ -72,6 +82,7 @@ export const useCompressorStore = defineStore('compressors', {
           }
         })
         await this.fetchCrawlStatus()
+        await this.fetchCrawlHistory()
         return res.data
       } catch (err) {
         console.error('Failed to trigger background crawl:', err)

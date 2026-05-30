@@ -196,3 +196,11 @@ The database features a rigorous relational model designed inside [models.py](fi
 * **Native JSON Enforcements:** Instructs the Google GenAI Engine to supply native parsed structures, eliminating syntax errors entirely.
 * **Advanced Exception Backoffs:** Utilizes `tenacity` retries with exponential backoffs (`min=10s`, `max=60s`) wrapping JSON parsing, providing reliable recovery if connections drop or structural errors occur.
 * **Polite Rate-Limit Evasion:** Maintains standard pauses defined by `REQUEST_DELAY_SECONDS` between page fetches, ensuring crawler behavior respects target websites and keeps API key consumption within healthy boundaries.
+
+<!-- Get-Content -Path "C:\Users\verma\.gemini\antigravity-ide\brain\c8d290c8-9c94-4afe-aea2-1d06af33ae2f\.system_generated\tasks\task-52.log" -Wait -Tail 30
+
+Get-Content -Path "C:\Users\verma\.gemini\antigravity-ide\brain\c8d290c8-9c94-4afe-aea2-1d06af33ae2f\.system_generated\tasks\task-56.log" -Wait -Tail 30
+
+Frontend Application	http://localhost:5173/	- npm run dev
+Backend API Server	http://localhost:8000/docs (Swagger UI)	- python main.py --server -->
+
