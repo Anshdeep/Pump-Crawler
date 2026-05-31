@@ -103,14 +103,30 @@ def find_similar_model(
     db: Session,
     type_id: int,
     manufacturer_id: int,
-    query_embedding: list[float],
-    distance_threshold: float = 0.08  # Cosine Distance <= 0.08 means Cosine Similarity >= 0.92
+    query_embedding: list[float] | None = None,
+    distance_threshold: float = 0.08,  # Cosine Distance <= 0.08 means Cosine Similarity >= 0.92
+    model_name: str | None = None
 ) -> Model | None:
     """
-    Search pgvector embedding column to find similar model under the same category & brand.
+    Search by exact name match (Tier 1) or pgvector embedding column similarity (Tier 2)
+    to find similar model under the same category & brand.
     If database does not support pgvector, falls back to a pure-Python cosine similarity search.
-    Returns Model object if a match is found under threshold, else None.
+    Returns Model object if a match is found, else None.
     """
+    # Tier 1 (Exact Match): Case-insensitive, whitespace-trimmed name check
+    if model_name:
+        from sqlalchemy import func
+        trimmed_name = model_name.strip()
+        exact_match = db.query(Model).filter(
+            Model.type_id == type_id,
+            Model.manufacturer_id == manufacturer_id,
+            func.lower(func.trim(Model.model_name)) == func.lower(trimmed_name)
+        ).first()
+        if exact_match:
+            print(f"  [Exact Match] Found model with identical name '{exact_match.model_name}'")
+            return exact_match
+
+    # Tier 2 (Vector Semantic Match)
     if not query_embedding:
         return None
         

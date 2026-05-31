@@ -325,7 +325,7 @@
                           {{ store.crawlStatus.discovered_manufacturers }}
                         </div>
                         <div class="text-caption text-medium-emphasis text-uppercase font-weight-bold">
-                          Manufacturers
+                          Brands Extracted
                         </div>
                       </v-card>
                     </v-col>
@@ -336,7 +336,7 @@
                           {{ store.crawlStatus.discovered_models }}
                         </div>
                         <div class="text-caption text-medium-emphasis text-uppercase font-weight-bold">
-                          Models Discovered
+                          Models Extracted
                         </div>
                       </v-card>
                     </v-col>
@@ -347,7 +347,7 @@
                           {{ store.crawlStatus.enriched_records }}
                         </div>
                         <div class="text-caption text-medium-emphasis text-uppercase font-weight-bold">
-                          Specs Enriched
+                          Specs Extracted
                         </div>
                       </v-card>
                     </v-col>
@@ -367,9 +367,9 @@
                         <th class="text-left font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4">Category</th>
                         <th class="text-left font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4">Duration</th>
                         <th class="text-left font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4">Status</th>
-                        <th class="text-center font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4">Discovered Manufacturers</th>
-                        <th class="text-center font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4">Discovered Models</th>
-                        <th class="text-center font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4">Specs Enriched</th>
+                        <th class="text-center font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4">New Brands Added</th>
+                        <th class="text-center font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4">New Models Added</th>
+                        <th class="text-center font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4">Specs Populated</th>
                       </tr>
                     </thead>
                     <tbody>

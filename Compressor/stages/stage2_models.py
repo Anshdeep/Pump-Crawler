@@ -142,9 +142,13 @@ def run(manufacturers_data: dict, db: Session = None) -> dict:
                 embedding = embed_text(text_to_embed)
 
                 # RAG Deduplication Vector Match
-                similar_model = None
-                if embedding:
-                    similar_model = crud.find_similar_model(db, type_obj.id, mfr_obj.id, embedding)
+                similar_model = crud.find_similar_model(
+                    db,
+                    type_id=type_obj.id,
+                    manufacturer_id=mfr_obj.id,
+                    query_embedding=embedding,
+                    model_name=model_name
+                )
 
                 if similar_model:
                     print(f"      [RAG Match] '{model_name}' overlaps with existing model '{similar_model.model_name}' (De-duplicated)")

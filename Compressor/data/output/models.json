@@ -11,36 +11,36 @@
         "model_name": "GA 5 MED",
         "series": "GA MED",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 275
+        "is_duplicate": true,
+        "model_id": 102
       },
       {
         "model_name": "GA 7 MED",
         "series": "GA MED",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 276
+        "is_duplicate": true,
+        "model_id": 103
       },
       {
         "model_name": "GA 11 MED",
         "series": "GA MED",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 277
+        "is_duplicate": true,
+        "model_id": 104
       },
       {
         "model_name": "GA 15 MED",
         "series": "GA MED",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 278
+        "is_duplicate": true,
+        "model_id": 105
       },
       {
         "model_name": "GA 18 MED",
         "series": "GA MED",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 279
+        "is_duplicate": true,
+        "model_id": 106
       }
     ]
   },
@@ -56,22 +56,22 @@
         "model_name": "TURBO-AIR",
         "series": "Centrifugal Compressors",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 255
+        "is_duplicate": true,
+        "model_id": 28
       },
       {
         "model_name": "MSG",
         "series": "Centrifugal Compressors",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 256
+        "is_duplicate": true,
+        "model_id": 29
       },
       {
         "model_name": "Centac",
         "series": "Centrifugal Compressors",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 257
+        "is_duplicate": true,
+        "model_id": 30
       }
     ]
   },
@@ -84,11 +84,18 @@
     },
     "models": [
       {
+        "model_name": "STC-SV",
+        "series": "STC-SV",
+        "product_url": "",
+        "is_duplicate": true,
+        "model_id": 21
+      },
+      {
         "model_name": "STC-SV (08MV 4A)",
         "series": "STC-SV",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 249
+        "is_duplicate": true,
+        "model_id": 22
       }
     ]
   },
@@ -104,36 +111,36 @@
         "model_name": "JGN",
         "series": "Small Line",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 250
+        "is_duplicate": true,
+        "model_id": 23
       },
       {
         "model_name": "JGQ",
         "series": "Small Line",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 251
+        "is_duplicate": true,
+        "model_id": 24
       },
       {
         "model_name": "JGM",
         "series": "Small Line",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 252
+        "is_duplicate": true,
+        "model_id": 25
       },
       {
         "model_name": "JGP",
         "series": "Small Line",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 253
+        "is_duplicate": true,
+        "model_id": 26
       },
       {
         "model_name": "JG",
         "series": "Small Line",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 254
+        "is_duplicate": true,
+        "model_id": 27
       }
     ]
   },
@@ -149,36 +156,36 @@
         "model_name": "15.11",
         "series": "",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 258
+        "is_duplicate": true,
+        "model_id": 31
       },
       {
         "model_name": "18.1",
         "series": "",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 259
+        "is_duplicate": true,
+        "model_id": 32
       },
       {
         "model_name": "BM Series",
         "series": "BM Series",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 260
+        "is_duplicate": true,
+        "model_id": 33
       },
       {
         "model_name": "K 22",
         "series": "K 22 – K 28 Series",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 261
+        "is_duplicate": true,
+        "model_id": 34
       },
       {
         "model_name": "K 28",
         "series": "K 22 – K 28 Series",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 262
+        "is_duplicate": true,
+        "model_id": 35
       }
     ]
   },
@@ -194,8 +201,8 @@
         "model_name": "TVS2650",
         "series": "TVS",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 263
+        "is_duplicate": true,
+        "model_id": 36
       }
     ]
   },
@@ -211,36 +218,36 @@
         "model_name": "V-1 SC-Trim",
         "series": "V-1",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 264
+        "is_duplicate": true,
+        "model_id": 37
       },
       {
         "model_name": "V-1 S-Trim",
         "series": "V-1",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 265
+        "is_duplicate": true,
+        "model_id": 38
       },
       {
         "model_name": "V-1 SCi-Trim",
         "series": "V-1",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 266
+        "is_duplicate": true,
+        "model_id": 39
       },
       {
         "model_name": "V-1 Si-Trim",
         "series": "V-1",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 267
+        "is_duplicate": true,
+        "model_id": 40
       },
       {
         "model_name": "V-1 T-Trim",
         "series": "V-1",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 268
+        "is_duplicate": true,
+        "model_id": 210
       }
     ]
   },
@@ -254,38 +261,38 @@
     "models": [
       {
         "model_name": "F-1C",
-        "series": "Race",
+        "series": "RACE",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 269
+        "is_duplicate": true,
+        "model_id": 42
       },
       {
         "model_name": "F-1R",
-        "series": "Race",
+        "series": "RACE",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 270
+        "is_duplicate": true,
+        "model_id": 43
       },
       {
         "model_name": "F-1X",
-        "series": "Race",
+        "series": "RACE",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 271
+        "is_duplicate": true,
+        "model_id": 44
       },
       {
         "model_name": "F-2",
-        "series": "Race",
+        "series": "RACE",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 272
+        "is_duplicate": true,
+        "model_id": 45
       },
       {
         "model_name": "F-3D-102",
-        "series": "Race",
+        "series": "RACE",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 273
+        "is_duplicate": true,
+        "model_id": 46
       }
     ]
   },
@@ -301,8 +308,8 @@
         "model_name": "P09H015B-BLDC-LC",
         "series": "Liquid-Cooled Series",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 274
+        "is_duplicate": true,
+        "model_id": 101
       }
     ]
   },
@@ -318,36 +325,36 @@
         "model_name": "L07",
         "series": "L Series",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 280
+        "is_duplicate": true,
+        "model_id": 107
       },
       {
         "model_name": "L11",
         "series": "L Series",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 281
+        "is_duplicate": true,
+        "model_id": 108
       },
       {
         "model_name": "L15",
         "series": "L Series",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 282
+        "is_duplicate": true,
+        "model_id": 109
       },
       {
         "model_name": "L22",
         "series": "L Series",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 283
+        "is_duplicate": true,
+        "model_id": 110
       },
       {
         "model_name": "C35-10",
         "series": "C Series",
         "product_url": "",
-        "is_duplicate": false,
-        "model_id": 284
+        "is_duplicate": true,
+        "model_id": 111
       }
     ]
   }

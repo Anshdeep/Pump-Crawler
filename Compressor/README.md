@@ -202,5 +202,9 @@ The database features a rigorous relational model designed inside [models.py](fi
 Get-Content -Path "C:\Users\verma\.gemini\antigravity-ide\brain\c8d290c8-9c94-4afe-aea2-1d06af33ae2f\.system_generated\tasks\task-56.log" -Wait -Tail 30
 
 Frontend Application	http://localhost:5173/	- npm run dev
-Backend API Server	http://localhost:8000/docs (Swagger UI)	- python main.py --server -->
+Backend API Server	http://localhost:8000/docs (Swagger UI)	- python main.py --server 
 
+python main.py --server > backend.log 2>&1
+Get-Content backend.log -Wait -Tail 50 
+
+-->
