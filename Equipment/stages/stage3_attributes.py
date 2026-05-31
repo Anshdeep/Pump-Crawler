@@ -35,17 +35,30 @@ def _fetch_model_page(model: dict, manufacturer: str, compressor_type: str) -> s
 
     # Fallback: search for model specs
     model_name = model.get("model_name", "")
-    query = f'"{manufacturer}" "{model_name}" specifications datasheet technical'
-    results = search(query, max_results=3)
+    
+    # Try a broader, highly flexible search query
+    query = f'{manufacturer} {model_name} {compressor_type} specifications datasheet technical'
+    results = search(query, max_results=4)
+
+    if not results:
+        # Strict backup query
+        strict_query = f'"{manufacturer}" "{model_name}" specifications'
+        results = search(strict_query, max_results=3)
 
     if results:
-        # Try fetching the first result page
+        # Try fetching candidate pages in sequence
         for r in results:
             url = r.get("url", "")
             if url:
                 try:
-                    return fetch_dynamic(url, max_chars=8000)
-                except Exception:
+                    text = fetch_dynamic(url, max_chars=8000)
+                    # Verify page content size to avoid scraping cookie walls or blank overlays
+                    if text and len(text.strip()) > 300:
+                        print(f"      [Harvester Specs] Successfully retrieved page content ({len(text)} chars) from {url[:60]}")
+                        return text
+                    else:
+                        print(f"      [Harvester Specs] Content from {url[:50]} too short ({len(text) if text else 0} chars), skipping...")
+                except Exception as e:
                     continue
 
     # Last resort: use search snippet text

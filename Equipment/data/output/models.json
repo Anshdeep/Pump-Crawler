@@ -1,4 +1,80 @@
 {
+  "Ingersoll Rand": {
+    "compressor_type": "Gas Compressors",
+    "manufacturer_info": {
+      "name": "Ingersoll Rand",
+      "country": "USA",
+      "website": "irco.com"
+    },
+    "models": [
+      {
+        "model_name": "TURBO-AIR",
+        "series": "Centrifugal Compressors",
+        "product_url": "",
+        "is_duplicate": true,
+        "model_id": 28
+      },
+      {
+        "model_name": "MSG",
+        "series": "Centrifugal Compressors",
+        "product_url": "",
+        "is_duplicate": true,
+        "model_id": 29
+      },
+      {
+        "model_name": "Centac",
+        "series": "Centrifugal Compressors",
+        "product_url": "",
+        "is_duplicate": true,
+        "model_id": 30
+      }
+    ]
+  },
+  "Shinano": {
+    "compressor_type": "Air Compressors",
+    "manufacturer_info": {
+      "name": "Shinano",
+      "country": "Japan",
+      "website": ""
+    },
+    "models": [
+      {
+        "model_name": "SI-AG4-A2PJ",
+        "series": "J-type",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 341
+      },
+      {
+        "model_name": "SI-AG4-A2RJ",
+        "series": "J-type",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 342
+      },
+      {
+        "model_name": "SI-AG4-A2LJ",
+        "series": "J-type",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 343
+      },
+      {
+        "model_name": "SI-AG2-U2P",
+        "series": "",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 344
+      },
+      {
+        "model_name": "SI-AG2-U2R",
+        "series": "",
+        "product_url": "",
+        "is_duplicate": false,
+        "model_id": 345
+      }
+    ]
+  },
   "Atlas Copco": {
     "compressor_type": "Medical Compressors",
     "manufacturer_info": {
@@ -44,37 +120,6 @@
       }
     ]
   },
-  "Ingersoll Rand": {
-    "compressor_type": "Gas Compressors",
-    "manufacturer_info": {
-      "name": "Ingersoll Rand",
-      "country": "USA",
-      "website": "irco.com"
-    },
-    "models": [
-      {
-        "model_name": "TURBO-AIR",
-        "series": "Centrifugal Compressors",
-        "product_url": "",
-        "is_duplicate": true,
-        "model_id": 28
-      },
-      {
-        "model_name": "MSG",
-        "series": "Centrifugal Compressors",
-        "product_url": "",
-        "is_duplicate": true,
-        "model_id": 29
-      },
-      {
-        "model_name": "Centac",
-        "series": "Centrifugal Compressors",
-        "product_url": "",
-        "is_duplicate": true,
-        "model_id": 30
-      }
-    ]
-  },
   "Siemens Energy": {
     "compressor_type": "Refrigeration Compressors",
     "manufacturer_info": {
@@ -83,6 +128,13 @@
       "website": "siemens-energy.com"
     },
     "models": [
+      {
+        "model_name": "STC-SV",
+        "series": "STC-SV",
+        "product_url": "",
+        "is_duplicate": true,
+        "model_id": 21
+      },
       {
         "model_name": "STC-SV (08MV 4A)",
         "series": "STC-SV",
@@ -254,35 +306,35 @@
     "models": [
       {
         "model_name": "F-1C",
-        "series": "Race",
+        "series": "RACE",
         "product_url": "",
         "is_duplicate": true,
         "model_id": 42
       },
       {
         "model_name": "F-1R",
-        "series": "Race",
+        "series": "RACE",
         "product_url": "",
         "is_duplicate": true,
         "model_id": 43
       },
       {
         "model_name": "F-1X",
-        "series": "Race",
+        "series": "RACE",
         "product_url": "",
         "is_duplicate": true,
         "model_id": 44
       },
       {
         "model_name": "F-2",
-        "series": "Race",
+        "series": "RACE",
         "product_url": "",
         "is_duplicate": true,
         "model_id": 45
       },
       {
         "model_name": "F-3D-102",
-        "series": "Race",
+        "series": "RACE",
         "product_url": "",
         "is_duplicate": true,
         "model_id": 46
@@ -306,48 +358,48 @@
       }
     ]
   },
-  "CompAir": {
+  "AmcareMed": {
     "compressor_type": "Medical Compressors",
     "manufacturer_info": {
-      "name": "CompAir",
-      "country": "Germany",
-      "website": "compair.com"
+      "name": "AmcareMed",
+      "country": "China",
+      "website": "amcaremed.com"
     },
     "models": [
       {
-        "model_name": "L07",
-        "series": "L Series",
+        "model_name": "Horizontal Piston Medical Air Compressor",
+        "series": "Piston Series",
         "product_url": "",
-        "is_duplicate": true,
-        "model_id": 107
+        "is_duplicate": false,
+        "model_id": 346
       },
       {
-        "model_name": "L11",
-        "series": "L Series",
+        "model_name": "Piston Medical Air Compressor",
+        "series": "Piston Series",
         "product_url": "",
-        "is_duplicate": true,
-        "model_id": 108
+        "is_duplicate": false,
+        "model_id": 347
       },
       {
-        "model_name": "L15",
-        "series": "L Series",
+        "model_name": "Oil-free Scroll Medical Air Compressor",
+        "series": "Scroll Series",
         "product_url": "",
-        "is_duplicate": true,
-        "model_id": 109
+        "is_duplicate": false,
+        "model_id": 348
       },
       {
-        "model_name": "L22",
-        "series": "L Series",
+        "model_name": "Skid-mounted oil free scroll air compressor",
+        "series": "Scroll Series",
         "product_url": "",
-        "is_duplicate": true,
-        "model_id": 110
+        "is_duplicate": false,
+        "model_id": 349
       },
       {
-        "model_name": "C35-10",
-        "series": "C Series",
+        "model_name": "Screw Medical Air Compressor",
+        "series": "Screw Series",
         "product_url": "",
-        "is_duplicate": true,
-        "model_id": 111
+        "is_duplicate": false,
+        "model_id": 350
       }
     ]
   }

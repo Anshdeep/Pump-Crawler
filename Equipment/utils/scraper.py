@@ -71,6 +71,149 @@ def fetch_static(url: str, max_chars: int = 8000) -> str:
     return text
 
 
+def _dismiss_popups(page):
+    """Attempt to click through and remove overlays, cookies banners, region blocks, and popups."""
+    import time
+    
+    # 1. Search for common consent, location selection, and close buttons
+    try:
+        selectors = [
+            # Cookie consents
+            "button:has-text('accept')", "button:has-text('allow')", "button:has-text('agree')",
+            "button:has-text('accept all')", "button:has-text('allow all')", "button:has-text('consent')",
+            "a:has-text('accept')", "a:has-text('agree')", "button:has-text('OK')", "button:has-text('Ok')",
+            # Region, Location & Language selection gates (e.g. Ingersoll Rand type modals)
+            "button:has-text('United States')", "a:has-text('United States')", "button:has-text('English')",
+            "a:has-text('English')", "button:has-text('Global')", "a:has-text('Global')",
+            "button:has-text('US')", "button:has-text('continue')", "a:has-text('continue')",
+            "button:has-text('select location')", "button:has-text('go to site')", "a:has-text('go to site')",
+            # General close modals
+            "button:has-text('close')", "button:has-text('dismiss')", "[aria-label*='close']",
+            "[class*='close']", "button:has-text('×')", "span:has-text('×')"
+        ]
+        
+        for selector in selectors:
+            elements = page.locator(selector)
+            try:
+                count = elements.count()
+                for i in range(count):
+                    el = elements.nth(i)
+                    if el.is_visible() and el.is_enabled():
+                        # Click the button to bypass the region block or popup
+                        el.click(timeout=1500)
+                        print(f"      [Playwright] Clicked popup bypass element: {selector}")
+                        time.sleep(0.5)
+                        break
+            except Exception:
+                continue
+    except Exception:
+        pass
+        
+    # 2. Run an aggressive client-side DOM cleanser to remove overlays and unlock scrolling
+    try:
+        page.evaluate("""() => {
+            try {
+                const badSelectors = [
+                    "[class*='cookie']", "[class*='consent']", "[class*='banner']", "[class*='popup']", 
+                    "[class*='modal']", "[class*='overlay']", "[class*='backdrop']", "[class*='gate']", 
+                    "[class*='region']", "[class*='location']", "[class*='language']", "[class*='selector']",
+                    "[id*='cookie']", "[id*='consent']", "[id*='banner']", "[id*='popup']", 
+                    "[id*='modal']", "[id*='overlay']", "[id*='backdrop']", "[id*='gate']", 
+                    "[id*='region']", "[id*='location']", "[id*='language']", "[id*='selector']",
+                    ".modal", ".backdrop", ".overlay", ".cookie", ".consent", ".privacy",
+                    "#cookie", "#consent", "#privacy", "#overlay", "#backdrop", ".modal-backdrop"
+                ];
+
+                const cleanDOM = () => {
+                    // Remove generic popups, overlays, backdrop elements
+                    badSelectors.forEach(sel => {
+                        try {
+                            document.querySelectorAll(sel).forEach(el => {
+                                // Don't accidentally wipe out main content wrappers
+                                if (el.tagName !== 'BODY' && el.tagName !== 'HTML' && el.tagName !== 'MAIN') {
+                                    el.remove();
+                                }
+                            });
+                        } catch(e) {}
+                    });
+
+                    // Find and delete high-z-index absolute/fixed overlays covering screen
+                    const allElements = document.getElementsByTagName('*');
+                    for (let el of allElements) {
+                        try {
+                            const style = window.getComputedStyle(el);
+                            const zIndex = parseInt(style.zIndex);
+                            const position = style.position;
+                            
+                            if ((position === 'fixed' || position === 'absolute') && zIndex >= 100) {
+                                const className = (el.className || '').toString().toLowerCase();
+                                const elementId = (el.id || '').toString().toLowerCase();
+                                // Keep main page components like standard navigation or headers
+                                if (!className.includes('nav') && !className.includes('header') &&
+                                    !elementId.includes('nav') && !elementId.includes('header') &&
+                                    el.tagName !== 'HEADER' && el.tagName !== 'NAV') {
+                                    el.remove();
+                                }
+                            }
+                        } catch(e) {}
+                    }
+
+                    // Unlock body & HTML elements' locked scrolling properties
+                    const unlockElement = (el) => {
+                        if (!el) return;
+                        el.style.setProperty('overflow', 'visible', 'important');
+                        el.style.setProperty('overflow-y', 'visible', 'important');
+                        el.style.setProperty('position', 'static', 'important');
+                        el.style.setProperty('height', 'auto', 'important');
+                        el.style.setProperty('max-height', 'none', 'important');
+                        
+                        // Strip typical modal locks
+                        const lockClasses = ['modal-open', 'no-scroll', 'overflow-hidden', 'scroll-lock', 'cookie-active'];
+                        lockClasses.forEach(c => el.classList.remove(c));
+                    };
+                    unlockElement(document.body);
+                    unlockElement(document.documentElement);
+                };
+
+                // Execute immediate cleanup
+                cleanDOM();
+
+                // Setup persistent MutationObserver if not already created
+                if (!window._domCleanserObserver) {
+                    const observer = new MutationObserver(() => {
+                        try {
+                            cleanDOM();
+                        } catch(e) {}
+                    });
+                    observer.observe(document.documentElement, { childList: true, subtree: true });
+                    window._domCleanserObserver = observer;
+                }
+            } catch(e) {}
+        }""")
+    except Exception as e:
+        print(f"      [Playwright Code Injection Error] {e}")
+
+    # 3. Inject standard fallback CSS just in case
+    try:
+        css_to_inject = """
+        [class*='cookie'], [class*='consent'], [class*='banner'], [class*='popup'], [class*='modal'],
+        [id*='cookie'], [id*='consent'], [id*='banner'], [id*='popup'], [id*='modal'],
+        .overlay, .backdrop, #overlay, #backdrop, .modal-backdrop {
+            display: none !important;
+            pointer-events: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+        }
+        body, html {
+            overflow: auto !important;
+            position: static !important;
+        }
+        """
+        page.add_style_tag(content=css_to_inject)
+    except Exception:
+        pass
+
+
 def fetch_dynamic(url: str, max_chars: int = 8000) -> str:
     """
     Fetch a JS-rendered page using Playwright (headless Chromium).
@@ -93,7 +236,7 @@ def fetch_dynamic(url: str, max_chars: int = 8000) -> str:
             context = browser.new_context(extra_http_headers=HEADERS)
             page = context.new_page()
 
-            # Use domcontentloaded (faster) and longer timeout
+            # Phase 1: Wait for domcontentloaded (very fast)
             response = page.goto(url, timeout=45000, wait_until="domcontentloaded")
 
             # Skip non-HTML responses (PDFs etc. trigger downloads)
@@ -101,7 +244,21 @@ def fetch_dynamic(url: str, max_chars: int = 8000) -> str:
                 browser.close()
                 return ""
 
-            time.sleep(1)  # let lazy content settle
+            # Try waiting for the full load state with a short timeout to let initial assets render
+            try:
+                page.wait_for_load_state("load", timeout=5000)
+            except Exception:
+                pass
+
+            # First dismissal pass (captures immediate cookie and overlay barriers)
+            _dismiss_popups(page)
+
+            # Settle period: sleep to allow slow lazy-loaded overlays (like region selectors) to mount
+            time.sleep(2.0)
+
+            # Second dismissal pass (captures asynchronously loaded dialogs)
+            _dismiss_popups(page)
+
             html = page.content()
             browser.close()
 

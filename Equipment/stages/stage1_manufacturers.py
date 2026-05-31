@@ -86,7 +86,7 @@ def run(compressors: list[dict], db: Session = None) -> dict:
         if not manufacturers:
             print(f"   🤖 No results from web -- using Gemini knowledge fallback...")
             fallback_query = (
-                f"List the top 5 major manufacturers of {ctype}. "
+                f"List the top 15 major manufacturers of {ctype}. "
                 f"Subtypes: {', '.join(subtypes) if subtypes else 'general'}"
             )
             fallback_results = search(fallback_query, max_results=3)

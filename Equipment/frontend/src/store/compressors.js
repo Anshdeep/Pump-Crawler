@@ -7,6 +7,7 @@ export const useCompressorStore = defineStore('compressors', {
     models: [],
     selectedModel: null,
     modelDetailsLoading: false,
+    brandsList: [],
     crawlStatus: {
       active: false,
       compressor_type: null,
@@ -54,6 +55,27 @@ export const useCompressorStore = defineStore('compressors', {
       }
     },
 
+    async fetchBrandsList() {
+      try {
+        const res = await axios.get('/api/manufacturers')
+        this.brandsList = res.data
+      } catch (err) {
+        console.error('Failed to fetch brands list:', err)
+      }
+    },
+
+    async toggleBrandApproval(manufacturerId, isApproved) {
+      try {
+        await axios.put(`/api/manufacturers/${manufacturerId}/approve`, null, {
+          params: { is_approved: isApproved }
+        })
+        await this.fetchBrandsList()
+      } catch (err) {
+        console.error(`Failed to toggle brand approval for ID ${manufacturerId}:`, err)
+        throw err
+      }
+    },
+
     async fetchCrawlStatus() {
       try {
         const res = await axios.get('/api/crawl/status')
@@ -86,6 +108,45 @@ export const useCompressorStore = defineStore('compressors', {
         return res.data
       } catch (err) {
         console.error('Failed to trigger background crawl:', err)
+        throw err
+      } finally {
+        this.crawlLoading = false
+      }
+    },
+
+    async triggerBrandDiscovery(compressorType = null, noCache = false) {
+      this.crawlLoading = true
+      try {
+        const res = await axios.post('/api/crawl/discover-brands', null, {
+          params: {
+            compressor_type: compressorType,
+            no_cache: noCache
+          }
+        })
+        await this.fetchCrawlStatus()
+        await this.fetchCrawlHistory()
+        return res.data
+      } catch (err) {
+        console.error('Failed to trigger background brand discovery:', err)
+        throw err
+      } finally {
+        this.crawlLoading = false
+      }
+    },
+
+    async triggerSpecsHarvester(noCache = false) {
+      this.crawlLoading = true
+      try {
+        const res = await axios.post('/api/crawl/harvest-specs', null, {
+          params: {
+            no_cache: noCache
+          }
+        })
+        await this.fetchCrawlStatus()
+        await this.fetchCrawlHistory()
+        return res.data
+      } catch (err) {
+        console.error('Failed to trigger specs harvesting:', err)
         throw err
       } finally {
         this.crawlLoading = false

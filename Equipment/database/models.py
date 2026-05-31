@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime, func, ARRAY, Float
+from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime, func, ARRAY, Float, Boolean
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import declarative_base, relationship
 from database.connection import HAS_VECTOR_SUPPORT
@@ -44,6 +44,7 @@ class Manufacturer(Base):
     website = Column(String(255), nullable=True)
     founded_year = Column(Integer, nullable=True)
     description = Column(Text, nullable=True)
+    is_approved = Column(Boolean, nullable=False, default=False)
 
     models = relationship("Model", back_populates="manufacturer", cascade="all, delete-orphan")
 

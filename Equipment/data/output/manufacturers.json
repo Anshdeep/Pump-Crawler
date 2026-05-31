@@ -1,19 +1,19 @@
 {
   "Air Compressors": [
     {
-      "name": "Atlas Copco",
-      "country": "Sweden",
-      "website": "atlascopco.com"
-    },
-    {
       "name": "Ingersoll Rand",
-      "country": "United States",
+      "country": "USA",
       "website": "ingersollrand.com"
     },
     {
-      "name": "Siemens Energy",
-      "country": "Germany",
-      "website": "siemens-energy.com"
+      "name": "Shinano",
+      "country": "Japan",
+      "website": ""
+    },
+    {
+      "name": "Atlas Copco",
+      "country": "Sweden",
+      "website": "atlascopco.com"
     }
   ],
   "Refrigeration Compressors": [
@@ -79,9 +79,9 @@
       "website": "atlascopco.com"
     },
     {
-      "name": "CompAir",
-      "country": "Germany",
-      "website": "compair.com"
+      "name": "AmcareMed",
+      "country": "China",
+      "website": "amcaremed.com"
     }
   ]
 }

@@ -53,6 +53,8 @@ def init_db():
     # 2. Create tables
     with engine.begin() as conn:
         Base.metadata.create_all(conn)
+        # Automatic Migration: Add is_approved column to manufacturers if it doesn't exist
+        conn.execute(text("ALTER TABLE manufacturers ADD COLUMN IF NOT EXISTS is_approved BOOLEAN DEFAULT FALSE;"))
     print("[DB] Database and tables initialized successfully!")
 
 

@@ -95,7 +95,7 @@ Rules:
 - "website" should be just the domain (e.g. "atlascopco.com"), or "" if unknown
 - "country" should be the HQ country, or "" if unknown
 - Include only real, well-known manufacturers -- no generic text
-- Return at most 10 manufacturers
+- Return at most 20 manufacturers
 
 Text:
 {_truncate(text)}

@@ -180,6 +180,193 @@ def run_crawling_background(compressor_type: str | None, no_cache: bool):
         db.close()
 
 
+def run_brand_discovery_background(compressor_type: str | None, no_cache: bool):
+    """Stage 1 ONLY: Discover manufacturers/brands for a type, and set is_approved = False."""
+    global CRAWL_PROGRESS
+    CRAWL_PROGRESS["active"] = True
+    CRAWL_PROGRESS["compressor_type"] = compressor_type or "All Categories"
+    CRAWL_PROGRESS["started_at"] = datetime.now().isoformat()
+    CRAWL_PROGRESS["completed_at"] = None
+    CRAWL_PROGRESS["discovered_manufacturers"] = 0
+    CRAWL_PROGRESS["discovered_models"] = 0
+    CRAWL_PROGRESS["enriched_records"] = 0
+    
+    if no_cache:
+        import config
+        config.CACHE_ENABLED = False
+        
+    db = next(connection.get_db())
+    
+    from database.models import CrawlHistory
+    from datetime import datetime as dt
+    
+    history_record = CrawlHistory(
+        started_at=dt.now(),
+        status="active",
+        compressor_type=CRAWL_PROGRESS["compressor_type"],
+        log_message="Brand discovery background task started (Stage 1)."
+    )
+    db.add(history_record)
+    db.commit()
+    db.refresh(history_record)
+    
+    initial_mfrs = db.query(Manufacturer).count()
+    
+    try:
+        compressors = load_compressors(None)
+        if compressor_type:
+            compressors = filter_compressors(compressors, [compressor_type])
+            
+        if not compressors:
+            raise ValueError(f"No compressor types matched filter: {compressor_type}")
+            
+        # ── Stage 1 ──
+        _update_progress("Stage 1: Manufacturers", 50, f"Discovering manufacturers for {[c['type'] for c in compressors]}")
+        mfrs_data = stage1.run(compressors, db=db)
+        total_mfrs = sum(len(v) for v in mfrs_data.values())
+        
+        CRAWL_PROGRESS["completed_at"] = datetime.now().isoformat()
+        _update_progress(
+            "Completed", 
+            100, 
+            f"Successfully extracted {total_mfrs} brands for approval workflow!",
+            discovered_manufacturers=total_mfrs
+        )
+        
+        final_mfrs = db.query(Manufacturer).count()
+        
+        history_record.status = "completed"
+        history_record.completed_at = dt.now()
+        history_record.new_manufacturers_count = max(0, final_mfrs - initial_mfrs)
+        history_record.log_message = f"Brand discovery compiled successfully. Discovered {history_record.new_manufacturers_count} new brands."
+        db.commit()
+        
+    except Exception as e:
+        print(f"[BG Brand Discovery Error] {e}")
+        _update_progress("Failed", 0, f"Error occurred: {str(e)}")
+        
+        history_record.status = "failed"
+        history_record.completed_at = dt.now()
+        history_record.log_message = f"Error: {str(e)}"
+        db.commit()
+        
+    finally:
+        CRAWL_PROGRESS["active"] = False
+        db.close()
+
+
+def run_specs_harvester_background(no_cache: bool):
+    """Stage 2 and 3: For approved manufacturers only, discover models and extract specs."""
+    global CRAWL_PROGRESS
+    CRAWL_PROGRESS["active"] = True
+    CRAWL_PROGRESS["compressor_type"] = "Approved Brands"
+    CRAWL_PROGRESS["started_at"] = datetime.now().isoformat()
+    CRAWL_PROGRESS["completed_at"] = None
+    CRAWL_PROGRESS["discovered_manufacturers"] = 0
+    CRAWL_PROGRESS["discovered_models"] = 0
+    CRAWL_PROGRESS["enriched_records"] = 0
+    
+    if no_cache:
+        import config
+        config.CACHE_ENABLED = False
+        
+    db = next(connection.get_db())
+    
+    from database.models import CrawlHistory
+    from datetime import datetime as dt
+    
+    history_record = CrawlHistory(
+        started_at=dt.now(),
+        status="active",
+        compressor_type="Approved Brands",
+        log_message="Approved specifications harvester background task started (Stages 2 & 3)."
+    )
+    db.add(history_record)
+    db.commit()
+    db.refresh(history_record)
+    
+    initial_models = db.query(Model).count()
+    
+    try:
+        # Load manufacturers.json Stage 1 output file
+        print("[BG Harvester] Loading manufacturers catalog...")
+        try:
+            manufacturers_data = load_json(MANUFACTURERS_JSON)
+        except FileNotFoundError:
+            # Fallback: if manufacturers.json is missing, reconstruct it from approved DB brands
+            manufacturers_data = {}
+            # Fetch all active compressor types in system
+            types_objs = db.query(CompressorType).all()
+            approved_objs = db.query(Manufacturer).filter(Manufacturer.is_approved == True).all()
+            for t in types_objs:
+                manufacturers_data[t.name] = [
+                    {"name": m.name, "country": m.country, "website": m.website, "description": m.description}
+                    for m in approved_objs
+                ]
+        
+        # Filter: keep only approved manufacturers
+        approved_objs = db.query(Manufacturer).filter(Manufacturer.is_approved == True).all()
+        approved_names = {m.name.strip().lower() for m in approved_objs}
+        
+        filtered_data = {}
+        for ctype, mfr_list in manufacturers_data.items():
+            approved_list = [m for m in mfr_list if m.get("name", "").strip().lower() in approved_names]
+            if approved_list:
+                filtered_data[ctype] = approved_list
+                
+        total_approved = sum(len(v) for v in filtered_data.values())
+        print(f"[BG Harvester] Filtered to {total_approved} approved brand profiles.")
+        
+        if not filtered_data:
+            raise ValueError("No approved manufacturers found! Please approve at least one manufacturer in the Brands tab before running specifications crawler.")
+            
+        CRAWL_PROGRESS["discovered_manufacturers"] = total_approved
+        
+        # ── Stage 2 ──
+        _update_progress("Stage 2: Models", 30, f"Discovering model lines for {total_approved} approved manufacturers")
+        models_data = stage2.run(filtered_data, db=db)
+        total_models = sum(len(v["models"]) for v in models_data.values())
+        _update_progress("Stage 2 Completed", 60, f"Discovered {total_models} model records", discovered_models=total_models)
+        time.sleep(2)
+        
+        # ── Stage 3 ──
+        _update_progress("Stage 3: Attributes", 70, f"Deep technical specifications harvesting for {total_models} models")
+        final_records = stage3.run(models_data, db=db)
+        with_attrs = sum(1 for r in final_records if r.get("attributes"))
+        
+        # Complete
+        CRAWL_PROGRESS["completed_at"] = datetime.now().isoformat()
+        _update_progress(
+            "Completed", 
+            100, 
+            f"Successfully enriched specifications for {with_attrs}/{total_models} active models!",
+            enriched_records=with_attrs
+        )
+        
+        final_models = db.query(Model).count()
+        
+        history_record.status = "completed"
+        history_record.completed_at = dt.now()
+        history_record.new_manufacturers_count = 0  # We harvested existing, didn't discover new brands
+        history_record.new_models_count = max(0, final_models - initial_models)
+        history_record.total_specs_enriched = with_attrs
+        history_record.log_message = f"Harvester specs run complete. Added {history_record.new_models_count} new models and populated {with_attrs} technical sheets."
+        db.commit()
+        
+    except Exception as e:
+        print(f"[BG Harvester Error] {e}")
+        _update_progress("Failed", 0, f"Error occurred: {str(e)}")
+        
+        history_record.status = "failed"
+        history_record.completed_at = dt.now()
+        history_record.log_message = f"Error: {str(e)}"
+        db.commit()
+        
+    finally:
+        CRAWL_PROGRESS["active"] = False
+        db.close()
+
+
 # ── FastAPI Routes ─────────────────────────────────────────────────────────
 
 @app.post("/api/init-db", tags=["System"])
@@ -211,6 +398,70 @@ def start_crawl_pipeline(
     # Launch background job
     background_tasks.add_task(run_crawling_background, compressor_type, no_cache)
     return {"status": "started", "message": "Crawler pipeline started successfully in background."}
+
+
+@app.post("/api/crawl/discover-brands", tags=["Crawler"])
+def discover_brands(
+    compressor_type: str = Query(None, description="Partial name of compressor type to filter"),
+    no_cache: bool = Query(False, description="Bypass local web cache files"),
+    background_tasks: BackgroundTasks = None
+):
+    """Trigger brand discovery crawler (Stage 1 ONLY) in background."""
+    if CRAWL_PROGRESS["active"]:
+        raise HTTPException(status_code=400, detail="A crawling background task is already active.")
+        
+    background_tasks.add_task(run_brand_discovery_background, compressor_type, no_cache)
+    return {"status": "started", "message": "Brand discovery pipeline started in background."}
+
+
+@app.post("/api/crawl/harvest-specs", tags=["Crawler"])
+def harvest_specs(
+    no_cache: bool = Query(False, description="Bypass local web cache files"),
+    background_tasks: BackgroundTasks = None
+):
+    """Trigger specifications crawler (Stage 2 and 3) for approved brands ONLY."""
+    if CRAWL_PROGRESS["active"]:
+        raise HTTPException(status_code=400, detail="A crawling background task is already active.")
+        
+    background_tasks.add_task(run_specs_harvester_background, no_cache)
+    return {"status": "started", "message": "Specifications harvester pipeline started for approved brands."}
+
+
+@app.get("/api/manufacturers", tags=["Data"])
+def list_manufacturers(db: Session = Depends(connection.get_db)):
+    """List all manufacturers with their approval status and model counts."""
+    mfrs = db.query(Manufacturer).order_by(Manufacturer.name.asc()).all()
+    return [
+        {
+            "id": m.id,
+            "name": m.name,
+            "country": m.country,
+            "website": m.website,
+            "description": m.description,
+            "is_approved": m.is_approved,
+            "model_count": db.query(Model).filter(Model.manufacturer_id == m.id).count()
+        }
+        for m in mfrs
+    ]
+
+
+@app.put("/api/manufacturers/{manufacturer_id}/approve", tags=["Data"])
+def approve_manufacturer(
+    manufacturer_id: int,
+    is_approved: bool = Query(..., description="Set approval status"),
+    db: Session = Depends(connection.get_db)
+):
+    """Toggle a manufacturer's approval status (is_approved)."""
+    mfr = db.query(Manufacturer).filter(Manufacturer.id == manufacturer_id).first()
+    if not mfr:
+        raise HTTPException(status_code=404, detail="Manufacturer not found")
+        
+    mfr.is_approved = is_approved
+    db.commit()
+    db.refresh(mfr)
+    
+    status_word = "approved" if is_approved else "unapproved"
+    return {"status": "success", "message": f"Brand '{mfr.name}' has been successfully {status_word}!"}
 
 
 @app.get("/api/crawl/history", tags=["Crawler"])

@@ -15,6 +15,9 @@
         <v-tab value="catalog" class="outfit-font text-subtitle-1 text-capitalize px-6">
           <v-icon start icon="mdi-database-search" class="mr-1"></v-icon> Specs Catalog
         </v-tab>
+        <v-tab value="brands" class="outfit-font text-subtitle-1 text-capitalize px-6">
+          <v-icon start icon="mdi-domain" class="mr-1"></v-icon> Brands Management
+        </v-tab>
         <v-tab value="crawler" class="outfit-font text-subtitle-1 text-capitalize px-6">
           <v-icon start icon="mdi-robot-mower" class="mr-1"></v-icon> Control Center
         </v-tab>
@@ -208,8 +211,110 @@
               </v-col>
             </v-row>
           </div>
+
+          <!-- ── TAB 2: BRANDS MANAGEMENT (NEW FEATURE) ── -->
+          <div v-show="tab === 'brands'">
+            <v-row class="justify-center">
+              <v-col cols="12" md="10">
+                <!-- Dashboard Info Card -->
+                <v-card class="glass-card pa-6 mb-6" rounded="lg">
+                  <div class="d-flex justify-space-between align-center flex-wrap gap-4">
+                    <div>
+                      <h3 class="outfit-font text-h5 font-weight-bold mb-1 white--text">
+                        <v-icon icon="mdi-domain" color="primary" class="mr-2"></v-icon>Brand Approval Workflow
+                      </h3>
+                      <p class="text-body-2 text-medium-emphasis">
+                        First discover manufacturer profiles, manually toggle approval below, and then click Specifications Harvester to crawl spec sheet attributes.
+                      </p>
+                    </div>
+                    <div class="d-flex gap-2">
+                      <v-btn
+                        color="primary"
+                        prepend-icon="mdi-robot-mower"
+                        variant="tonal"
+                        class="outfit-font text-capitalize px-4"
+                        @click="tab = 'crawler'"
+                      >
+                        Control Center
+                      </v-btn>
+                      <v-btn
+                        color="secondary"
+                        prepend-icon="mdi-sync"
+                        class="outfit-font text-capitalize px-4"
+                        @click="fetchBrands"
+                      >
+                        Refresh Directory
+                      </v-btn>
+                    </div>
+                  </div>
+                </v-card>
+
+                <!-- Brands Datatable Card -->
+                <v-card class="glass-card pa-6" rounded="lg">
+                  <div class="d-flex justify-space-between align-center mb-5">
+                    <h3 class="outfit-font text-h5 font-weight-bold white--text">
+                      Discovered Manufacturers ({{ brandsList.length }})
+                    </h3>
+                  </div>
+
+                  <v-table v-if="brandsList.length > 0" class="glass-table-card elevation-2" rounded="lg">
+                    <thead>
+                      <tr>
+                        <th class="text-left font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4">Brand Name</th>
+                        <th class="text-left font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4">HQ Country</th>
+                        <th class="text-left font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4">Website</th>
+                        <th class="text-center font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4" style="width: 150px;">Harvested Models</th>
+                        <th class="text-center font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4" style="width: 150px;">Approved Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="brand in brandsList" :key="brand.id" class="glass-table-row">
+                        <td class="text-white py-4 font-weight-bold text-subtitle-1">{{ brand.name }}</td>
+                        <td class="text-medium-emphasis py-4">{{ brand.country || 'Global HQ' }}</td>
+                        <td class="py-4">
+                          <a v-if="brand.website" :href="'https://' + brand.website" target="_blank" class="text-secondary font-weight-bold text-decoration-none d-flex align-center">
+                            <v-icon icon="mdi-open-in-new" start size="14" class="mr-1"></v-icon>{{ brand.website }}
+                          </a>
+                          <span v-else class="text-disabled">—</span>
+                        </td>
+                        <td class="text-center py-4">
+                          <v-chip v-if="brand.model_count > 0" size="small" color="primary" variant="flat" class="font-weight-bold">
+                            {{ brand.model_count }} Models
+                          </v-chip>
+                          <v-chip v-else size="small" variant="outlined" color="rgba(255,255,255,0.2)" class="text-medium-emphasis">
+                            0 Models
+                          </v-chip>
+                        </td>
+                        <td class="text-center py-4">
+                          <v-switch
+                            v-model="brand.is_approved"
+                            color="success"
+                            density="compact"
+                            inset
+                            hide-details
+                            class="d-inline-flex"
+                            @change="toggleApproval(brand.id, brand.is_approved)"
+                          ></v-switch>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </v-table>
+
+                  <div v-else class="text-center py-12 text-medium-emphasis">
+                    <v-avatar color="rgba(6, 182, 212, 0.05)" size="72" class="mb-4">
+                      <v-icon icon="mdi-domain-off" color="secondary" size="36"></v-icon>
+                    </v-avatar>
+                    <h4 class="outfit-font text-h6 font-weight-bold">No Discovered Brands Yet</h4>
+                    <p class="text-body-2 text-medium-emphasis mb-6">
+                      Go to the Control Center and run Brand Discovery (Stage 1) to find initial profiles.
+                    </p>
+                  </div>
+                </v-card>
+              </v-col>
+            </v-row>
+          </div>
  
-          <!-- ── TAB 2: CRAWLER CONTROL CENTER ── -->
+          <!-- ── TAB 3: CRAWLER CONTROL CENTER ── -->
           <div v-show="tab === 'crawler'">
             <v-row class="justify-center">
               <v-col cols="12" md="8">
@@ -221,7 +326,7 @@
                         <v-icon icon="mdi-database-cog" color="primary" class="mr-2"></v-icon>Database Initialization
                       </h3>
                       <p class="text-body-2 text-medium-emphasis">
-                        Spin up the PostgreSQL schema, register pgvector extensions, and create base schemas.
+                        Spin up the PostgreSQL schema, register pgvector extensions, and create tables.
                       </p>
                     </div>
                     <v-btn
@@ -239,50 +344,91 @@
 
                 <!-- Crawler Setup Options -->
                 <v-card class="glass-card pa-6 mb-6" rounded="lg">
-                  <h3 class="outfit-font text-h5 font-weight-bold mb-4 glow-text-secondary">
-                    <v-icon icon="mdi-robot-mower" class="mr-2"></v-icon>Launch Crawler Pipeline
+                  <h3 class="outfit-font text-h5 font-weight-bold mb-5 glow-text-secondary">
+                    <v-icon icon="mdi-robot-mower" class="mr-2"></v-icon>Crawler Operations Control
                   </h3>
                   
                   <v-row>
-                    <v-col cols="12" sm="6">
+                    <!-- Column 1: Step 1 Brand Discovery -->
+                    <v-col cols="12" md="6" class="pr-md-6 border-right">
+                      <div class="mb-4">
+                        <div class="text-h6 font-weight-bold outfit-font text-white d-flex align-center">
+                          <v-avatar color="rgba(6, 182, 212, 0.1)" size="30" class="mr-2 text-subtitle-2 font-weight-black text-secondary">1</v-avatar>
+                          Step 1: Brand Discovery
+                        </div>
+                        <p class="text-caption text-medium-emphasis mt-2" style="min-height: 50px;">
+                          Scour search engines and query Gemini to discover manufacturers/brands for a specific compressor category. Discovered brands are loaded as unapproved.
+                        </p>
+                      </div>
+
                       <v-select
                         v-model="crawlParams.compressor_type"
                         :items="crawlTypeOptions"
-                        label="Target Compressor Type"
+                        label="Target Compressor Category"
                         variant="outlined"
                         density="comfortable"
                         color="secondary"
-                        hint="Leave blank to crawl all categories end-to-end"
-                        persistent-hint
+                        class="mb-3"
                       ></v-select>
-                    </v-col>
-                    
-                    <v-col cols="12" sm="6" class="d-flex align-center">
+                      
                       <v-switch
                         v-model="crawlParams.no_cache"
-                        label="Bypass Crawler Web Cache (Force Fresh Search)"
+                        label="Bypass Local Web Cache"
                         color="secondary"
                         inset
-                        hide-details
+                        density="compact"
+                        class="mb-4"
                       ></v-switch>
+
+                      <v-btn
+                        color="primary"
+                        block
+                        height="45"
+                        prepend-icon="mdi-feature-search"
+                        class="outfit-font text-capitalize font-weight-bold"
+                        :disabled="store.crawlStatus.active"
+                        :loading="store.crawlLoading"
+                        @click="triggerBrandDiscovery"
+                      >
+                        Run Brand Discovery (Stage 1)
+                      </v-btn>
+                    </v-col>
+
+                    <!-- Column 2: Step 2 Specifications Harvester -->
+                    <v-col cols="12" md="6" class="pl-md-6">
+                      <div class="mb-4">
+                        <div class="text-h6 font-weight-bold outfit-font text-white d-flex align-center">
+                          <v-avatar color="rgba(6, 182, 212, 0.1)" size="30" class="mr-2 text-subtitle-2 font-weight-black text-secondary">2</v-avatar>
+                          Step 2: Specs Harvester
+                        </div>
+                        <p class="text-caption text-medium-emphasis mt-2" style="min-height: 50px;">
+                          Harvest model lineups and deep technical specifications worksheets ONLY for brands approved in the Brands Management tab. Playwright popup bypassing is integrated.
+                        </p>
+                      </div>
+
+                      <div class="pa-4 rounded glass-card text-center mb-6" style="min-height: 80px; display: flex; flex-direction: column; justify-content: center; background: rgba(255,255,255,0.01) !important;">
+                        <span class="text-subtitle-2 text-medium-emphasis outfit-font">
+                          Currently Approved Brands to Crawl:
+                        </span>
+                        <span class="text-h5 font-weight-black glow-text-secondary mt-1">
+                          {{ approvedBrandsCount }}
+                        </span>
+                      </div>
+
+                      <v-btn
+                        color="secondary"
+                        block
+                        height="45"
+                        prepend-icon="mdi-database-import"
+                        class="outfit-font text-capitalize font-weight-bold"
+                        :disabled="store.crawlStatus.active || approvedBrandsCount === 0"
+                        :loading="store.crawlLoading"
+                        @click="triggerSpecsHarvester"
+                      >
+                        Harvest Approved Brands Specs
+                      </v-btn>
                     </v-col>
                   </v-row>
-
-                  <v-divider class="my-5 opacity-10"></v-divider>
-
-                  <v-btn
-                    color="secondary"
-                    block
-                    height="50"
-                    prepend-icon="mdi-play-circle"
-                    class="outfit-font text-capitalize text-h6 font-weight-bold"
-                    elevation="6"
-                    :disabled="store.crawlStatus.active"
-                    :loading="store.crawlLoading"
-                    @click="triggerCrawl"
-                  >
-                    Start Crawler Pipeline Task
-                  </v-btn>
                 </v-card>
 
                 <!-- Crawler Live Progress Progress Card -->
@@ -576,6 +722,7 @@ const toast = ref({
 onMounted(async () => {
   await store.fetchCompressors()
   await store.fetchModels()
+  await store.fetchBrandsList()
   await store.fetchCrawlStatus()
   await store.fetchCrawlHistory()
   
@@ -587,6 +734,7 @@ onMounted(async () => {
       if (store.crawlStatus.percent === 100) {
         store.fetchCompressors()
         store.fetchModels(filters.value)
+        store.fetchBrandsList()
         store.fetchCrawlHistory()
       }
     }
@@ -595,7 +743,9 @@ onMounted(async () => {
 
 // Computeds
 const models = computed(() => store.models || [])
+const brandsList = computed(() => store.brandsList || [])
 const crawlHistory = computed(() => store.crawlHistory || [])
+const approvedBrandsCount = computed(() => brandsList.value.filter(b => b.is_approved).length)
 
 // Formatters
 const formatDateTime = (isoString) => {
@@ -699,6 +849,19 @@ const fetchModels = () => {
   store.fetchModels(filters.value)
 }
 
+const fetchBrands = async () => {
+  await store.fetchBrandsList()
+}
+
+const toggleApproval = async (brandId, isApproved) => {
+  try {
+    await store.toggleBrandApproval(brandId, isApproved)
+    showToast(`Brand approval updated successfully!`, 'success')
+  } catch (err) {
+    showToast('Failed to toggle brand approval status.', 'error')
+  }
+}
+
 const resetFilters = () => {
   filters.value = {
     q: '',
@@ -725,15 +888,26 @@ const triggerDbInit = async () => {
   }
 }
 
-const triggerCrawl = async () => {
+const triggerBrandDiscovery = async () => {
   try {
-    const res = await store.triggerCrawl(
+    const res = await store.triggerBrandDiscovery(
       crawlParams.value.compressor_type,
       crawlParams.value.no_cache
     )
     showToast(res.message, 'success')
   } catch (err) {
-    showToast('Failed to trigger background crawl task.', 'error')
+    showToast('Failed to trigger brand discovery task.', 'error')
+  }
+}
+
+const triggerSpecsHarvester = async () => {
+  try {
+    const res = await store.triggerSpecsHarvester(
+      crawlParams.value.no_cache
+    )
+    showToast(res.message, 'success')
+  } catch (err) {
+    showToast('Failed to trigger specifications harvester task.', 'error')
   }
 }
 
@@ -775,6 +949,10 @@ const formatVal = (key, val) => {
 
 .border-left {
   border-left: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.border-right {
+  border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
 
 /* Glassmorphism View Toggle Styles */
