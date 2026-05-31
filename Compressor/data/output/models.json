@@ -84,13 +84,6 @@
     },
     "models": [
       {
-        "model_name": "STC-SV",
-        "series": "STC-SV",
-        "product_url": "",
-        "is_duplicate": true,
-        "model_id": 21
-      },
-      {
         "model_name": "STC-SV (08MV 4A)",
         "series": "STC-SV",
         "product_url": "",
@@ -261,35 +254,35 @@
     "models": [
       {
         "model_name": "F-1C",
-        "series": "RACE",
+        "series": "Race",
         "product_url": "",
         "is_duplicate": true,
         "model_id": 42
       },
       {
         "model_name": "F-1R",
-        "series": "RACE",
+        "series": "Race",
         "product_url": "",
         "is_duplicate": true,
         "model_id": 43
       },
       {
         "model_name": "F-1X",
-        "series": "RACE",
+        "series": "Race",
         "product_url": "",
         "is_duplicate": true,
         "model_id": 44
       },
       {
         "model_name": "F-2",
-        "series": "RACE",
+        "series": "Race",
         "product_url": "",
         "is_duplicate": true,
         "model_id": 45
       },
       {
         "model_name": "F-3D-102",
-        "series": "RACE",
+        "series": "Race",
         "product_url": "",
         "is_duplicate": true,
         "model_id": 46

@@ -18,53 +18,54 @@ The diagram below shows how the Vue 3 Frontend, FastAPI Backend, Database, and G
 ```mermaid
 sequenceDiagram
     autonumber
-    actor User as "End User"
+    participant User as "End User"
     participant FE as "Vue 3 / Vuetify Frontend"
     participant BE as "FastAPI API Server"
     participant DB as "PostgreSQL (pump_db)"
     participant AI as "Gemini 3.1 Flash Lite"
 
     %% Database Init
-    User->>FE: Click "Initialize Database"
-    FE->>BE: POST /api/init-db
-    BE->>DB: CREATE EXTENSION vector; Create Tables
-    DB-->>BE: Tables Created & Checked
-    BE-->>FE: Success Notification
+    User->>FE: Click Initialize Database button
+    FE->>BE: POST to /api/init-db
+    BE->>DB: CREATE EXTENSION vector and create tables
+    DB-->>BE: Tables created and checked
+    BE-->>FE: Return success notification
 
     %% Crawler Run
-    User->>FE: Click "Start Crawling" (e.g. Air)
-    FE->>BE: POST /api/crawl?compressor_type=Air
-    BE-->>FE: Return Job Started (Background Task Spawned)
+    User->>FE: Click Start Crawling for Air
+    FE->>BE: POST to /api/crawl?compressor_type=Air
+    BE-->>FE: Return job started in background
     
-    rect rgb(20, 20, 30)
-        Note over BE, AI: Background Crawling Pipeline
-        BE->>DB: Insert CrawlHistory (Status: active)
-        BE->>AI: Stage 1: Get Manufacturers/Brands
-        AI-->>BE: Manufacturers List (JSON)
-        BE->>DB: Save/Update Manufacturers
-        BE->>AI: Stage 2: Discover Models for Brand
-        AI-->>BE: Extract Model Names & Metadata
-        Note over BE, DB: Execute Two-Tier Deduplication Check
-        BE->>DB: Query exact name match OR query pgvector embeddings
-        DB-->>BE: Existing Row / None
-        alt Model is unique
-            BE->>DB: Insert Model row
-        else Model is duplicate
-            BE->>DB: Link duplicate specs, Skip insertion
-        end
-        BE->>BE: Stage 3: Fetch spec sheets & scrape dynamic tables
-        BE->>AI: Extract 30+ engineering attributes from HTML
-        AI-->>BE: Structured Technical Specs JSON
-        BE->>DB: Save TechnicalAttribute specs (JSONB)
-        BE->>DB: Update CrawlHistory (Status: completed, new counts)
+    Note over BE, AI: Background Crawling Pipeline
+    BE->>DB: Insert CrawlHistory row with status active
+    BE->>AI: Stage 1: Get Manufacturers and Brands
+    AI-->>BE: Return manufacturers list JSON
+    BE->>DB: Save or update Manufacturers
+    BE->>AI: Stage 2: Discover Models for Brand
+    AI-->>BE: Extract model names and metadata
+    Note over BE, DB: Two-Tier Deduplication Check
+    BE->>DB: Query exact name match or pgvector embeddings
+    DB-->>BE: Return existing row or None
+    
+    alt Model is unique
+        BE->>DB: Insert new Model row
+    else Model is duplicate
+        BE->>DB: Link duplicate specs and skip insertion
     end
+    
+    BE->>BE: Stage 3: Fetch spec sheets and scrape dynamic tables
+    BE->>AI: Extract engineering attributes from HTML
+    AI-->>BE: Return structured technical specs JSON
+    BE->>DB: Save TechnicalAttribute specs JSON
+    BE->>DB: Update CrawlHistory with status completed
+    BE-->>User: Update live status dashboard
 
     %% Fetch Catalog
-    User->>FE: Open Specifications Dashboard
+    User->>FE: Open Specifications Dashboard page
     FE->>BE: GET /api/compressors
-    BE->>DB: Fetch Nested Category Tree
-    DB-->>BE: CompressorTypes + Manufacturers + Models
-    BE-->>FE: Render Interactive Specifications Grid
+    BE->>DB: Fetch nested category tree
+    DB-->>BE: Return CompressorTypes and manufacturers and models
+    BE-->>FE: Render interactive specifications grid
 ```
 
 ---
@@ -93,11 +94,11 @@ The system stores structured compressor engineering specs using the PostgreSQL d
 
 ```mermaid
 erDiagram
-    compressor_types ||--o{ compressor_subtypes : "has many"
-    compressor_types ||--o{ models : "categorizes"
-    compressor_subtypes ||--o{ models : "subcategorizes"
-    manufacturers ||--o{ models : "manufactures"
-    models ||--|| technical_attributes : "has one specs sheet"
+    compressor_types ||--o{ compressor_subtypes : has_many
+    compressor_types ||--o{ models : categorizes
+    compressor_subtypes ||--o{ models : subcategorizes
+    manufacturers ||--o{ models : manufactures
+    models ||--|| technical_attributes : has_specs
 
     compressor_types {
         int id
@@ -125,11 +126,11 @@ erDiagram
         string model_name
         string series
         text product_url
-        vector embedding
+        array embedding
     }
     technical_attributes {
         int model_id
-        jsonb attributes
+        json attributes
         timestamp updated_at
     }
     crawl_history {
