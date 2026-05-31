@@ -207,4 +207,8 @@ Backend API Server	http://localhost:8000/docs (Swagger UI)	- python main.py --se
 python main.py --server > backend.log 2>&1
 Get-Content backend.log -Wait -Tail 50 
 
+##Rename repository on github 
+git remote set-url origin https://github.com/Anshdeep/Equipment-Crawler.git
+git remote -v
+
 -->
