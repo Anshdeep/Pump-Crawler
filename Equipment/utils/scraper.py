@@ -90,7 +90,7 @@ def fetch_static(url: str, max_chars: int = 8000) -> str:
 
     time.sleep(REQUEST_DELAY_SECONDS)
 
-    response = httpx.get(url, headers=HEADERS, timeout=20, follow_redirects=True)
+    response = httpx.get(url, headers=HEADERS, timeout=6, follow_redirects=True)
     response.raise_for_status()
 
     # Skip if response is not HTML
@@ -269,7 +269,7 @@ def fetch_dynamic(url: str, max_chars: int = 8000) -> str:
             page = context.new_page()
 
             # Phase 1: Wait for domcontentloaded (very fast)
-            response = page.goto(url, timeout=45000, wait_until="domcontentloaded")
+            response = page.goto(url, timeout=10000, wait_until="domcontentloaded")
 
             # Skip non-HTML responses (PDFs etc. trigger downloads)
             if response and "text/html" not in response.headers.get("content-type", ""):
@@ -278,7 +278,7 @@ def fetch_dynamic(url: str, max_chars: int = 8000) -> str:
 
             # Try waiting for the full load state with a short timeout to let initial assets render
             try:
-                page.wait_for_load_state("load", timeout=2500)
+                page.wait_for_load_state("load", timeout=1000)
             except Exception:
                 pass
 
@@ -286,7 +286,7 @@ def fetch_dynamic(url: str, max_chars: int = 8000) -> str:
             _dismiss_popups(page)
 
             # Settle period: sleep to allow slow lazy-loaded overlays (like region selectors) to mount
-            time.sleep(1.0)
+            time.sleep(0.5)
 
             # Second dismissal pass (captures asynchronously loaded dialogs)
             _dismiss_popups(page)

@@ -11,28 +11,28 @@
         "model_name": "R160N-A145",
         "series": null,
         "product_url": null,
-        "is_duplicate": false,
+        "is_duplicate": true,
         "model_id": 407
       },
       {
         "model_name": "MSG 2/3",
         "series": "MSG",
         "product_url": null,
-        "is_duplicate": false,
+        "is_duplicate": true,
         "model_id": 408
       },
       {
         "model_name": "H10T2",
         "series": null,
         "product_url": null,
-        "is_duplicate": false,
+        "is_duplicate": true,
         "model_id": 409
       },
       {
         "model_name": "H15T4",
         "series": null,
         "product_url": null,
-        "is_duplicate": false,
+        "is_duplicate": true,
         "model_id": 410
       }
     ]
@@ -259,7 +259,7 @@
       },
       {
         "model_name": "KBH",
-        "series": "Hydrogen Mobility",
+        "series": "Hydrogen Mobility Compressor",
         "product_url": null,
         "is_duplicate": true,
         "model_id": 376
@@ -292,18 +292,11 @@
     },
     "models": [
       {
-        "model_name": "STC-GC 10-50",
-        "series": "STC-GC",
+        "model_name": "STC-GC",
+        "series": "STC-GC Series",
         "product_url": null,
-        "is_duplicate": false,
-        "model_id": 411
-      },
-      {
-        "model_name": "STC-GC 63-100",
-        "series": "STC-GC",
-        "product_url": null,
-        "is_duplicate": false,
-        "model_id": 412
+        "is_duplicate": true,
+        "model_id": 384
       },
       {
         "model_name": "SGT5-9000HL",
@@ -327,11 +320,25 @@
         "model_id": 387
       },
       {
+        "model_name": "SGT5-2000E",
+        "series": "Heavy-duty gas turbines",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 388
+      },
+      {
         "model_name": "SGT6-9000HL",
         "series": "Heavy-duty gas turbines",
         "product_url": null,
         "is_duplicate": true,
         "model_id": 389
+      },
+      {
+        "model_name": "SGT6-8000H",
+        "series": "Heavy-duty gas turbines",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 390
       },
       {
         "model_name": "SGT-800",
@@ -353,13 +360,6 @@
         "product_url": null,
         "is_duplicate": true,
         "model_id": 393
-      },
-      {
-        "model_name": "SGT-A05",
-        "series": "Aeroderivative gas turbine",
-        "product_url": null,
-        "is_duplicate": false,
-        "model_id": 413
       }
     ]
   },
@@ -616,6 +616,44 @@
         "product_url": null,
         "is_duplicate": true,
         "model_id": 406
+      }
+    ]
+  },
+  "Gentilin": {
+    "compressor_type": "Medical Compressors",
+    "manufacturer_info": {
+      "name": "Gentilin",
+      "country": "Italy",
+      "website": "gentilinair.com"
+    },
+    "models": [
+      {
+        "model_name": "HUSH",
+        "series": "HUSH Series",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 414
+      },
+      {
+        "model_name": "SCROLL",
+        "series": "SCROLL Series",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 415
+      },
+      {
+        "model_name": "CLINIC",
+        "series": "CLINIC Series",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 416
+      },
+      {
+        "model_name": "PRO",
+        "series": "PRO Series",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 417
       }
     ]
   }

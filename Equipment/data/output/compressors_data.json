@@ -10,7 +10,16 @@
     "model": "R160N-A145",
     "series": null,
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "capacity_cfm": 993.0,
+      "pressure_psi": 200.0,
+      "power_hp": 200.0,
+      "cooling_type": "air-cooled",
+      "stage_count": 1,
+      "certifications": [
+        "ISO 1217"
+      ]
+    }
   },
   {
     "compressor_type": "Gas Compressors",
@@ -23,7 +32,21 @@
     "model": "MSG 2/3",
     "series": "MSG",
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "capacity_cfm": 10000,
+      "capacity_m3_hr": 17000,
+      "pressure_psi": 1450,
+      "pressure_bar": 100,
+      "power_kw": 4100,
+      "power_hp": 5500,
+      "lubrication_type": "oil-free",
+      "stage_count": 3,
+      "certifications": [
+        "ISO 8573-1",
+        "ISO 9001:2008",
+        "ISO 14001:2004"
+      ]
+    }
   },
   {
     "compressor_type": "Gas Compressors",
@@ -36,7 +59,16 @@
     "model": "H10T2",
     "series": null,
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "capacity_cfm": 135000,
+      "capacity_m3_hr": 230000,
+      "pressure_psi": 1450,
+      "pressure_bar": 100,
+      "power_kw": 18650,
+      "power_hp": 25000,
+      "lubrication_type": "oil-free",
+      "stage_count": 6
+    }
   },
   {
     "compressor_type": "Gas Compressors",
@@ -49,7 +81,21 @@
     "model": "H15T4",
     "series": null,
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "capacity_cfm": 18.6,
+      "pressure_psi": 5000,
+      "power_hp": 15,
+      "drive_type": "belt-drive",
+      "stage_count": 4,
+      "oil_capacity_liters": null,
+      "outlet_size_inch": null,
+      "inlet_size_inch": null,
+      "efficiency_percent": null,
+      "operating_temp_min_c": null,
+      "operating_temp_max_c": null,
+      "duty_cycle": null,
+      "pump_life_hours": null
+    }
   },
   {
     "compressor_type": "Air Compressors",
@@ -302,7 +348,15 @@
     "model": "SI-1060",
     "series": null,
     "product_url": "",
-    "attributes": {}
+    "attributes": {
+      "weight_kg": 0.87,
+      "weight_lbs": 1.92,
+      "capacity_cfm": 2.9,
+      "noise_level_db": 89,
+      "inlet_size_inch": 0.25,
+      "motor_speed_rpm": 11000,
+      "outlet_size_inch": 0.25
+    }
   },
   {
     "compressor_type": "Air Compressors",
@@ -315,7 +369,39 @@
     "model": "SI-1365D",
     "series": null,
     "product_url": "",
-    "attributes": {}
+    "attributes": {
+      "phase": null,
+      "voltage": null,
+      "power_hp": null,
+      "power_kw": null,
+      "weight_kg": null,
+      "drive_type": null,
+      "duty_cycle": null,
+      "motor_type": null,
+      "weight_lbs": null,
+      "stage_count": null,
+      "capacity_cfm": null,
+      "cooling_type": null,
+      "frequency_hz": null,
+      "pressure_bar": null,
+      "pressure_psi": null,
+      "dimensions_mm": null,
+      "capacity_m3_hr": null,
+      "certifications": null,
+      "noise_level_db": null,
+      "warranty_years": null,
+      "inlet_size_inch": null,
+      "motor_speed_rpm": null,
+      "pump_life_hours": null,
+      "lubrication_type": null,
+      "outlet_size_inch": null,
+      "tank_size_liters": null,
+      "tank_size_gallons": null,
+      "efficiency_percent": null,
+      "oil_capacity_liters": null,
+      "operating_temp_max_c": null,
+      "operating_temp_min_c": null
+    }
   },
   {
     "compressor_type": "Air Compressors",
@@ -341,7 +427,9 @@
     "model": "SI-1065",
     "series": null,
     "product_url": "",
-    "attributes": {}
+    "attributes": {
+      "outlet_size_inch": 0.25
+    }
   },
   {
     "compressor_type": "Air Compressors",
@@ -641,19 +729,19 @@
     "series": "GA MED",
     "product_url": "",
     "attributes": {
-      "capacity_cfm": 155,
-      "pressure_psi": 189,
-      "pressure_bar": 13,
-      "power_kw": 26,
       "power_hp": 35,
-      "lubrication_type": "oil-injected",
+      "power_kw": 26,
+      "capacity_cfm": 155,
+      "pressure_bar": 13,
+      "pressure_psi": 189,
       "certifications": [
         "ISO 9001",
         "ISO 14001",
         "ISO 1217",
         "ISO7396",
         "HTM02-01"
-      ]
+      ],
+      "lubrication_type": "oil-injected"
     }
   },
   {
@@ -1027,7 +1115,11 @@
     "model": "JGA",
     "series": "Small Line",
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "duty_cycle": "24/7",
+      "weight_lbs": 7600,
+      "motor_speed_rpm": 1800
+    }
   },
   {
     "compressor_type": "Gas Compressors",
@@ -1040,7 +1132,10 @@
     "model": "JGR",
     "series": "Small Line",
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "weight_lbs": 7600,
+      "motor_speed_rpm": 1800
+    }
   },
   {
     "compressor_type": "Gas Compressors",
@@ -1053,7 +1148,13 @@
     "model": "KBK",
     "series": "Mid-Line",
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "power_hp": 5520,
+      "power_kw": 4116,
+      "duty_cycle": "continuous",
+      "motor_speed_rpm": 1500,
+      "lubrication_type": "full-pressure"
+    }
   },
   {
     "compressor_type": "Gas Compressors",
@@ -1066,7 +1167,12 @@
     "model": "KBT",
     "series": "Mid-Line",
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "power_hp": 5520,
+      "power_kw": 4116,
+      "duty_cycle": "continuous",
+      "motor_speed_rpm": 1500
+    }
   },
   {
     "compressor_type": "Gas Compressors",
@@ -1077,9 +1183,15 @@
       "website": "arielcorp.com"
     },
     "model": "KBH",
-    "series": "Hydrogen Mobility",
+    "series": "Hydrogen Mobility Compressor",
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "pressure_bar": 500,
+      "pressure_psi": 7250,
+      "inlet_size_inch": 4.25,
+      "motor_speed_rpm": 1000,
+      "lubrication_type": "non-lubricated"
+    }
   },
   {
     "compressor_type": "Gas Compressors",
@@ -1092,7 +1204,28 @@
     "model": "GRU",
     "series": "GRU Series",
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "phase": "3-phase",
+      "voltage": "460V",
+      "power_hp": 750,
+      "power_kw": 560,
+      "drive_type": "direct-drive",
+      "motor_type": "TEFC",
+      "capacity_cfm": 2322,
+      "cooling_type": "air-cooled",
+      "frequency_hz": 60,
+      "pressure_bar": 76,
+      "pressure_psi": 1100,
+      "capacity_m3_hr": 3944,
+      "certifications": [
+        "NFPA 52",
+        "NFPA 70",
+        "ASME",
+        "NEC",
+        "UL",
+        "ISO 9001-2015"
+      ]
+    }
   },
   {
     "compressor_type": "Gas Compressors",
@@ -1102,23 +1235,42 @@
       "country": null,
       "website": "siemens.com"
     },
-    "model": "STC-GC 10-50",
-    "series": "STC-GC",
+    "model": "STC-GC",
+    "series": "STC-GC Series",
     "product_url": null,
-    "attributes": {}
-  },
-  {
-    "compressor_type": "Gas Compressors",
-    "manufacturer": "Siemens",
-    "manufacturer_info": {
-      "name": "Siemens",
-      "country": null,
-      "website": "siemens.com"
-    },
-    "model": "STC-GC 63-100",
-    "series": "STC-GC",
-    "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "phase": null,
+      "voltage": null,
+      "power_hp": null,
+      "power_kw": null,
+      "weight_kg": null,
+      "drive_type": null,
+      "duty_cycle": null,
+      "motor_type": null,
+      "weight_lbs": null,
+      "stage_count": null,
+      "capacity_cfm": null,
+      "cooling_type": null,
+      "frequency_hz": null,
+      "pressure_bar": null,
+      "pressure_psi": null,
+      "dimensions_mm": null,
+      "capacity_m3_hr": null,
+      "certifications": null,
+      "noise_level_db": null,
+      "warranty_years": null,
+      "inlet_size_inch": null,
+      "motor_speed_rpm": null,
+      "pump_life_hours": null,
+      "lubrication_type": null,
+      "outlet_size_inch": null,
+      "tank_size_liters": null,
+      "tank_size_gallons": null,
+      "efficiency_percent": null,
+      "oil_capacity_liters": null,
+      "operating_temp_max_c": null,
+      "operating_temp_min_c": null
+    }
   },
   {
     "compressor_type": "Gas Compressors",
@@ -1131,7 +1283,9 @@
     "model": "SGT5-9000HL",
     "series": "Heavy-duty gas turbines",
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "pump_life_hours": 100000
+    }
   },
   {
     "compressor_type": "Gas Compressors",
@@ -1144,7 +1298,10 @@
     "model": "SGT5-8000H",
     "series": "Heavy-duty gas turbines",
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "capacity_m3_hr": 100000,
+      "efficiency_percent": 39.1
+    }
   },
   {
     "compressor_type": "Gas Compressors",
@@ -1157,7 +1314,24 @@
     "model": "SGT5-4000F",
     "series": "Heavy-duty gas turbines",
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "pump_life_hours": 100000
+    }
+  },
+  {
+    "compressor_type": "Gas Compressors",
+    "manufacturer": "Siemens",
+    "manufacturer_info": {
+      "name": "Siemens",
+      "country": null,
+      "website": "siemens.com"
+    },
+    "model": "SGT5-2000E",
+    "series": "Heavy-duty gas turbines",
+    "product_url": null,
+    "attributes": {
+      "pump_life_hours": 100000
+    }
   },
   {
     "compressor_type": "Gas Compressors",
@@ -1170,7 +1344,26 @@
     "model": "SGT6-9000HL",
     "series": "Heavy-duty gas turbines",
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "capacity_m3_hr": 100000,
+      "efficiency_percent": 39.1
+    }
+  },
+  {
+    "compressor_type": "Gas Compressors",
+    "manufacturer": "Siemens",
+    "manufacturer_info": {
+      "name": "Siemens",
+      "country": null,
+      "website": "siemens.com"
+    },
+    "model": "SGT6-8000H",
+    "series": "Heavy-duty gas turbines",
+    "product_url": null,
+    "attributes": {
+      "capacity_m3_hr": 100000,
+      "efficiency_percent": 39.1
+    }
   },
   {
     "compressor_type": "Gas Compressors",
@@ -1212,19 +1405,6 @@
     "attributes": {}
   },
   {
-    "compressor_type": "Gas Compressors",
-    "manufacturer": "Siemens",
-    "manufacturer_info": {
-      "name": "Siemens",
-      "country": null,
-      "website": "siemens.com"
-    },
-    "model": "SGT-A05",
-    "series": "Aeroderivative gas turbine",
-    "product_url": null,
-    "attributes": {}
-  },
-  {
     "compressor_type": "Turbochargers/Superchargers",
     "manufacturer": "Magnuson Products LLC",
     "manufacturer_info": {
@@ -1235,7 +1415,9 @@
     "model": "05-00-23-060-BL",
     "series": "TVS2300",
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "tank_size_gallons": 2
+    }
   },
   {
     "compressor_type": "Turbochargers/Superchargers",
@@ -1501,7 +1683,39 @@
     "model": "V-1 Ti-Trim",
     "series": "V-1",
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "phase": null,
+      "voltage": null,
+      "power_hp": null,
+      "power_kw": null,
+      "weight_kg": null,
+      "drive_type": null,
+      "duty_cycle": null,
+      "motor_type": null,
+      "weight_lbs": null,
+      "stage_count": null,
+      "capacity_cfm": null,
+      "cooling_type": null,
+      "frequency_hz": null,
+      "pressure_bar": null,
+      "pressure_psi": null,
+      "dimensions_mm": null,
+      "capacity_m3_hr": null,
+      "certifications": null,
+      "noise_level_db": null,
+      "warranty_years": null,
+      "inlet_size_inch": null,
+      "motor_speed_rpm": null,
+      "pump_life_hours": null,
+      "lubrication_type": null,
+      "outlet_size_inch": null,
+      "tank_size_liters": null,
+      "tank_size_gallons": null,
+      "efficiency_percent": null,
+      "oil_capacity_liters": null,
+      "operating_temp_max_c": null,
+      "operating_temp_min_c": null
+    }
   },
   {
     "compressor_type": "Turbochargers/Superchargers",
@@ -1514,7 +1728,39 @@
     "model": "V-1 JT-Trim",
     "series": "V-1",
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "phase": null,
+      "voltage": null,
+      "power_hp": null,
+      "power_kw": null,
+      "weight_kg": null,
+      "drive_type": null,
+      "duty_cycle": null,
+      "motor_type": null,
+      "weight_lbs": null,
+      "stage_count": null,
+      "capacity_cfm": null,
+      "cooling_type": null,
+      "frequency_hz": null,
+      "pressure_bar": null,
+      "pressure_psi": null,
+      "dimensions_mm": null,
+      "capacity_m3_hr": null,
+      "certifications": null,
+      "noise_level_db": null,
+      "warranty_years": null,
+      "inlet_size_inch": null,
+      "motor_speed_rpm": null,
+      "pump_life_hours": null,
+      "lubrication_type": null,
+      "outlet_size_inch": null,
+      "tank_size_liters": null,
+      "tank_size_gallons": null,
+      "efficiency_percent": null,
+      "oil_capacity_liters": null,
+      "operating_temp_max_c": null,
+      "operating_temp_min_c": null
+    }
   },
   {
     "compressor_type": "Turbochargers/Superchargers",
@@ -1527,7 +1773,18 @@
     "model": "V-3 H67B",
     "series": "V-3",
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "power_hp": 525,
+      "drive_type": "gear-drive",
+      "weight_lbs": 35,
+      "capacity_cfm": 750,
+      "pressure_psi": 14,
+      "dimensions_mm": "381 x 304.8 x 304.8",
+      "inlet_size_inch": 3.5,
+      "motor_speed_rpm": 52000,
+      "outlet_size_inch": 2.5,
+      "efficiency_percent": 71
+    }
   },
   {
     "compressor_type": "Turbochargers/Superchargers",
@@ -1540,7 +1797,21 @@
     "model": "V-3 SCi-Trim",
     "series": "V-3",
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "power_hp": 525,
+      "drive_type": "gear-drive",
+      "weight_lbs": 35,
+      "capacity_cfm": 750,
+      "pressure_psi": 14,
+      "dimensions_mm": "381 x 304.8 x 304.8",
+      "certifications": [
+        "SAE-J1723"
+      ],
+      "inlet_size_inch": 3.5,
+      "motor_speed_rpm": 52000,
+      "outlet_size_inch": 2.5,
+      "efficiency_percent": 71
+    }
   },
   {
     "compressor_type": "Turbochargers/Superchargers",
@@ -1553,7 +1824,21 @@
     "model": "V-3 Si-Trim",
     "series": "V-3",
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "power_hp": 525,
+      "drive_type": "gear-drive",
+      "weight_lbs": 35,
+      "capacity_cfm": 750,
+      "pressure_psi": 14,
+      "dimensions_mm": "381 x 304.8 x 304.8",
+      "certifications": [
+        "SAE-J1723"
+      ],
+      "inlet_size_inch": 3.5,
+      "motor_speed_rpm": 52000,
+      "outlet_size_inch": 2.5,
+      "efficiency_percent": 71
+    }
   },
   {
     "compressor_type": "Turbochargers/Superchargers",
@@ -1566,7 +1851,39 @@
     "model": "2024-2026 F-150 5.0L 4V Supercharger Kit",
     "series": null,
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "phase": null,
+      "voltage": null,
+      "power_hp": null,
+      "power_kw": null,
+      "weight_kg": null,
+      "drive_type": null,
+      "duty_cycle": null,
+      "motor_type": null,
+      "weight_lbs": null,
+      "stage_count": null,
+      "capacity_cfm": null,
+      "cooling_type": null,
+      "frequency_hz": null,
+      "pressure_bar": null,
+      "pressure_psi": null,
+      "dimensions_mm": null,
+      "capacity_m3_hr": null,
+      "certifications": null,
+      "noise_level_db": null,
+      "warranty_years": null,
+      "inlet_size_inch": null,
+      "motor_speed_rpm": null,
+      "pump_life_hours": null,
+      "lubrication_type": null,
+      "outlet_size_inch": null,
+      "tank_size_liters": null,
+      "tank_size_gallons": null,
+      "efficiency_percent": null,
+      "oil_capacity_liters": null,
+      "operating_temp_max_c": null,
+      "operating_temp_min_c": null
+    }
   },
   {
     "compressor_type": "Turbochargers/Superchargers",
@@ -1579,7 +1896,39 @@
     "model": "2024-2026 S650 Ford Mustang GT Supercharger System",
     "series": null,
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "phase": null,
+      "voltage": null,
+      "power_hp": null,
+      "power_kw": null,
+      "weight_kg": null,
+      "drive_type": null,
+      "duty_cycle": null,
+      "motor_type": null,
+      "weight_lbs": null,
+      "stage_count": null,
+      "capacity_cfm": null,
+      "cooling_type": null,
+      "frequency_hz": null,
+      "pressure_bar": null,
+      "pressure_psi": null,
+      "dimensions_mm": null,
+      "capacity_m3_hr": null,
+      "certifications": null,
+      "noise_level_db": null,
+      "warranty_years": null,
+      "inlet_size_inch": null,
+      "motor_speed_rpm": null,
+      "pump_life_hours": null,
+      "lubrication_type": null,
+      "outlet_size_inch": null,
+      "tank_size_liters": null,
+      "tank_size_gallons": null,
+      "efficiency_percent": null,
+      "oil_capacity_liters": null,
+      "operating_temp_max_c": null,
+      "operating_temp_min_c": null
+    }
   },
   {
     "compressor_type": "Turbochargers/Superchargers",
@@ -1592,7 +1941,39 @@
     "model": "2022 F-250 Supercharger Kit",
     "series": null,
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "phase": null,
+      "voltage": null,
+      "power_hp": null,
+      "power_kw": null,
+      "weight_kg": null,
+      "drive_type": null,
+      "duty_cycle": null,
+      "motor_type": null,
+      "weight_lbs": null,
+      "stage_count": null,
+      "capacity_cfm": null,
+      "cooling_type": null,
+      "frequency_hz": null,
+      "pressure_bar": null,
+      "pressure_psi": null,
+      "dimensions_mm": null,
+      "capacity_m3_hr": null,
+      "certifications": null,
+      "noise_level_db": null,
+      "warranty_years": null,
+      "inlet_size_inch": null,
+      "motor_speed_rpm": null,
+      "pump_life_hours": null,
+      "lubrication_type": null,
+      "outlet_size_inch": null,
+      "tank_size_liters": null,
+      "tank_size_gallons": null,
+      "efficiency_percent": null,
+      "oil_capacity_liters": null,
+      "operating_temp_max_c": null,
+      "operating_temp_min_c": null
+    }
   },
   {
     "compressor_type": "Turbochargers/Superchargers",
@@ -1605,7 +1986,39 @@
     "model": "2020-2026 F-150 Supercharger Kit",
     "series": null,
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "capacity_cfm": null,
+      "capacity_m3_hr": null,
+      "pressure_psi": null,
+      "pressure_bar": null,
+      "power_kw": null,
+      "power_hp": null,
+      "motor_type": null,
+      "motor_speed_rpm": null,
+      "cooling_type": null,
+      "lubrication_type": null,
+      "drive_type": null,
+      "stage_count": null,
+      "noise_level_db": null,
+      "weight_kg": null,
+      "weight_lbs": null,
+      "dimensions_mm": null,
+      "tank_size_liters": null,
+      "tank_size_gallons": null,
+      "voltage": null,
+      "frequency_hz": null,
+      "phase": null,
+      "certifications": null,
+      "warranty_years": null,
+      "oil_capacity_liters": null,
+      "outlet_size_inch": null,
+      "inlet_size_inch": null,
+      "efficiency_percent": null,
+      "operating_temp_min_c": null,
+      "operating_temp_max_c": null,
+      "duty_cycle": null,
+      "pump_life_hours": null
+    }
   },
   {
     "compressor_type": "Medical Compressors",
@@ -1864,7 +2277,18 @@
     "model": "Skid-mounted oil free scroll air compressor",
     "series": "Scroll Series",
     "product_url": null,
-    "attributes": {}
+    "attributes": {
+      "duty_cycle": "continuous",
+      "pressure_bar": 0.8,
+      "pressure_psi": 100,
+      "certifications": [
+        "ISO 13485",
+        "EN 61000",
+        "Class 0"
+      ],
+      "pump_life_hours": 8000,
+      "lubrication_type": "oil-free"
+    }
   },
   {
     "compressor_type": "Medical Compressors",
@@ -2137,6 +2561,117 @@
     "model": "C50",
     "series": "C Series",
     "product_url": null,
+    "attributes": {
+      "capacity_cfm": null,
+      "capacity_m3_hr": null,
+      "pressure_psi": null,
+      "pressure_bar": null,
+      "power_kw": null,
+      "power_hp": null,
+      "motor_type": null,
+      "motor_speed_rpm": null,
+      "cooling_type": null,
+      "lubrication_type": null,
+      "drive_type": null,
+      "stage_count": null,
+      "noise_level_db": null,
+      "weight_kg": null,
+      "weight_lbs": null,
+      "dimensions_mm": null,
+      "tank_size_liters": null,
+      "tank_size_gallons": null,
+      "voltage": null,
+      "frequency_hz": null,
+      "phase": null,
+      "certifications": null,
+      "warranty_years": null,
+      "oil_capacity_liters": null,
+      "outlet_size_inch": null,
+      "inlet_size_inch": null,
+      "efficiency_percent": null,
+      "operating_temp_min_c": null,
+      "operating_temp_max_c": null,
+      "duty_cycle": null,
+      "pump_life_hours": null
+    }
+  },
+  {
+    "compressor_type": "Medical Compressors",
+    "manufacturer": "Gentilin",
+    "manufacturer_info": {
+      "name": "Gentilin",
+      "country": "Italy",
+      "website": "gentilinair.com"
+    },
+    "model": "HUSH",
+    "series": "HUSH Series",
+    "product_url": null,
+    "attributes": {
+      "capacity_m3_hr": null,
+      "power_kw": 8.0,
+      "lubrication_type": "oil-free",
+      "noise_level_db": 78.0,
+      "tank_size_liters": 500.0,
+      "duty_cycle": "continuous"
+    }
+  },
+  {
+    "compressor_type": "Medical Compressors",
+    "manufacturer": "Gentilin",
+    "manufacturer_info": {
+      "name": "Gentilin",
+      "country": "Italy",
+      "website": "gentilinair.com"
+    },
+    "model": "SCROLL",
+    "series": "SCROLL Series",
+    "product_url": null,
     "attributes": {}
+  },
+  {
+    "compressor_type": "Medical Compressors",
+    "manufacturer": "Gentilin",
+    "manufacturer_info": {
+      "name": "Gentilin",
+      "country": "Italy",
+      "website": "gentilinair.com"
+    },
+    "model": "CLINIC",
+    "series": "CLINIC Series",
+    "product_url": null,
+    "attributes": {}
+  },
+  {
+    "compressor_type": "Medical Compressors",
+    "manufacturer": "Gentilin",
+    "manufacturer_info": {
+      "name": "Gentilin",
+      "country": "Italy",
+      "website": "gentilinair.com"
+    },
+    "model": "PRO",
+    "series": "PRO Series",
+    "product_url": null,
+    "attributes": {
+      "capacity_m3_hr": null,
+      "pressure_bar": 10,
+      "power_kw": 4.4,
+      "power_hp": 3,
+      "motor_type": "S1 class",
+      "cooling_type": "air-cooled",
+      "lubrication_type": "oil-free",
+      "noise_level_db": 85,
+      "weight_kg": 88,
+      "tank_size_liters": 90,
+      "voltage": "230V",
+      "frequency_hz": 50,
+      "certifications": [
+        "ISO 13285"
+      ],
+      "operating_temp_min_c": -20,
+      "operating_temp_max_c": 40,
+      "duty_cycle": "100%",
+      "pump_life_hours": 1500
+    }
   }
 ]

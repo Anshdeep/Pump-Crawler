@@ -28,7 +28,7 @@ def tavily_search(query: str, max_results: int = 5) -> list[dict]:
         "include_raw_content": False,
     }
 
-    response = httpx.post(TAVILY_ENDPOINT, json=payload, headers=headers, timeout=30)
+    response = httpx.post(TAVILY_ENDPOINT, json=payload, headers=headers, timeout=10)
     response.raise_for_status()
     data = response.json()
 
@@ -61,7 +61,7 @@ def duckduckgo_search(query: str, max_results: int = 5) -> list[dict]:
     params = {"q": query}
     headers = {"User-Agent": "Mozilla/5.0 (compatible; CompressorBot/1.0)"}
 
-    response = httpx.post(url, data=params, headers=headers, timeout=30)
+    response = httpx.post(url, data=params, headers=headers, timeout=10)
     response.raise_for_status()
 
     soup = BeautifulSoup(response.text, "lxml")
