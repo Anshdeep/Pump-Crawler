@@ -42,6 +42,38 @@ def _parse_html(html: str, max_chars: int) -> str:
     return "\n".join(lines)[:max_chars]
 
 
+def filter_technical_specs_only(text: str) -> str:
+    """
+    Filter the input text, keeping only lines containing actual technical specifications, 
+    numeric values with units, or engineering keywords.
+    """
+    import re
+    
+    # Matches common technical keywords
+    SPEC_KEYWORDS = re.compile(
+        r"(capacity|cfm|m3|pressure|psi|bar|power|kw|hp|rpm|voltage|phase|hz|dB|weight|kg|lbs|dimension|tank|liter|gallon|spec|model|series|technical|lubric|oil|drive|speed|motor|cooling|efficiency|warranty|temp|operating|inlet|outlet|certif|duty|pump)",
+        re.IGNORECASE
+    )
+    
+    # Matches common number + unit configurations (e.g. 50 HP, 120V, 10 bar)
+    NUMERIC_UNIT = re.compile(
+        r"\b\d+(\.\d+)?\s*(cfm|psi|bar|kw|hp|v|hz|db|kg|lbs|mm|l|gal|in|inch|%|c)\b",
+        re.IGNORECASE
+    )
+    
+    lines = text.splitlines()
+    spec_lines = []
+    for line in lines:
+        stripped = line.strip()
+        if len(stripped) < 3:
+            continue
+        # Retain line if it contains technical keywords, measurement units, or raw numbers/digits
+        if SPEC_KEYWORDS.search(stripped) or NUMERIC_UNIT.search(stripped) or any(char.isdigit() for char in stripped):
+            spec_lines.append(stripped)
+            
+    return "\n".join(spec_lines)
+
+
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=2, max=10))
 def fetch_static(url: str, max_chars: int = 8000) -> str:
     """
@@ -246,7 +278,7 @@ def fetch_dynamic(url: str, max_chars: int = 8000) -> str:
 
             # Try waiting for the full load state with a short timeout to let initial assets render
             try:
-                page.wait_for_load_state("load", timeout=5000)
+                page.wait_for_load_state("load", timeout=2500)
             except Exception:
                 pass
 
@@ -254,7 +286,7 @@ def fetch_dynamic(url: str, max_chars: int = 8000) -> str:
             _dismiss_popups(page)
 
             # Settle period: sleep to allow slow lazy-loaded overlays (like region selectors) to mount
-            time.sleep(2.0)
+            time.sleep(1.0)
 
             # Second dismissal pass (captures asynchronously loaded dialogs)
             _dismiss_popups(page)

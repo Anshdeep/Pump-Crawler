@@ -13,10 +13,9 @@ from tqdm import tqdm
 from sqlalchemy.orm import Session
 
 from config import FINAL_OUTPUT_JSON
-from utils.scraper import fetch_dynamic, fetch_static
+from utils.scraper import fetch_dynamic, fetch_static, scrape_search_results, filter_technical_specs_only
 from utils.genai_extractor import extract_attributes
 from utils.web_search import search
-from utils.scraper import scrape_search_results
 
 
 def _fetch_model_page(model: dict, manufacturer: str, compressor_type: str) -> str:
@@ -24,7 +23,7 @@ def _fetch_model_page(model: dict, manufacturer: str, compressor_type: str) -> s
     Attempt to fetch the product page for this model.
     Priority: product_url -> web search for spec sheet.
     """
-    product_url = model.get("product_url", "").strip()
+    product_url = (model.get("product_url") or "").strip()
 
     # Try the direct URL first
     if product_url and product_url.startswith("http"):
@@ -46,14 +45,14 @@ def _fetch_model_page(model: dict, manufacturer: str, compressor_type: str) -> s
         results = search(strict_query, max_results=3)
 
     if results:
-        # Try fetching candidate pages in sequence
-        for r in results:
+        # Try fetching the first 2 candidate pages in sequence (fast limit to avoid sequential chromium loads)
+        for r in results[:2]:
             url = r.get("url", "")
             if url:
                 try:
                     text = fetch_dynamic(url, max_chars=8000)
-                    # Verify page content size to avoid scraping cookie walls or blank overlays
-                    if text and len(text.strip()) > 300:
+                    # Lower content threshold to 100 characters so small spec grids are not skipped
+                    if text and len(text.strip()) > 100:
                         print(f"      [Harvester Specs] Successfully retrieved page content ({len(text)} chars) from {url[:60]}")
                         return text
                     else:
@@ -63,6 +62,41 @@ def _fetch_model_page(model: dict, manufacturer: str, compressor_type: str) -> s
 
     # Last resort: use search snippet text
     return scrape_search_results(results, max_chars=5000)
+
+
+# In-memory shared page URL and series content cache
+URL_CONTENT_CACHE = {}
+
+def _fetch_model_page_cached(model: dict, manufacturer: str, compressor_type: str) -> str:
+    """
+    Wrapper around _fetch_model_page using in-memory cache to reuse crawled 
+    pages across models belonging to the same product series.
+    """
+    product_url = (model.get("product_url") or "").strip()
+    series = (model.get("series") or "").strip()
+    
+    # 1. Try to reuse cached page content by exact direct URL
+    if product_url and product_url in URL_CONTENT_CACHE:
+        print(f"      [Cache Hit] Reusing catalog text by URL: {product_url[:65]}...")
+        return URL_CONTENT_CACHE[product_url]
+        
+    # 2. Try to reuse by Series family (if another model in this series already crawled it)
+    series_key = f"{manufacturer}::{series}"
+    if series and series_key in URL_CONTENT_CACHE:
+        print(f"      [Cache Hit] Reusing catalog text for Series: '{series}' (Crawling avoided!)")
+        return URL_CONTENT_CACHE[series_key]
+        
+    # Settle fresh crawl
+    text = _fetch_model_page(model, manufacturer, compressor_type)
+    
+    # Cache content for subsequent models to reuse
+    if text and len(text.strip()) > 300:
+        if product_url:
+            URL_CONTENT_CACHE[product_url] = text
+        if series:
+            URL_CONTENT_CACHE[series_key] = text
+            
+    return text
 
 
 def run(models_data: dict, db: Session = None) -> list[dict]:
@@ -116,23 +150,30 @@ def run(models_data: dict, db: Session = None) -> list[dict]:
             # -- Step 1: Fetch page ---------------------------------
             print(f"   🌐 Fetching product page...")
             try:
-                page_text = _fetch_model_page(model, mfr_name, ctype)
+                page_text = _fetch_model_page_cached(model, mfr_name, ctype)
             except Exception as e:
                 print(f"   [WARN] Could not fetch page: {e}")
                 page_text = ""
 
             # -- Step 2: Gemini attribute extraction ----------------
-            if page_text.strip():
-                print(f"   🤖 Extracting attributes with Gemini...")
-                try:
-                    attributes = extract_attributes(mfr_name, model_name, ctype, page_text)
-                    
-                    # Save to DB
-                    if db and model_id and attributes:
-                        import database.crud as crud
-                        crud.save_technical_attributes(db, model_id, attributes)
-                except Exception as e:
-                    print(f"   [WARN] Attribute extraction failed: {e}")
+            if page_text and page_text.strip():
+                # Apply high-density regex pre-filtering to slash token consumption
+                filtered_text = filter_technical_specs_only(page_text)
+                print(f"      [Specs Optimizer] Reduced input text from {len(page_text)} to {len(filtered_text)} characters!")
+                
+                if filtered_text.strip():
+                    print(f"   🤖 Extracting attributes with Gemini...")
+                    try:
+                        attributes = extract_attributes(mfr_name, model_name, ctype, filtered_text)
+                        
+                        # Save to DB
+                        if db and model_id and attributes:
+                            import database.crud as crud
+                            crud.save_technical_attributes(db, model_id, attributes)
+                    except Exception as e:
+                        print(f"   [WARN] Attribute extraction failed: {e}")
+                else:
+                    print(f"   [WARN] Filtering left empty specs sheet -- attributes will be empty")
             else:
                 print(f"   [WARN] No page text -- attributes will be empty")
 

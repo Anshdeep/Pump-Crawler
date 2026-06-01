@@ -3,30 +3,37 @@
     "compressor_type": "Gas Compressors",
     "manufacturer_info": {
       "name": "Ingersoll Rand",
-      "country": "USA",
+      "country": null,
       "website": "irco.com"
     },
     "models": [
       {
-        "model_name": "TURBO-AIR",
-        "series": "Centrifugal Compressors",
-        "product_url": "",
-        "is_duplicate": true,
-        "model_id": 28
+        "model_name": "R160N-A145",
+        "series": null,
+        "product_url": null,
+        "is_duplicate": false,
+        "model_id": 407
       },
       {
-        "model_name": "MSG",
-        "series": "Centrifugal Compressors",
-        "product_url": "",
-        "is_duplicate": true,
-        "model_id": 29
+        "model_name": "MSG 2/3",
+        "series": "MSG",
+        "product_url": null,
+        "is_duplicate": false,
+        "model_id": 408
       },
       {
-        "model_name": "Centac",
-        "series": "Centrifugal Compressors",
-        "product_url": "",
-        "is_duplicate": true,
-        "model_id": 30
+        "model_name": "H10T2",
+        "series": null,
+        "product_url": null,
+        "is_duplicate": false,
+        "model_id": 409
+      },
+      {
+        "model_name": "H15T4",
+        "series": null,
+        "product_url": null,
+        "is_duplicate": false,
+        "model_id": 410
       }
     ]
   },
@@ -35,43 +42,68 @@
     "manufacturer_info": {
       "name": "Shinano",
       "country": "Japan",
-      "website": ""
+      "website": null
     },
     "models": [
       {
         "model_name": "SI-AG4-A2PJ",
         "series": "J-type",
-        "product_url": "",
-        "is_duplicate": false,
+        "is_duplicate": true,
         "model_id": 341
       },
       {
         "model_name": "SI-AG4-A2RJ",
         "series": "J-type",
-        "product_url": "",
-        "is_duplicate": false,
+        "is_duplicate": true,
         "model_id": 342
       },
       {
         "model_name": "SI-AG4-A2LJ",
         "series": "J-type",
-        "product_url": "",
-        "is_duplicate": false,
+        "is_duplicate": true,
         "model_id": 343
       },
       {
         "model_name": "SI-AG2-U2P",
-        "series": "",
-        "product_url": "",
-        "is_duplicate": false,
+        "series": null,
+        "is_duplicate": true,
         "model_id": 344
       },
       {
         "model_name": "SI-AG2-U2R",
-        "series": "",
-        "product_url": "",
-        "is_duplicate": false,
+        "series": null,
+        "is_duplicate": true,
         "model_id": 345
+      },
+      {
+        "model_name": "SI-1060",
+        "series": null,
+        "is_duplicate": true,
+        "model_id": 362
+      },
+      {
+        "model_name": "SI-1365D",
+        "series": null,
+        "is_duplicate": true,
+        "model_id": 363
+      },
+      {
+        "model_name": "SI-1356D",
+        "series": null,
+        "is_duplicate": true,
+        "model_id": 364
+      },
+      {
+        "model_name": "SI-1065",
+        "series": null,
+        "is_duplicate": true,
+        "model_id": 365
+      },
+      {
+        "model_name": "SI-1052",
+        "series": null,
+        "is_duplicate": true,
+        "model_id": 366
       }
     ]
   },
@@ -86,106 +118,151 @@
       {
         "model_name": "GA 5 MED",
         "series": "GA MED",
-        "product_url": "",
         "is_duplicate": true,
         "model_id": 102
       },
       {
         "model_name": "GA 7 MED",
         "series": "GA MED",
-        "product_url": "",
         "is_duplicate": true,
         "model_id": 103
       },
       {
         "model_name": "GA 11 MED",
         "series": "GA MED",
-        "product_url": "",
         "is_duplicate": true,
         "model_id": 104
       },
       {
         "model_name": "GA 15 MED",
         "series": "GA MED",
-        "product_url": "",
         "is_duplicate": true,
         "model_id": 105
       },
       {
         "model_name": "GA 18 MED",
         "series": "GA MED",
-        "product_url": "",
         "is_duplicate": true,
         "model_id": 106
+      },
+      {
+        "model_name": "GA 22 MED",
+        "series": "GA MED",
+        "is_duplicate": true,
+        "model_id": 401
+      },
+      {
+        "model_name": "GA 26 MED",
+        "series": "GA MED",
+        "is_duplicate": true,
+        "model_id": 402
+      },
+      {
+        "model_name": "LFx",
+        "series": "LFx oil-free piston",
+        "is_duplicate": true,
+        "model_id": 403
+      },
+      {
+        "model_name": "GA 160 VSD",
+        "series": "GA",
+        "is_duplicate": true,
+        "model_id": 404
+      },
+      {
+        "model_name": "ZT-MED",
+        "series": "ZT-MED",
+        "is_duplicate": true,
+        "model_id": 405
       }
     ]
   },
   "Siemens Energy": {
-    "compressor_type": "Refrigeration Compressors",
+    "compressor_type": "Air Compressors",
     "manufacturer_info": {
       "name": "Siemens Energy",
       "country": "Germany",
       "website": "siemens-energy.com"
     },
-    "models": [
-      {
-        "model_name": "STC-SV",
-        "series": "STC-SV",
-        "product_url": "",
-        "is_duplicate": true,
-        "model_id": 21
-      },
-      {
-        "model_name": "STC-SV (08MV 4A)",
-        "series": "STC-SV",
-        "product_url": "",
-        "is_duplicate": true,
-        "model_id": 22
-      }
-    ]
+    "models": []
   },
   "Ariel Corporation": {
     "compressor_type": "Gas Compressors",
     "manufacturer_info": {
       "name": "Ariel Corporation",
-      "country": "USA",
+      "country": null,
       "website": "arielcorp.com"
     },
     "models": [
       {
         "model_name": "JGN",
         "series": "Small Line",
-        "product_url": "",
+        "product_url": null,
         "is_duplicate": true,
         "model_id": 23
       },
       {
         "model_name": "JGQ",
         "series": "Small Line",
-        "product_url": "",
+        "product_url": null,
         "is_duplicate": true,
         "model_id": 24
       },
       {
         "model_name": "JGM",
         "series": "Small Line",
-        "product_url": "",
+        "product_url": null,
         "is_duplicate": true,
         "model_id": 25
       },
       {
         "model_name": "JGP",
         "series": "Small Line",
-        "product_url": "",
+        "product_url": null,
         "is_duplicate": true,
         "model_id": 26
       },
       {
         "model_name": "JG",
         "series": "Small Line",
-        "product_url": "",
+        "product_url": null,
         "is_duplicate": true,
         "model_id": 27
+      },
+      {
+        "model_name": "JGA",
+        "series": "Small Line",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 372
+      },
+      {
+        "model_name": "JGR",
+        "series": "Small Line",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 373
+      },
+      {
+        "model_name": "KBK",
+        "series": "Mid-Line",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 374
+      },
+      {
+        "model_name": "KBT",
+        "series": "Mid-Line",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 375
+      },
+      {
+        "model_name": "KBH",
+        "series": "Hydrogen Mobility",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 376
       }
     ]
   },
@@ -193,44 +270,96 @@
     "compressor_type": "Gas Compressors",
     "manufacturer_info": {
       "name": "Bauer Compressors",
-      "country": "Germany",
-      "website": "bauer-kompressoren.de"
+      "country": null,
+      "website": "bauercomp.com"
     },
     "models": [
       {
-        "model_name": "15.11",
-        "series": "",
-        "product_url": "",
+        "model_name": "GRU",
+        "series": "GRU Series",
+        "product_url": null,
         "is_duplicate": true,
-        "model_id": 31
+        "model_id": 377
+      }
+    ]
+  },
+  "Siemens": {
+    "compressor_type": "Gas Compressors",
+    "manufacturer_info": {
+      "name": "Siemens",
+      "country": null,
+      "website": "siemens.com"
+    },
+    "models": [
+      {
+        "model_name": "STC-GC 10-50",
+        "series": "STC-GC",
+        "product_url": null,
+        "is_duplicate": false,
+        "model_id": 411
       },
       {
-        "model_name": "18.1",
-        "series": "",
-        "product_url": "",
-        "is_duplicate": true,
-        "model_id": 32
+        "model_name": "STC-GC 63-100",
+        "series": "STC-GC",
+        "product_url": null,
+        "is_duplicate": false,
+        "model_id": 412
       },
       {
-        "model_name": "BM Series",
-        "series": "BM Series",
-        "product_url": "",
+        "model_name": "SGT5-9000HL",
+        "series": "Heavy-duty gas turbines",
+        "product_url": null,
         "is_duplicate": true,
-        "model_id": 33
+        "model_id": 385
       },
       {
-        "model_name": "K 22",
-        "series": "K 22 – K 28 Series",
-        "product_url": "",
+        "model_name": "SGT5-8000H",
+        "series": "Heavy-duty gas turbines",
+        "product_url": null,
         "is_duplicate": true,
-        "model_id": 34
+        "model_id": 386
       },
       {
-        "model_name": "K 28",
-        "series": "K 22 – K 28 Series",
-        "product_url": "",
+        "model_name": "SGT5-4000F",
+        "series": "Heavy-duty gas turbines",
+        "product_url": null,
         "is_duplicate": true,
-        "model_id": 35
+        "model_id": 387
+      },
+      {
+        "model_name": "SGT6-9000HL",
+        "series": "Heavy-duty gas turbines",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 389
+      },
+      {
+        "model_name": "SGT-800",
+        "series": "Industrial gas turbines",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 391
+      },
+      {
+        "model_name": "SGT-750",
+        "series": "Industrial gas turbines",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 392
+      },
+      {
+        "model_name": "SGT-A35",
+        "series": "Aeroderivative gas turbine",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 393
+      },
+      {
+        "model_name": "SGT-A05",
+        "series": "Aeroderivative gas turbine",
+        "product_url": null,
+        "is_duplicate": false,
+        "model_id": 413
       }
     ]
   },
@@ -238,16 +367,23 @@
     "compressor_type": "Turbochargers/Superchargers",
     "manufacturer_info": {
       "name": "Magnuson Products LLC",
-      "country": "United States",
-      "website": "magnusonsuperchargers.com"
+      "country": null,
+      "website": null
     },
     "models": [
       {
-        "model_name": "TVS2650",
-        "series": "TVS",
-        "product_url": "",
+        "model_name": "05-00-23-060-BL",
+        "series": "TVS2300",
+        "product_url": null,
         "is_duplicate": true,
-        "model_id": 36
+        "model_id": 394
+      },
+      {
+        "model_name": "31-99-07-005",
+        "series": "Small Univ Cooling System",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 395
       }
     ]
   },
@@ -255,44 +391,79 @@
     "compressor_type": "Turbochargers/Superchargers",
     "manufacturer_info": {
       "name": "Vortech Engineering, Inc.",
-      "country": "United States",
-      "website": "vortechsuperchargers.com"
+      "country": null,
+      "website": null
     },
     "models": [
       {
         "model_name": "V-1 SC-Trim",
         "series": "V-1",
-        "product_url": "",
+        "product_url": null,
         "is_duplicate": true,
         "model_id": 37
       },
       {
         "model_name": "V-1 S-Trim",
         "series": "V-1",
-        "product_url": "",
+        "product_url": null,
         "is_duplicate": true,
         "model_id": 38
       },
       {
         "model_name": "V-1 SCi-Trim",
         "series": "V-1",
-        "product_url": "",
+        "product_url": null,
         "is_duplicate": true,
         "model_id": 39
       },
       {
         "model_name": "V-1 Si-Trim",
         "series": "V-1",
-        "product_url": "",
+        "product_url": null,
         "is_duplicate": true,
         "model_id": 40
       },
       {
         "model_name": "V-1 T-Trim",
         "series": "V-1",
-        "product_url": "",
+        "product_url": null,
         "is_duplicate": true,
         "model_id": 210
+      },
+      {
+        "model_name": "V-1 Ti-Trim",
+        "series": "V-1",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 396
+      },
+      {
+        "model_name": "V-1 JT-Trim",
+        "series": "V-1",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 397
+      },
+      {
+        "model_name": "V-3 H67B",
+        "series": "V-3",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 398
+      },
+      {
+        "model_name": "V-3 SCi-Trim",
+        "series": "V-3",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 399
+      },
+      {
+        "model_name": "V-3 Si-Trim",
+        "series": "V-3",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 400
       }
     ]
   },
@@ -300,44 +471,37 @@
     "compressor_type": "Turbochargers/Superchargers",
     "manufacturer_info": {
       "name": "ProCharger",
-      "country": "United States",
-      "website": "procharger.com"
+      "country": null,
+      "website": null
     },
     "models": [
       {
-        "model_name": "F-1C",
-        "series": "RACE",
-        "product_url": "",
+        "model_name": "2024-2026 F-150 5.0L 4V Supercharger Kit",
+        "series": null,
+        "product_url": null,
         "is_duplicate": true,
-        "model_id": 42
+        "model_id": 356
       },
       {
-        "model_name": "F-1R",
-        "series": "RACE",
-        "product_url": "",
+        "model_name": "2024-2026 S650 Ford Mustang GT Supercharger System",
+        "series": null,
+        "product_url": null,
         "is_duplicate": true,
-        "model_id": 43
+        "model_id": 357
       },
       {
-        "model_name": "F-1X",
-        "series": "RACE",
-        "product_url": "",
+        "model_name": "2022 F-250 Supercharger Kit",
+        "series": null,
+        "product_url": null,
         "is_duplicate": true,
-        "model_id": 44
+        "model_id": 358
       },
       {
-        "model_name": "F-2",
-        "series": "RACE",
-        "product_url": "",
+        "model_name": "2020-2026 F-150 Supercharger Kit",
+        "series": null,
+        "product_url": null,
         "is_duplicate": true,
-        "model_id": 45
-      },
-      {
-        "model_name": "F-3D-102",
-        "series": "RACE",
-        "product_url": "",
-        "is_duplicate": true,
-        "model_id": 46
+        "model_id": 359
       }
     ]
   },
@@ -345,14 +509,14 @@
     "compressor_type": "Medical Compressors",
     "manufacturer_info": {
       "name": "Air Squared",
-      "country": "USA",
+      "country": null,
       "website": "airsquared.com"
     },
     "models": [
       {
         "model_name": "P09H015B-BLDC-LC",
         "series": "Liquid-Cooled Series",
-        "product_url": "",
+        "product_url": null,
         "is_duplicate": true,
         "model_id": 101
       }
@@ -362,44 +526,96 @@
     "compressor_type": "Medical Compressors",
     "manufacturer_info": {
       "name": "AmcareMed",
-      "country": "China",
+      "country": null,
       "website": "amcaremed.com"
     },
     "models": [
       {
         "model_name": "Horizontal Piston Medical Air Compressor",
         "series": "Piston Series",
-        "product_url": "",
-        "is_duplicate": false,
+        "product_url": null,
+        "is_duplicate": true,
         "model_id": 346
       },
       {
         "model_name": "Piston Medical Air Compressor",
         "series": "Piston Series",
-        "product_url": "",
-        "is_duplicate": false,
+        "product_url": null,
+        "is_duplicate": true,
         "model_id": 347
       },
       {
         "model_name": "Oil-free Scroll Medical Air Compressor",
         "series": "Scroll Series",
-        "product_url": "",
-        "is_duplicate": false,
+        "product_url": null,
+        "is_duplicate": true,
         "model_id": 348
       },
       {
         "model_name": "Skid-mounted oil free scroll air compressor",
         "series": "Scroll Series",
-        "product_url": "",
-        "is_duplicate": false,
+        "product_url": null,
+        "is_duplicate": true,
         "model_id": 349
       },
       {
         "model_name": "Screw Medical Air Compressor",
         "series": "Screw Series",
-        "product_url": "",
-        "is_duplicate": false,
+        "product_url": null,
+        "is_duplicate": true,
         "model_id": 350
+      }
+    ]
+  },
+  "CompAir": {
+    "compressor_type": "Medical Compressors",
+    "manufacturer_info": {
+      "name": "CompAir",
+      "country": null,
+      "website": "compair.com"
+    },
+    "models": [
+      {
+        "model_name": "L07",
+        "series": "L Series",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 107
+      },
+      {
+        "model_name": "L11",
+        "series": "L Series",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 108
+      },
+      {
+        "model_name": "L15",
+        "series": "L Series",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 109
+      },
+      {
+        "model_name": "L22",
+        "series": "L Series",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 110
+      },
+      {
+        "model_name": "C35-10",
+        "series": "C Series",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 111
+      },
+      {
+        "model_name": "C50",
+        "series": "C Series",
+        "product_url": null,
+        "is_duplicate": true,
+        "model_id": 406
       }
     ]
   }

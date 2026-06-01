@@ -10,6 +10,8 @@ Fixes:
 import json
 import re
 import time
+from typing import List, Optional
+from pydantic import BaseModel, Field
 from google import genai
 from google.genai import types
 from google.genai import errors as genai_errors
@@ -22,6 +24,58 @@ _client = genai.Client(api_key=GEMINI_API_KEY)
 _CALL_DELAY = 2.0
 # Max input chars sent to Gemini (keeps tokens low)
 _MAX_INPUT_CHARS = 6000
+
+
+# ── Pydantic Structured Output Schemas ─────────────────────────────────────
+
+class ManufacturerSchema(BaseModel):
+    name: str = Field(description="The formal brand/manufacturer name")
+    country: Optional[str] = Field("", description="The country of headquarters, or empty if unknown")
+    website: Optional[str] = Field("", description="The website homepage domain name only (e.g. atlascopco.com)")
+
+class ModelSchema(BaseModel):
+    model_name: str = Field(description="The model number or alphanumeric identifier")
+    series: Optional[str] = Field("", description="The series/product lineage name (e.g. GA Series)")
+    product_url: Optional[str] = Field("", description="The direct URL link to this model page if found")
+
+class ManufacturerListSchema(BaseModel):
+    manufacturers: List[ManufacturerSchema] = Field(description="List of discovered manufacturers")
+
+class ModelListSchema(BaseModel):
+    models: List[ModelSchema] = Field(description="List of discovered compressor models")
+
+class TechnicalSpecsSchema(BaseModel):
+    capacity_cfm: Optional[float] = Field(None, description="Flow capacity in Cubic Feet per Minute")
+    capacity_m3_hr: Optional[float] = Field(None, description="Flow capacity in Cubic Meters per Hour")
+    pressure_psi: Optional[float] = Field(None, description="Operating pressure in Pounds per Square Inch")
+    pressure_bar: Optional[float] = Field(None, description="Operating pressure in bar")
+    power_kw: Optional[float] = Field(None, description="Motor power rating in kilowatts")
+    power_hp: Optional[float] = Field(None, description="Motor power rating in horsepower")
+    motor_type: Optional[str] = Field(None, description="Type of motor (e.g. induction, PM, VSD, fixed speed)")
+    motor_speed_rpm: Optional[float] = Field(None, description="Motor rotation speed in RPM")
+    cooling_type: Optional[str] = Field(None, description="Cooling system (e.g. air-cooled, water-cooled)")
+    lubrication_type: Optional[str] = Field(None, description="Lubrication classification (e.g. oil-free, oil-injected)")
+    drive_type: Optional[str] = Field(None, description="Drive transmission mechanism (e.g. direct-drive, belt-drive, gear-drive)")
+    stage_count: Optional[int] = Field(None, description="Number of compression stages")
+    noise_level_db: Optional[float] = Field(None, description="Acoustic noise level rating in dB(A)")
+    weight_kg: Optional[float] = Field(None, description="Net weight in kilograms")
+    weight_lbs: Optional[float] = Field(None, description="Net weight in pounds")
+    dimensions_mm: Optional[str] = Field(None, description="Outer measurements / dimensions format width x depth x height in mm")
+    tank_size_liters: Optional[float] = Field(None, description="Receiver tank volume in liters")
+    tank_size_gallons: Optional[float] = Field(None, description="Receiver tank volume in gallons")
+    voltage: Optional[str] = Field(None, description="Electrical voltage level rating (e.g. 230V, 460V)")
+    frequency_hz: Optional[float] = Field(None, description="AC grid frequency rating in Hz")
+    phase: Optional[str] = Field(None, description="Electrical grid phase count (e.g. 3-phase, single-phase)")
+    certifications: Optional[List[str]] = Field(None, description="List of engineering certifications (e.g. CE, UL, ISO)")
+    warranty_years: Optional[float] = Field(None, description="Product warranty period in years")
+    oil_capacity_liters: Optional[float] = Field(None, description="Internal lube fluid capacity in liters")
+    outlet_size_inch: Optional[float] = Field(None, description="Discharge air outlet pipe dimension in inches")
+    inlet_size_inch: Optional[float] = Field(None, description="Inlet air intake pipe dimension in inches")
+    efficiency_percent: Optional[float] = Field(None, description="Energy or pump operating efficiency factor in percentage")
+    operating_temp_min_c: Optional[float] = Field(None, description="Minimum allowed operating temperature limit in C")
+    operating_temp_max_c: Optional[float] = Field(None, description="Maximum allowed operating temperature limit in C")
+    duty_cycle: Optional[str] = Field(None, description="Continuous or intermittent operational duty cycle ratio limit")
+    pump_life_hours: Optional[float] = Field(None, description="Design pump service life in operating hours")
 
 
 def _clean_json(raw: str) -> str:
@@ -46,8 +100,8 @@ def _should_retry(exc: Exception) -> bool:
     wait=wait_exponential(multiplier=2, min=10, max=60),
     retry=retry_if_exception(_should_retry),
 )
-def generate_json(prompt: str) -> dict | list:
-    """Call Gemini, clean the response, parse as JSON, and return."""
+def generate_json(prompt: str, schema=None) -> dict | list:
+    """Call Gemini with Pydantic response schema guidance, clean response, parse, and return."""
     time.sleep(_CALL_DELAY)  # polite rate-limit buffer
     try:
         response = _client.models.generate_content(
@@ -57,6 +111,7 @@ def generate_json(prompt: str) -> dict | list:
                 temperature=0.1,
                 max_output_tokens=2048,
                 response_mime_type="application/json",
+                response_schema=schema,
             ),
         )
         raw_text = response.text
@@ -78,57 +133,35 @@ def _truncate(text: str) -> str:
 
 def extract_manufacturers(compressor_type: str, subtypes: list, text: str) -> list[dict]:
     """
-    Extract manufacturer list from scraped text.
-    Returns: [{"name": str, "country": str, "website": str}, ...]
+    Extract manufacturer list from scraped text using schema guides.
     """
     subtype_str = ", ".join(subtypes) if subtypes else "general"
 
-    prompt = f"""You are a data extraction assistant.
-From the text below, extract a JSON array of compressor manufacturers.
-
+    prompt = f"""You are a technical data extraction assistant.
+From the scraped content below, extract up to 20 well-known manufacturers matching:
 Compressor Type: {compressor_type}
 Subtypes: {subtype_str}
 
-Rules:
-- Return ONLY a valid JSON array of objects, no markdown fences or preambles.
-- Each item must have exactly these keys: "name", "country", "website"
-- "website" should be just the domain (e.g. "atlascopco.com"), or "" if unknown
-- "country" should be the HQ country, or "" if unknown
-- Include only real, well-known manufacturers -- no generic text
-- Return at most 20 manufacturers
-
 Text:
-{_truncate(text)}
+{_truncate(text)}"""
 
-JSON array:"""
-
-    return generate_json(prompt)
+    res = generate_json(prompt, schema=ManufacturerListSchema)
+    return res.get("manufacturers", []) if isinstance(res, dict) else []
 
 
 def extract_models(manufacturer: str, compressor_type: str, text: str) -> list[dict]:
     """
-    Extract model list for a manufacturer from scraped text.
-    Returns: [{"model_name": str, "series": str, "product_url": str}, ...]
+    Extract model list for a manufacturer from scraped text using schema guides.
     """
-    prompt = f"""You are a data extraction assistant.
-From the text below, extract a JSON array of compressor models made by {manufacturer}.
-
+    prompt = f"""You are a technical data extraction assistant.
+From the scraped content below, extract up to 10 actual product models made by {manufacturer}.
 Compressor Type: {compressor_type}
 
-Rules:
-- Return ONLY a valid JSON array of objects, no markdown fences or preambles.
-- Each item must have exactly these keys: "model_name", "series", "product_url"
-- "series" is the product family/series name (e.g. "GA Series"), or "" if unknown
-- "product_url" is the full URL to the product page, or "" if not found
-- Include only actual model names/numbers -- not categories or marketing text
-- Return at most 10 models
-
 Text:
-{_truncate(text)}
+{_truncate(text)}"""
 
-JSON array:"""
-
-    return generate_json(prompt)
+    res = generate_json(prompt, schema=ModelListSchema)
+    return res.get("models", []) if isinstance(res, dict) else []
 
 
 def extract_attributes(
@@ -138,39 +171,19 @@ def extract_attributes(
     text: str,
 ) -> dict:
     """
-    Extract full technical attributes from a product page.
-    Returns a flat dict of attribute key -> value.
+    Extract technical specs sheet dictionary from specifications text using schema guides.
     """
-    prompt = f"""You are a technical data extraction assistant.
-Extract ALL technical specifications from the product page text below.
+    prompt = f"""You are a technical specifications compiler.
+From the specifications text below, extract ALL measurable mechanical, electrical, and physical specifications.
 
 Manufacturer: {manufacturer}
 Model: {model_name}
 Compressor Type: {compressor_type}
 
-Rules:
-- Return ONLY a valid JSON object (not array), no markdown fences or preambles.
-- Include every measurable attribute you can find. Common attributes include:
-    capacity_cfm, capacity_m3_hr, pressure_psi, pressure_bar,
-    power_kw, power_hp, motor_type, motor_speed_rpm,
-    cooling_type, lubrication_type, drive_type, stage_count,
-    noise_level_db, weight_kg, weight_lbs,
-    dimensions_mm, tank_size_liters, tank_size_gallons,
-    voltage, frequency_hz, phase,
-    certifications, warranty_years, oil_capacity_liters,
-    outlet_size_inch, inlet_size_inch, efficiency_percent,
-    operating_temp_min_c, operating_temp_max_c,
-    duty_cycle, pump_life_hours
-- Use null for any attribute you cannot find
-- Use numeric types for numbers (not strings)
-- "certifications" should be a list of strings
-
 Text:
-{_truncate(text)}
+{_truncate(text)}"""
 
-JSON object:"""
-
-    return generate_json(prompt)
+    return generate_json(prompt, schema=TechnicalSpecsSchema)
 
 
 def enrich_manufacturer_info(manufacturer: str, compressor_type: str) -> dict:
