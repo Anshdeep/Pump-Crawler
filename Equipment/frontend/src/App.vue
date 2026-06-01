@@ -160,6 +160,79 @@
               </v-card>
             </v-col>
           </v-row>
+
+          <!-- ── MODERN GRAPH VISUALIZATIONS SECTION ── -->
+          <v-row class="mt-6">
+            <!-- Timeline Chart: Discovered vs Harvested over time and date -->
+            <v-col cols="12" lg="8">
+              <v-card class="glass-card pa-6 h-100 relative overflow-hidden" rounded="xl">
+                <h3 class="outfit-font text-h6 font-weight-bold text-white mb-4 d-flex align-center z-index-1">
+                  <v-icon icon="mdi-chart-timeline-variant" color="primary" class="mr-2" size="24"></v-icon>
+                  Discovery & Harvesting Timeline
+                </h3>
+                <div class="chart-wrapper" style="position: relative; height: 350px; width: 100%;">
+                  <canvas id="timelineChart"></canvas>
+                </div>
+                <div class="stat-gradient-glow" style="background: radial-gradient(circle, rgba(139, 92, 246, 0.05) 0%, transparent 80%); top: -30%; left: -30%; width: 250px; height: 250px;"></div>
+              </v-card>
+            </v-col>
+
+            <!-- Model Status Breakdown -->
+            <v-col cols="12" md="6" lg="4">
+              <v-card class="glass-card pa-6 h-100 relative overflow-hidden" rounded="xl">
+                <h3 class="outfit-font text-h6 font-weight-bold text-white mb-4 d-flex align-center z-index-1">
+                  <v-icon icon="mdi-chart-donut" color="secondary" class="mr-2" size="24"></v-icon>
+                  Model Catalog Status
+                </h3>
+                <div class="chart-wrapper d-flex justify-center align-center" style="position: relative; height: 350px; width: 100%;">
+                  <canvas id="modelStatusChart"></canvas>
+                </div>
+                <div class="stat-gradient-glow" style="background: radial-gradient(circle, rgba(3, 105, 161, 0.05) 0%, transparent 80%); top: -30%; right: -30%; width: 250px; height: 250px;"></div>
+              </v-card>
+            </v-col>
+
+            <!-- Manufacturer Readiness -->
+            <v-col cols="12" md="6" lg="4">
+              <v-card class="glass-card pa-6 h-100 relative overflow-hidden" rounded="xl">
+                <h3 class="outfit-font text-h6 font-weight-bold text-white mb-4 d-flex align-center z-index-1">
+                  <v-icon icon="mdi-factory" color="success" class="mr-2" size="24"></v-icon>
+                  Manufacturer Coverage
+                </h3>
+                <div class="chart-wrapper d-flex justify-center align-center" style="position: relative; height: 350px; width: 100%;">
+                  <canvas id="manufacturerChart"></canvas>
+                </div>
+                <div class="stat-gradient-glow" style="background: radial-gradient(circle, rgba(16, 185, 129, 0.05) 0%, transparent 80%); bottom: -30%; left: -30%; width: 250px; height: 250px;"></div>
+              </v-card>
+            </v-col>
+
+            <!-- Taxonomy Composition -->
+            <v-col cols="12" md="6" lg="4">
+              <v-card class="glass-card pa-6 h-100 relative overflow-hidden" rounded="xl">
+                <h3 class="outfit-font text-h6 font-weight-bold text-white mb-4 d-flex align-center z-index-1">
+                  <v-icon icon="mdi-chart-bar" color="info" class="mr-2" size="24"></v-icon>
+                  Taxonomy Distribution
+                </h3>
+                <div class="chart-wrapper" style="position: relative; height: 350px; width: 100%;">
+                  <canvas id="taxonomyChart"></canvas>
+                </div>
+                <div class="stat-gradient-glow" style="background: radial-gradient(circle, rgba(6, 182, 212, 0.05) 0%, transparent 80%); bottom: -30%; right: -30%; width: 250px; height: 250px;"></div>
+              </v-card>
+            </v-col>
+
+            <!-- Specifications Enrichment Gauge -->
+            <v-col cols="12" md="12" lg="4">
+              <v-card class="glass-card pa-6 h-100 relative overflow-hidden" rounded="xl">
+                <h3 class="outfit-font text-h6 font-weight-bold text-white mb-4 d-flex align-center z-index-1">
+                  <v-icon icon="mdi-playlist-check" color="error" class="mr-2" size="24"></v-icon>
+                  Specs Enrichment Rate
+                </h3>
+                <div class="chart-wrapper d-flex justify-center align-center" style="position: relative; height: 350px; width: 100%;">
+                  <canvas id="specsEnrichmentChart"></canvas>
+                </div>
+                <div class="stat-gradient-glow" style="background: radial-gradient(circle, rgba(239, 68, 68, 0.05) 0%, transparent 80%); top: 50%; left: 50%; transform: translate(-50%, -50%); width: 250px; height: 250px;"></div>
+              </v-card>
+            </v-col>
+          </v-row>
         </div>
 
         <!-- ── TAB 2: SPECS CATALOG ── -->
@@ -731,8 +804,62 @@
                   </div>
                 </div>
 
+                <!-- Category Filters Row -->
+                <v-row class="mb-6">
+                  <v-col cols="12" sm="4">
+                    <v-autocomplete
+                      v-model="mfrFilters.equipment_master_id"
+                      :items="equipmentMastersList"
+                      item-title="name"
+                      item-value="id"
+                      label="Filter by Master Category"
+                      prepend-inner-icon="mdi-robot-industrial"
+                      variant="outlined"
+                      density="comfortable"
+                      color="secondary"
+                      clearable
+                      hide-details
+                      @update:model-value="onMfrMasterFilterChange"
+                    ></v-autocomplete>
+                  </v-col>
+                  
+                  <v-col cols="12" sm="4">
+                    <v-autocomplete
+                      v-model="mfrFilters.equipment_type_id"
+                      :items="filteredMfrTypes"
+                      item-title="name"
+                      item-value="id"
+                      label="Filter by Type"
+                      prepend-inner-icon="mdi-shape-outline"
+                      variant="outlined"
+                      density="comfortable"
+                      color="secondary"
+                      clearable
+                      hide-details
+                      @update:model-value="onMfrTypeFilterChange"
+                    ></v-autocomplete>
+                  </v-col>
+
+                  <v-col cols="12" sm="4">
+                    <v-autocomplete
+                      v-model="mfrFilters.equipment_subtype_id"
+                      :items="filteredMfrSubtypes"
+                      item-title="name"
+                      item-value="id"
+                      label="Filter by Subtype"
+                      prepend-inner-icon="mdi-tag-multiple-outline"
+                      variant="outlined"
+                      density="comfortable"
+                      color="secondary"
+                      clearable
+                      hide-details
+                      @update:model-value="fetchPaginatedManufacturers"
+                    ></v-autocomplete>
+                  </v-col>
+                </v-row>
+
                 <!-- Manufacturers Directory Table -->
-                <v-table v-if="manufacturersList.length > 0" class="glass-table-card elevation-2" rounded="lg">
+                <v-table v-if="mfrItems.length > 0" class="glass-table-card elevation-2" rounded="lg">
                   <thead>
                     <tr>
                       <th class="text-left font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4">Manufacturer</th>
@@ -746,7 +873,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="mfr in manufacturersList" :key="mfr.id" class="glass-table-row">
+                    <tr v-for="mfr in mfrItems" :key="mfr.id" class="glass-table-row">
                       <td class="text-white py-4 font-weight-bold text-subtitle-1">{{ mfr.name }}</td>
                       <td class="text-medium-emphasis py-4">{{ mfr.country || 'Global HQ' }}</td>
                       <td class="py-4">
@@ -796,6 +923,36 @@
                     </tr>
                   </tbody>
                 </v-table>
+
+                <!-- Pagination & Page Count Row -->
+                <div v-if="mfrItems.length > 0" class="d-flex justify-space-between align-center flex-wrap gap-4 mt-6 pt-4 border-top">
+                  <div class="d-flex align-center gap-2">
+                    <span class="text-caption text-medium-emphasis outfit-font font-weight-bold">ROWS PER PAGE:</span>
+                    <v-select
+                      v-model="mfrLimit"
+                      :items="[5, 10, 20, 50]"
+                      variant="outlined"
+                      density="compact"
+                      hide-details
+                      color="secondary"
+                      style="max-width: 80px;"
+                      @update:model-value="mfrPage = 1; fetchPaginatedManufacturers();"
+                    ></v-select>
+                    <span class="text-caption text-medium-emphasis outfit-font font-weight-black uppercase ml-4">
+                      Showing {{ (mfrPage - 1) * mfrLimit + 1 }} - {{ Math.min(mfrPage * mfrLimit, mfrTotal) }} of {{ mfrTotal }} items
+                    </span>
+                  </div>
+
+                  <v-pagination
+                    v-model="mfrPage"
+                    :length="Math.ceil(mfrTotal / mfrLimit)"
+                    total-visible="5"
+                    density="comfortable"
+                    active-color="primary"
+                    variant="tonal"
+                    @update:model-value="fetchPaginatedManufacturers"
+                  ></v-pagination>
+                </div>
 
                 <div v-else class="text-center py-12 text-medium-emphasis">
                   <v-avatar color="rgba(6, 182, 212, 0.05)" size="72" class="mb-4">
@@ -1455,6 +1612,8 @@
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue'
 import { useCompressorStore } from './store/compressors'
+import Chart from 'chart.js/auto'
+import axios from 'axios'
 
 const store = useCompressorStore()
 
@@ -1561,6 +1720,7 @@ onMounted(async () => {
   await store.fetchCrawlHistory()
   await store.fetchTaxonomyTree()
   await store.fetchSettings()
+  await store.fetchDashboardStats()
   
   // Polling crawler status dynamically
   setInterval(() => {
@@ -1572,6 +1732,7 @@ onMounted(async () => {
         store.fetchManufacturersList()
         store.fetchCrawlHistory()
         store.fetchTaxonomyTree()
+        store.fetchDashboardStats()
       }
     }
   }, 3000)
@@ -2175,6 +2336,448 @@ const showToast = (message, color = 'success') => {
     color
   }
 }
+
+// ── MODERN GRAPH VISUALIZATIONS LOGIC ──
+
+// Chart.js instances
+let timelineChart = null
+let modelStatusChart = null
+let manufacturerChart = null
+let taxonomyChart = null
+let specsChart = null
+
+const dashboardStats = computed(() => store.dashboardStats)
+
+// Initialize and draw all 5 charts beautifully with premium dark neon palettes
+const initCharts = (stats) => {
+  if (!stats) return
+
+  // 1. Discovery & Harvesting Timeline (Area/Line Chart)
+  const timelineCtx = document.getElementById('timelineChart')
+  if (timelineCtx) {
+    if (timelineChart) timelineChart.destroy()
+
+    const timelineData = stats.timeline || []
+    const dates = timelineData.map(t => t.date)
+    const discMfrs = timelineData.map(t => t.discovered_manufacturers || 0)
+    const harvMfrs = timelineData.map(t => t.harvested_manufacturers || 0)
+    const discModels = timelineData.map(t => t.discovered_models || 0)
+    const harvModels = timelineData.map(t => t.harvested_models || 0)
+
+    // Compute cumulative sums for time series visualization
+    let cumMfrsDisc = 0, cumMfrsHarv = 0, cumModelsDisc = 0, cumModelsHarv = 0
+    const mfrsDiscCum = discMfrs.map(v => cumMfrsDisc += v)
+    const mfrsHarvCum = harvMfrs.map(v => cumMfrsHarv += v)
+    const modelsDiscCum = discModels.map(v => cumModelsDisc += v)
+    const modelsHarvCum = harvModels.map(v => cumModelsHarv += v)
+
+    timelineChart = new Chart(timelineCtx, {
+      type: 'line',
+      data: {
+        labels: dates,
+        datasets: [
+          {
+            label: 'Discovered Models',
+            data: modelsDiscCum,
+            borderColor: '#3B82F6', // Neon Blue
+            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+            borderWidth: 3,
+            pointBackgroundColor: '#3B82F6',
+            fill: true,
+            tension: 0.35
+          },
+          {
+            label: 'Specs Harvested Models',
+            data: modelsHarvCum,
+            borderColor: '#EF4444', // Red
+            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+            borderWidth: 3,
+            pointBackgroundColor: '#EF4444',
+            fill: true,
+            tension: 0.35
+          },
+          {
+            label: 'Discovered Manufacturers',
+            data: mfrsDiscCum,
+            borderColor: '#8B5CF6', // Purple
+            borderWidth: 2,
+            pointBackgroundColor: '#8B5CF6',
+            fill: false,
+            tension: 0.35,
+            borderDash: [4, 4]
+          },
+          {
+            label: 'Harvested Manufacturers',
+            data: mfrsHarvCum,
+            borderColor: '#F59E0B', // Amber
+            borderWidth: 2,
+            pointBackgroundColor: '#F59E0B',
+            fill: false,
+            tension: 0.35,
+            borderDash: [4, 4]
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'top',
+            labels: {
+              color: '#94A3B8',
+              font: { family: 'Outfit', size: 12, weight: 'bold' },
+              padding: 15
+            }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(9, 10, 15, 0.95)',
+            titleFont: { family: 'Outfit', size: 13, weight: 'bold' },
+            bodyFont: { family: 'Outfit', size: 12 },
+            borderColor: 'rgba(255, 255, 255, 0.08)',
+            borderWidth: 1,
+            padding: 10,
+            cornerRadius: 8
+          }
+        },
+        scales: {
+          x: {
+            grid: { color: 'rgba(255, 255, 255, 0.04)' },
+            ticks: { color: '#64748B', font: { family: 'Outfit', size: 11 } }
+          },
+          y: {
+            grid: { color: 'rgba(255, 255, 255, 0.04)' },
+            ticks: { color: '#64748B', font: { family: 'Outfit', size: 11 } }
+          }
+        }
+      }
+    })
+  }
+
+  // 2. Model Catalog Status (Doughnut Chart)
+  const modelStatusCtx = document.getElementById('modelStatusChart')
+  if (modelStatusCtx) {
+    if (modelStatusChart) modelStatusChart.destroy()
+
+    const approvedCount = stats.models?.approved || 0
+    const harvestedCount = stats.models?.harvested || 0
+    const pendingCount = stats.models?.pending || 0
+
+    modelStatusChart = new Chart(modelStatusCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Approved & Enriched', 'Approved Pending Harvest', 'Unapproved Discovery'],
+        datasets: [{
+          data: [
+            harvestedCount,
+            approvedCount - harvestedCount > 0 ? approvedCount - harvestedCount : 0,
+            pendingCount
+          ],
+          backgroundColor: [
+            'rgba(16, 185, 129, 0.8)', // Emerald Green
+            'rgba(245, 158, 11, 0.8)',  // Amber
+            'rgba(239, 68, 68, 0.8)'    // Red
+          ],
+          borderColor: '#090A0F',
+          borderWidth: 2,
+          hoverOffset: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '65%',
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              color: '#94A3B8',
+              font: { family: 'Outfit', size: 11, weight: 'bold' },
+              padding: 15
+            }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(9, 10, 15, 0.95)',
+            bodyFont: { family: 'Outfit', size: 12 },
+            borderColor: 'rgba(255, 255, 255, 0.08)',
+            borderWidth: 1,
+            cornerRadius: 8
+          }
+        }
+      }
+    })
+  }
+
+  // 3. Manufacturer Coverage (Bar Chart)
+  const manufacturerCtx = document.getElementById('manufacturerChart')
+  if (manufacturerCtx) {
+    if (manufacturerChart) manufacturerChart.destroy()
+
+    const appMfrs = stats.manufacturers?.approved || 0
+    const harvMfrs = stats.manufacturers?.harvested || 0
+    const pendMfrs = stats.manufacturers?.pending || 0
+
+    manufacturerChart = new Chart(manufacturerCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Approved', 'Harvested', 'Pending'],
+        datasets: [{
+          data: [appMfrs, harvMfrs, pendMfrs],
+          backgroundColor: [
+            'rgba(139, 92, 246, 0.75)', // Purple
+            'rgba(6, 182, 212, 0.75)',  // Cyan
+            'rgba(239, 68, 68, 0.75)'   // Red
+          ],
+          borderColor: ['#8B5CF6', '#06B6D4', '#EF4444'],
+          borderWidth: 1.5,
+          borderRadius: 8
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: 'rgba(9, 10, 15, 0.95)',
+            bodyFont: { family: 'Outfit', size: 12 },
+            borderColor: 'rgba(255, 255, 255, 0.08)',
+            borderWidth: 1,
+            cornerRadius: 8
+          }
+        },
+        scales: {
+          x: {
+            grid: { display: false },
+            ticks: { color: '#64748B', font: { family: 'Outfit', size: 11 } }
+          },
+          y: {
+            grid: { color: 'rgba(255, 255, 255, 0.04)' },
+            ticks: { color: '#64748B', font: { family: 'Outfit', size: 11 } }
+          }
+        }
+      }
+    })
+  }
+
+  // 4. Taxonomy Distribution Chart (Horizontal Bar Chart)
+  const taxonomyCtx = document.getElementById('taxonomyChart')
+  if (taxonomyCtx) {
+    if (taxonomyChart) taxonomyChart.destroy()
+
+    const taxonomyData = stats.models?.by_type || []
+    const topTaxonomy = taxonomyData.slice(0, 5) // top 5 types
+    const labels = topTaxonomy.map(t => t.type_name)
+    const counts = topTaxonomy.map(t => t.count)
+
+    taxonomyChart = new Chart(taxonomyCtx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          data: counts,
+          backgroundColor: 'rgba(6, 182, 212, 0.7)', // Cyan
+          borderColor: '#06B6D4',
+          borderWidth: 1.5,
+          borderRadius: 6
+        }]
+      },
+      options: {
+        indexAxis: 'y', // Horizontal bars
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: 'rgba(9, 10, 15, 0.95)',
+            bodyFont: { family: 'Outfit', size: 12 },
+            borderColor: 'rgba(255, 255, 255, 0.08)',
+            borderWidth: 1,
+            cornerRadius: 8
+          }
+        },
+        scales: {
+          x: {
+            grid: { color: 'rgba(255, 255, 255, 0.04)' },
+            ticks: { color: '#64748B', font: { family: 'Outfit', size: 11 } }
+          },
+          y: {
+            grid: { display: false },
+            ticks: {
+              color: '#94A3B8',
+              font: { family: 'Outfit', size: 11, weight: 'bold' },
+              callback: function(val) {
+                const label = this.getLabelForValue(val)
+                return label.length > 15 ? label.substring(0, 15) + '...' : label
+              }
+            }
+          }
+        }
+      }
+    })
+  }
+
+  // 5. Specs Enrichment Gauge Chart (Radial Donut)
+  const specsCtx = document.getElementById('specsEnrichmentChart')
+  if (specsCtx) {
+    if (specsChart) specsChart.destroy()
+
+    const enriched = stats.attributes?.enriched || 0
+    const unenriched = stats.attributes?.unenriched || 0
+
+    specsChart = new Chart(specsCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Enriched Specs', 'Missing Specs'],
+        datasets: [{
+          data: [enriched, unenriched],
+          backgroundColor: [
+            '#EF4444', // Red
+            'rgba(255, 255, 255, 0.04)' // Transparent Slate
+          ],
+          borderColor: '#090A0F',
+          borderWidth: 2,
+          hoverOffset: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '75%',
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              color: '#94A3B8',
+              font: { family: 'Outfit', size: 11, weight: 'bold' },
+              padding: 15
+            }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(9, 10, 15, 0.95)',
+            bodyFont: { family: 'Outfit', size: 12 },
+            borderColor: 'rgba(255, 255, 255, 0.08)',
+            borderWidth: 1,
+            cornerRadius: 8
+          }
+        }
+      }
+    })
+  }
+}
+
+// Reactively redraw charts whenever new statistics are fetched
+watch(dashboardStats, (newStats) => {
+  if (newStats && tab.value === 'overview') {
+    initCharts(newStats)
+  }
+}, { deep: true })
+
+// Redraw charts when switching back to Overview Dashboard to avoid layout squishing
+watch(tab, (newTab) => {
+  if (newTab === 'overview') {
+    setTimeout(() => {
+      if (store.dashboardStats) {
+        initCharts(store.dashboardStats)
+      }
+    }, 150)
+  }
+})
+
+// Auto-sync dashboard stats reactively when models list or manufacturers mutate
+watch([models, manufacturersList, crawlHistory], () => {
+  store.fetchDashboardStats()
+}, { deep: true })
+
+// ── MANUFACTURER DIRECTORY PAGINATION & FILTERS LOGIC ──
+
+const mfrFilters = ref({
+  equipment_master_id: null,
+  equipment_type_id: null,
+  equipment_subtype_id: null
+})
+
+const mfrPage = ref(1)
+const mfrLimit = ref(10)
+const mfrTotal = ref(0)
+const mfrItems = ref([])
+const mfrLoading = ref(false)
+
+const filteredMfrTypes = computed(() => {
+  if (!mfrFilters.value.equipment_master_id) {
+    const list = []
+    taxonomyTree.value.forEach(m => {
+      list.push(...(m.types || []))
+    })
+    return list
+  }
+  const match = taxonomyTree.value.find(m => m.id === mfrFilters.value.equipment_master_id)
+  return match ? match.types : []
+})
+
+const filteredMfrSubtypes = computed(() => {
+  if (!mfrFilters.value.equipment_type_id) {
+    const list = []
+    taxonomyTree.value.forEach(m => {
+      (m.types || []).forEach(t => {
+        list.push(...(t.subtypes || []))
+      })
+    })
+    return list
+  }
+  let subtypes = []
+  taxonomyTree.value.forEach(m => {
+    const matchedType = (m.types || []).find(t => t.id === mfrFilters.value.equipment_type_id)
+    if (matchedType) {
+      subtypes = matchedType.subtypes || []
+    }
+  })
+  return subtypes
+})
+
+const fetchPaginatedManufacturers = async () => {
+  mfrLoading.value = true
+  try {
+    const params = {
+      equipment_master_id: mfrFilters.value.equipment_master_id,
+      equipment_type_id: mfrFilters.value.equipment_type_id,
+      equipment_subtype_id: mfrFilters.value.equipment_subtype_id,
+      page: mfrPage.value,
+      limit: mfrLimit.value
+    }
+    const res = await axios.get('/api/manufacturers', { params })
+    mfrItems.value = res.data.items || []
+    mfrTotal.value = res.data.total || 0
+  } catch (err) {
+    showToast('Failed to load manufacturers directory.', 'error')
+  } finally {
+    mfrLoading.value = false
+  }
+}
+
+const onMfrMasterFilterChange = () => {
+  mfrFilters.value.equipment_type_id = null
+  mfrFilters.value.equipment_subtype_id = null
+  mfrPage.value = 1
+  fetchPaginatedManufacturers()
+}
+
+const onMfrTypeFilterChange = () => {
+  mfrFilters.value.equipment_subtype_id = null
+  mfrPage.value = 1
+  fetchPaginatedManufacturers()
+}
+
+// Watchers for Manufacturer list mutations and tab switching
+watch(manufacturersList, () => {
+  fetchPaginatedManufacturers()
+}, { deep: true, immediate: true })
+
+watch(tab, (newTab) => {
+  if (newTab === 'manufacturers') {
+    fetchPaginatedManufacturers()
+  }
+})
 </script>
 
 <style>
@@ -2414,7 +3017,12 @@ const showToast = (message, color = 'success') => {
 .gap-4 { gap: 16px; }
 .leading-tight { line-height: 1.25; }
 .italic { font-style: italic; }
-.max-width-sort {
-  max-width: 320px;
+.z-index-1 {
+  position: relative;
+  z-index: 1;
+}
+.chart-wrapper {
+  position: relative;
+  width: 100%;
 }
 </style>

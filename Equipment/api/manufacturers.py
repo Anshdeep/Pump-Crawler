@@ -20,25 +20,73 @@ class ManufacturerSchema(BaseModel):
 # ── REST Endpoints ─────────────────────────────────────────────────────────
 
 @router.get("/manufacturers")
-def list_manufacturers(db: Session = Depends(get_db)):
-    """List all manufacturers in the directory with approval status, model count, and harvested flags."""
-    mfrs = db.query(Manufacturer).order_by(Manufacturer.name.asc()).all()
-    return [
-        {
-            "id": m.id,
-            "name": m.name,
-            "country": m.country,
-            "website": m.website,
-            "founded_year": m.founded_year,
-            "description": m.description,
-            "is_approved": m.is_approved,
-            "is_harvested": m.is_harvested,
-            "model_count": db.query(Model).filter(Model.manufacturer_id == m.id).count(),
-            "created_at": m.created_at,
-            "updated_at": m.updated_at
+def list_manufacturers(
+    equipment_master_id: int = Query(None),
+    equipment_type_id: int = Query(None),
+    equipment_subtype_id: int = Query(None),
+    page: int = Query(None, description="Page number for pagination"),
+    limit: int = Query(10, description="Items per page"),
+    db: Session = Depends(get_db)
+):
+    """List manufacturers in the directory with optional pagination, filtering, and model counts."""
+    query = db.query(Manufacturer)
+    
+    # Filter manufacturers by their associated models' categories
+    if equipment_master_id or equipment_type_id or equipment_subtype_id:
+        query = query.join(Model, Model.manufacturer_id == Manufacturer.id)
+        if equipment_master_id:
+            query = query.filter(Model.equipment_master_id == equipment_master_id)
+        if equipment_type_id:
+            query = query.filter(Model.equipment_type_id == equipment_type_id)
+        if equipment_subtype_id:
+            query = query.filter(Model.equipment_subtype_id == equipment_subtype_id)
+        query = query.distinct()
+        
+    query = query.order_by(Manufacturer.name.asc())
+    
+    if page is not None:
+        total = query.count()
+        mfrs = query.offset((page - 1) * limit).limit(limit).all()
+        items = [
+            {
+                "id": m.id,
+                "name": m.name,
+                "country": m.country,
+                "website": m.website,
+                "founded_year": m.founded_year,
+                "description": m.description,
+                "is_approved": m.is_approved,
+                "is_harvested": m.is_harvested,
+                "model_count": db.query(Model).filter(Model.manufacturer_id == m.id).count(),
+                "created_at": m.created_at,
+                "updated_at": m.updated_at
+            }
+            for m in mfrs
+        ]
+        return {
+            "total": total,
+            "page": page,
+            "limit": limit,
+            "items": items
         }
-        for m in mfrs
-    ]
+    else:
+        mfrs = query.all()
+        return [
+            {
+                "id": m.id,
+                "name": m.name,
+                "country": m.country,
+                "website": m.website,
+                "founded_year": m.founded_year,
+                "description": m.description,
+                "is_approved": m.is_approved,
+                "is_harvested": m.is_harvested,
+                "model_count": db.query(Model).filter(Model.manufacturer_id == m.id).count(),
+                "created_at": m.created_at,
+                "updated_at": m.updated_at
+            }
+            for m in mfrs
+        ]
 
 @router.post("/manufacturers")
 def create_manufacturer(data: ManufacturerSchema, db: Session = Depends(get_db)):

@@ -29,6 +29,7 @@ export const useCompressorStore = defineStore('compressors', {
     equipmentSubtypes: [],
     systemSettings: [],
     taxonomyTree: [],
+    dashboardStats: null,
   }),
   
   actions: {
@@ -221,6 +222,15 @@ export const useCompressorStore = defineStore('compressors', {
         this.systemSettings = res.data
       } catch (err) {
         console.error('Failed to fetch system settings:', err)
+      }
+    },
+
+    async fetchDashboardStats() {
+      try {
+        const res = await axios.get('/api/dashboard-stats')
+        this.dashboardStats = res.data
+      } catch (err) {
+        console.error('Failed to fetch dashboard charts stats:', err)
       }
     },
 

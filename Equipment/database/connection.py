@@ -129,6 +129,69 @@ def init_db():
             except Exception:
                 pass
 
+            # Seed equipment_type categories
+            res_types = conn.execute(text("SELECT COUNT(*) FROM equipment_type;"))
+            if res_types.scalar() == 0:
+                print("[Seeding] Populating equipment_type defaults...")
+                comp_id = conn.execute(text("SELECT id FROM equipment_master WHERE name = 'Compressor';")).scalar()
+                pump_id = conn.execute(text("SELECT id FROM equipment_master WHERE name = 'Pump';")).scalar()
+                
+                if comp_id:
+                    conn.execute(text(
+                        "INSERT INTO equipment_type (equipment_master_id, name, description) VALUES "
+                        "(:comp_id, 'Air Compressors', 'Air compression systems for tools and utility air'), "
+                        "(:comp_id, 'Refrigeration Compressors', 'AC and low temperature thermal compression systems'), "
+                        "(:comp_id, 'Gas Compressors', 'Natural gas and hydrocarbon process compression pipeline equipment'), "
+                        "(:comp_id, 'Turbochargers/Superchargers', 'Automotive air induction systems'), "
+                        "(:comp_id, 'Medical Compressors', 'Clean sterile compressed air for healthcare devices');"
+                    ), {"comp_id": comp_id})
+                    
+                if pump_id:
+                    conn.execute(text(
+                        "INSERT INTO equipment_type (equipment_master_id, name, description) VALUES "
+                        "(:pump_id, 'Centrifugal Pumps', 'High velocity fluid impeller transfer pumps'), "
+                        "(:pump_id, 'Positive Displacement Pumps', 'Fixed volume mechanical displacement fluid pumps');"
+                    ), {"pump_id": pump_id})
+
+            # Seed equipment_subtypes
+            res_sub = conn.execute(text("SELECT COUNT(*) FROM equipment_subtypes;"))
+            if res_sub.scalar() == 0:
+                print("[Seeding] Populating equipment_subtypes defaults...")
+                types = conn.execute(text("SELECT id, name FROM equipment_type;")).all()
+                type_map = {t[1]: t[0] for t in types}
+                
+                subtypes_data = {
+                    "Air Compressors": ["Reciprocating", "Scroll", "Screw", "Centrifugal"],
+                    "Refrigeration Compressors": ["Reciprocating", "Scroll", "Screw"],
+                    "Gas Compressors": ["Reciprocating", "Centrifugal"],
+                    "Turbochargers/Superchargers": ["Centrifugal", "Roots"],
+                    "Medical Compressors": ["Oil-free diaphragm", "Scroll"],
+                    "Centrifugal Pumps": ["Radial Flow", "Axial Flow", "Mixed Flow"],
+                    "Positive Displacement Pumps": ["Reciprocating", "Rotary", "Diaphragm", "Screw", "Plunger"]
+                }
+                
+                for type_name, subs in subtypes_data.items():
+                    type_id = type_map.get(type_name)
+                    if type_id:
+                        for s_name in subs:
+                            conn.execute(text(
+                                "INSERT INTO equipment_subtypes (type_id, name) VALUES (:t_id, :name);"
+                            ), {"t_id": type_id, "name": s_name})
+
+            # Healing: Match existing models with null subtypes based on subtype name match in model_name or series
+            print("[Healing] Retroactively matching existing models with null subtypes...")
+            conn.execute(text("""
+                UPDATE models m
+                SET equipment_subtype_id = s.id
+                FROM equipment_subtypes s
+                WHERE m.equipment_subtype_id IS NULL
+                  AND m.equipment_type_id = s.type_id
+                  AND (
+                    LOWER(m.model_name) LIKE '%' || LOWER(s.name) || '%'
+                    OR (m.series IS NOT NULL AND LOWER(m.series) LIKE '%' || LOWER(s.name) || '%')
+                  );
+            """))
+
             # Seed dynamic settings defaults
             settings_defaults = [
                 ("MAX_MANUFACTURERS_PER_TYPE", "3", "int", "Maximum number of manufacturers to discover per equipment type during Stage 1"),
