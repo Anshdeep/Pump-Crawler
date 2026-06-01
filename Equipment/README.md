@@ -32,7 +32,7 @@ The platform features a **FastAPI backend ASGI web server**, a **PostgreSQL 18 d
 
 ```mermaid
 graph TD
-    A[data/compressors.json] -->|Stage 1: Discover Brands| B(stages/stage1_manufacturers.py)
+    A[data/compressors.json] -->|Stage 1: Discover Manufacturers| B(stages/stage1_manufacturers.py)
     B -->|Tavily / DDG + Gemini| C[(PostgreSQL / JSON)]
     
     C -->|Stage 2: Target Model Lineups| D(stages/stage2_models.py)
@@ -75,7 +75,7 @@ Compressor/
 │   ├── models.py               # SQLAlchemy ORM models (Types, Manufacturers, Models, Specs)
 │   └── crud.py                 # DB CRUD operations & pgvector cosine similarity lookup
 ├── stages/
-│   ├── stage1_manufacturers.py # Stage 1 Orchestrator (Brands Discovery)
+│   ├── stage1_manufacturers.py # Stage 1 Orchestrator (Manufacturers Discovery)
 │   ├── stage2_models.py        # Stage 2 Orchestrator (Models & Embedding Gen)
 │   └── stage3_attributes.py    # Stage 3 Orchestrator (Deep Dynamic Attribute Extraction)
 ├── utils/
@@ -204,7 +204,7 @@ Get-Content -Path "C:\Users\verma\.gemini\antigravity-ide\brain\c8d290c8-9c94-4a
 Frontend Application	http://localhost:5173/	- npm run dev
 Backend API Server	http://localhost:8000/docs (Swagger UI)	- python main.py --server 
 
-python main.py --server > backend.log 2>&1
+python main.py --server >> backend.log 2>&1
 Get-Content backend.log -Wait -Tail 50 
 
 ##Rename repository on github 

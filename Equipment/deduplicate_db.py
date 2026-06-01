@@ -55,7 +55,7 @@ def deduplicate_database():
             master = sorted_candidates[0]
             redundants = sorted_candidates[1:]
 
-            print(f"\n  * Group: Brand ID {manufacturer_id} | Type ID {type_id} | Name: '{master.model_name}'")
+            print(f"\n  * Group: Manufacturer ID {manufacturer_id} | Type ID {type_id} | Name: '{master.model_name}'")
             print(f"    [*] Master Record selected: ID {master.id}")
 
             for m in redundants:

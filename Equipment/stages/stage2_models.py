@@ -16,6 +16,7 @@ from config import MODELS_JSON, MAX_MODELS_PER_MANUFACTURER
 from utils.web_search import search
 from utils.scraper import scrape_search_results, fetch_dynamic
 from utils.genai_extractor import extract_models, embed_text
+from database.models import EquipmentType
 
 
 def _build_model_query(manufacturer: str, compressor_type: str) -> str:
@@ -42,7 +43,7 @@ def _find_product_page(manufacturer: str, website: str, compressor_type: str) ->
     return results[0]["url"] if results else None
 
 
-def run(manufacturers_data: dict, db: Session = None) -> dict:
+def run(manufacturers_data: dict, db: Session = None, check_cancel=None) -> dict:
     """
     Run Stage 2 for all manufacturers.
 
@@ -50,6 +51,7 @@ def run(manufacturers_data: dict, db: Session = None) -> dict:
         manufacturers_data: output from Stage 1
             {compressor_type: [{"name", "country", "website"}, ...]}
         db: SQLAlchemy DB Session (optional)
+        check_cancel: Function to check if task was cancelled (optional)
 
     Returns:
         dict: {manufacturer_name: {"compressor_type": str, "models": [...]}}
@@ -67,6 +69,9 @@ def run(manufacturers_data: dict, db: Session = None) -> dict:
             all_tasks.append((ctype, mfr))
 
     for ctype, mfr in tqdm(all_tasks, desc="Manufacturers", unit="mfr"):
+        if check_cancel:
+            check_cancel()
+            
         mfr_name = mfr.get("name", "")
         website  = mfr.get("website", "")
 
@@ -74,6 +79,13 @@ def run(manufacturers_data: dict, db: Session = None) -> dict:
             continue
 
         print(f"\n>  {mfr_name}  [{ctype}]")
+
+        # Fetch subtype names for Gemini classification guidance
+        subtype_names = []
+        if db:
+            type_obj = db.query(EquipmentType).filter(EquipmentType.name == ctype).first()
+            if type_obj:
+                subtype_names = [sub.name for sub in type_obj.subtypes]
 
         # -- Step 1: Web search for models ----------------------
         query = _build_model_query(mfr_name, ctype)
@@ -99,7 +111,7 @@ def run(manufacturers_data: dict, db: Session = None) -> dict:
         if page_text.strip():
             print(f"   🤖 Extracting models with Gemini...")
             try:
-                models = extract_models(mfr_name, ctype, page_text)
+                models = extract_models(mfr_name, ctype, page_text, allowed_subtypes=subtype_names)
             except Exception as e:
                 print(f"   [WARN] Model extraction failed: {e}")
 
@@ -110,7 +122,7 @@ def run(manufacturers_data: dict, db: Session = None) -> dict:
             fallback_results = search(fallback_query, max_results=3)
             fallback_text    = scrape_search_results(fallback_results, max_chars=5000)
             try:
-                models = extract_models(mfr_name, ctype, fallback_text)
+                models = extract_models(mfr_name, ctype, fallback_text, allowed_subtypes=subtype_names)
             except Exception as e:
                 print(f"   [ERROR] Fallback failed: {e}")
 
@@ -120,7 +132,11 @@ def run(manufacturers_data: dict, db: Session = None) -> dict:
         # -- Step 6: DB Insertion & RAG Deduplication -----------
         if db:
             import database.crud as crud
-            type_obj = crud.get_or_create_compressor_type(db, name=ctype)
+            type_obj = db.query(EquipmentType).filter(EquipmentType.name == ctype).first()
+            if not type_obj:
+                type_obj = crud.get_or_create_equipment_type(db, name=ctype, equipment_master_id=1)
+            master_id = type_obj.equipment_master_id
+            
             mfr_obj = crud.get_or_create_manufacturer(
                 db, 
                 name=mfr_name, 
@@ -137,6 +153,23 @@ def run(manufacturers_data: dict, db: Session = None) -> dict:
                 if not model_name:
                     continue
 
+                # Resolve matched subtype
+                matched_subtype_id = None
+                model_subtype_name = m.get("subtype")
+                if type_obj:
+                    if model_subtype_name:
+                        # 1. Exact or substring match of database subtype inside Gemini response
+                        for sub in type_obj.subtypes:
+                            if sub.name.lower() == model_subtype_name.lower() or sub.name.lower() in model_subtype_name.lower():
+                                matched_subtype_id = sub.id
+                                break
+                    # 2. Fallback: substring matching in model name or series name
+                    if not matched_subtype_id:
+                        for sub in type_obj.subtypes:
+                            if sub.name.lower() in model_name.lower() or (series and sub.name.lower() in series.lower()):
+                                matched_subtype_id = sub.id
+                                break
+
                 # Generate semantic text vector
                 text_to_embed = f"{mfr_name} {ctype} model {model_name}"
                 embedding = embed_text(text_to_embed)
@@ -144,7 +177,7 @@ def run(manufacturers_data: dict, db: Session = None) -> dict:
                 # RAG Deduplication Vector Match
                 similar_model = crud.find_similar_model(
                     db,
-                    type_id=type_obj.id,
+                    equipment_type_id=type_obj.id,
                     manufacturer_id=mfr_obj.id,
                     query_embedding=embedding,
                     model_name=model_name
@@ -155,10 +188,11 @@ def run(manufacturers_data: dict, db: Session = None) -> dict:
                     m["is_duplicate"] = True
                     m["model_id"] = similar_model.id
                 else:
-                    new_model = crud.create_compressor_model(
+                    new_model = crud.create_equipment_model(
                         db,
-                        type_id=type_obj.id,
-                        subtype_id=None,
+                        equipment_master_id=master_id,
+                        equipment_type_id=type_obj.id,
+                        equipment_subtype_id=matched_subtype_id,
                         manufacturer_id=mfr_obj.id,
                         model_name=model_name,
                         series=series,

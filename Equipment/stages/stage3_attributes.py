@@ -99,7 +99,7 @@ def _fetch_model_page_cached(model: dict, manufacturer: str, compressor_type: st
     return text
 
 
-def run(models_data: dict, db: Session = None) -> list[dict]:
+def run(models_data: dict, db: Session = None, check_cancel=None) -> list[dict]:
     """
     Run Stage 3 for all models.
 
@@ -107,6 +107,7 @@ def run(models_data: dict, db: Session = None) -> list[dict]:
         models_data: output from Stage 2
             {manufacturer_name: {"compressor_type": str, "models": [...]}}
         db: SQLAlchemy DB Session (optional)
+        check_cancel: Function to check if task was cancelled (optional)
 
     Returns:
         list of flat compressor records with full attributes
@@ -126,6 +127,9 @@ def run(models_data: dict, db: Session = None) -> list[dict]:
             all_tasks.append((ctype, mfr_name, mfr_info, model))
 
     for ctype, mfr_name, mfr_info, model in tqdm(all_tasks, desc="Models", unit="model"):
+        if check_cancel:
+            check_cancel()
+            
         model_name  = model.get("model_name", "Unknown")
         series      = model.get("series", "")
         product_url = model.get("product_url", "")
@@ -136,11 +140,15 @@ def run(models_data: dict, db: Session = None) -> list[dict]:
         # -- DB Spec Lookup -------------------------------------
         db_attributes = None
         if db and model_id:
-            from database.models import TechnicalAttribute
+            from database.models import TechnicalAttribute, Model
             db_attr_record = db.query(TechnicalAttribute).filter(TechnicalAttribute.model_id == model_id).first()
             if db_attr_record and db_attr_record.attributes:
                 db_attributes = db_attr_record.attributes
                 print(f"   [RAG Hit] Loaded existing specs from DB for '{model_name}' (Crawling avoided!)")
+                model_obj = db.query(Model).filter(Model.id == model_id).first()
+                if model_obj and not model_obj.is_harvested:
+                    model_obj.is_harvested = True
+                    db.commit()
 
         # -- Fetch & extract if not cached in DB ----------------
         attributes = {}
@@ -170,6 +178,11 @@ def run(models_data: dict, db: Session = None) -> list[dict]:
                         if db and model_id and attributes:
                             import database.crud as crud
                             crud.save_technical_attributes(db, model_id, attributes)
+                            from database.models import Model
+                            model_obj = db.query(Model).filter(Model.id == model_id).first()
+                            if model_obj:
+                                model_obj.is_harvested = True
+                                db.commit()
                     except Exception as e:
                         print(f"   [WARN] Attribute extraction failed: {e}")
                 else:

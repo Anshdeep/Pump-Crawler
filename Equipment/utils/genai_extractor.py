@@ -29,7 +29,7 @@ _MAX_INPUT_CHARS = 6000
 # ── Pydantic Structured Output Schemas ─────────────────────────────────────
 
 class ManufacturerSchema(BaseModel):
-    name: str = Field(description="The formal brand/manufacturer name")
+    name: str = Field(description="The formal manufacturer name")
     country: Optional[str] = Field("", description="The country of headquarters, or empty if unknown")
     website: Optional[str] = Field("", description="The website homepage domain name only (e.g. atlascopco.com)")
 
@@ -37,6 +37,7 @@ class ModelSchema(BaseModel):
     model_name: str = Field(description="The model number or alphanumeric identifier")
     series: Optional[str] = Field("", description="The series/product lineage name (e.g. GA Series)")
     product_url: Optional[str] = Field("", description="The direct URL link to this model page if found")
+    subtype: Optional[str] = Field("", description="The classified equipment subtype/technology from the page text (e.g., Rotary Screw, Centrifugal, Scroll)")
 
 class ManufacturerListSchema(BaseModel):
     manufacturers: List[ManufacturerSchema] = Field(description="List of discovered manufacturers")
@@ -149,13 +150,17 @@ Text:
     return res.get("manufacturers", []) if isinstance(res, dict) else []
 
 
-def extract_models(manufacturer: str, compressor_type: str, text: str) -> list[dict]:
+def extract_models(manufacturer: str, compressor_type: str, text: str, allowed_subtypes: list[str] = None) -> list[dict]:
     """
     Extract model list for a manufacturer from scraped text using schema guides.
     """
+    subtype_hint = ""
+    if allowed_subtypes:
+        subtype_hint = f"\nFor the 'subtype' field, match it against one of these allowed options if possible: {', '.join(allowed_subtypes)}."
+
     prompt = f"""You are a technical data extraction assistant.
 From the scraped content below, extract up to 10 actual product models made by {manufacturer}.
-Compressor Type: {compressor_type}
+Compressor Type: {compressor_type}{subtype_hint}
 
 Text:
 {_truncate(text)}"""

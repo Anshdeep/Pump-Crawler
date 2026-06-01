@@ -7,7 +7,7 @@ export const useCompressorStore = defineStore('compressors', {
     models: [],
     selectedModel: null,
     modelDetailsLoading: false,
-    brandsList: [],
+    manufacturersList: [],  // Master list of manufacturer registries
     crawlStatus: {
       active: false,
       compressor_type: null,
@@ -22,6 +22,13 @@ export const useCompressorStore = defineStore('compressors', {
     },
     crawlLoading: false,
     crawlHistory: [],
+    
+    // ── Generalized Taxonomy & Settings State ──────────────────────────────
+    equipmentMasters: [],
+    equipmentTypes: [],
+    equipmentSubtypes: [],
+    systemSettings: [],
+    taxonomyTree: [],
   }),
   
   actions: {
@@ -55,23 +62,58 @@ export const useCompressorStore = defineStore('compressors', {
       }
     },
 
-    async fetchBrandsList() {
+    async fetchManufacturersList() {
       try {
         const res = await axios.get('/api/manufacturers')
-        this.brandsList = res.data
+        this.manufacturersList = res.data
       } catch (err) {
-        console.error('Failed to fetch brands list:', err)
+        console.error('Failed to fetch manufacturers list:', err)
       }
     },
 
-    async toggleBrandApproval(manufacturerId, isApproved) {
+    async toggleManufacturerApproval(manufacturerId, isApproved) {
       try {
         await axios.put(`/api/manufacturers/${manufacturerId}/approve`, null, {
           params: { is_approved: isApproved }
         })
-        await this.fetchBrandsList()
+        await this.fetchManufacturersList()
       } catch (err) {
-        console.error(`Failed to toggle brand approval for ID ${manufacturerId}:`, err)
+        console.error(`Failed to toggle manufacturer approval for ID ${manufacturerId}:`, err)
+        throw err
+      }
+    },
+
+    async toggleModelApproval(modelId, isApproved) {
+      try {
+        await axios.put(`/api/models/${modelId}/approve`, null, {
+          params: { is_approved: isApproved }
+        })
+        if (this.selectedModel && this.selectedModel.id === modelId) {
+          this.selectedModel.is_approved = isApproved
+        }
+      } catch (err) {
+        console.error(`Failed to toggle model approval for ID ${modelId}:`, err)
+        throw err
+      }
+    },
+
+    async bulkApproveModels(modelIds, isApproved) {
+      try {
+        await axios.put('/api/models/bulk-approve', {
+          model_ids: modelIds,
+          is_approved: isApproved
+        })
+        // Update local state models
+        this.models.forEach(m => {
+          if (modelIds.includes(m.id)) {
+            m.is_approved = isApproved
+          }
+        })
+        if (this.selectedModel && modelIds.includes(this.selectedModel.id)) {
+          this.selectedModel.is_approved = isApproved
+        }
+      } catch (err) {
+        console.error('Failed bulk models approval:', err)
         throw err
       }
     },
@@ -94,12 +136,14 @@ export const useCompressorStore = defineStore('compressors', {
       }
     },
 
-    async triggerCrawl(compressorType = null, noCache = false) {
+    // ── Crawler triggers ────────────────────────────────────────────────────
+
+    async triggerManufacturerDiscovery(equipmentTypeId = null, noCache = false) {
       this.crawlLoading = true
       try {
-        const res = await axios.post('/api/crawl', null, {
+        const res = await axios.post('/api/crawl/discover-manufacturers', null, {
           params: {
-            compressor_type: compressorType,
+            equipment_type_id: equipmentTypeId,
             no_cache: noCache
           }
         })
@@ -107,38 +151,23 @@ export const useCompressorStore = defineStore('compressors', {
         await this.fetchCrawlHistory()
         return res.data
       } catch (err) {
-        console.error('Failed to trigger background crawl:', err)
+        console.error('Failed to trigger background manufacturer discovery:', err)
         throw err
       } finally {
         this.crawlLoading = false
       }
     },
 
-    async triggerBrandDiscovery(compressorType = null, noCache = false) {
+    async triggerSpecsHarvester(manufacturerIds = null, onlyUnharvested = false, noCache = false, modelIds = null, deepCrawl = true) {
       this.crawlLoading = true
       try {
-        const res = await axios.post('/api/crawl/discover-brands', null, {
-          params: {
-            compressor_type: compressorType,
-            no_cache: noCache
-          }
-        })
-        await this.fetchCrawlStatus()
-        await this.fetchCrawlHistory()
-        return res.data
-      } catch (err) {
-        console.error('Failed to trigger background brand discovery:', err)
-        throw err
-      } finally {
-        this.crawlLoading = false
-      }
-    },
-
-    async triggerSpecsHarvester(noCache = false) {
-      this.crawlLoading = true
-      try {
+        // Axios handles array parameters automatically
         const res = await axios.post('/api/crawl/harvest-specs', null, {
           params: {
+            manufacturer_ids: manufacturerIds,
+            model_ids: modelIds,
+            deep_crawl: deepCrawl,
+            only_unharvested: onlyUnharvested,
             no_cache: noCache
           }
         })
@@ -153,6 +182,18 @@ export const useCompressorStore = defineStore('compressors', {
       }
     },
 
+    async stopCrawl() {
+      try {
+        const res = await axios.post('/api/crawl/stop')
+        await this.fetchCrawlStatus()
+        await this.fetchCrawlHistory()
+        return res.data
+      } catch (err) {
+        console.error('Failed to stop background crawl:', err)
+        throw err
+      }
+    },
+
     async initializeDatabase() {
       try {
         const res = await axios.post('/api/init-db')
@@ -161,6 +202,102 @@ export const useCompressorStore = defineStore('compressors', {
         console.error('Failed to initialize database tables:', err)
         throw err
       }
+    },
+
+    // ── Taxonomy & System Config CRUD Actions ────────────────────────────────
+
+    async fetchTaxonomyTree() {
+      try {
+        const res = await axios.get('/api/taxonomy/tree')
+        this.taxonomyTree = res.data
+      } catch (err) {
+        console.error('Failed to fetch taxonomy tree:', err)
+      }
+    },
+
+    async fetchSettings() {
+      try {
+        const res = await axios.get('/api/settings')
+        this.systemSettings = res.data
+      } catch (err) {
+        console.error('Failed to fetch system settings:', err)
+      }
+    },
+
+    async updateSetting(key, value) {
+      try {
+        await axios.put(`/api/settings/${key}`, null, {
+          params: { value: value }
+        })
+        await this.fetchSettings()
+      } catch (err) {
+        console.error(`Failed to update system setting '${key}':`, err)
+        throw err
+      }
+    },
+
+    // Equipment Masters
+    async createMaster(name, description) {
+      const res = await axios.post('/api/equipment-masters', { name, description })
+      await this.fetchTaxonomyTree()
+      return res.data
+    },
+    async updateMaster(id, name, description) {
+      const res = await axios.put(`/api/equipment-masters/${id}`, { name, description })
+      await this.fetchTaxonomyTree()
+      return res.data
+    },
+    async deleteMaster(id) {
+      await axios.delete(`/api/equipment-masters/${id}`)
+      await this.fetchTaxonomyTree()
+    },
+
+    // Equipment Types
+    async createType(name, equipmentMasterId, description) {
+      const res = await axios.post('/api/equipment-types', { name, equipment_master_id: equipmentMasterId, description })
+      await this.fetchTaxonomyTree()
+      return res.data
+    },
+    async updateType(id, name, equipmentMasterId, description) {
+      const res = await axios.put(`/api/equipment-types/${id}`, { name, equipment_master_id: equipmentMasterId, description })
+      await this.fetchTaxonomyTree()
+      return res.data
+    },
+    async deleteType(id) {
+      await axios.delete(`/api/equipment-types/${id}`)
+      await this.fetchTaxonomyTree()
+    },
+
+    // Subtypes
+    async createSubtype(name, typeId) {
+      const res = await axios.post('/api/equipment-subtypes', { name, type_id: typeId })
+      await this.fetchTaxonomyTree()
+      return res.data
+    },
+    async updateSubtype(id, name, typeId) {
+      const res = await axios.put(`/api/equipment-subtypes/${id}`, { name, type_id: typeId })
+      await this.fetchTaxonomyTree()
+      return res.data
+    },
+    async deleteSubtype(id) {
+      await axios.delete(`/api/equipment-subtypes/${id}`)
+      await this.fetchTaxonomyTree()
+    },
+
+    // Manufacturers CRUD
+    async createManufacturer(data) {
+      const res = await axios.post('/api/manufacturers', data)
+      await this.fetchManufacturersList()
+      return res.data
+    },
+    async updateManufacturer(id, data) {
+      const res = await axios.put(`/api/manufacturers/${id}`, data)
+      await this.fetchManufacturersList()
+      return res.data
+    },
+    async deleteManufacturer(id) {
+      await axios.delete(`/api/manufacturers/${id}`)
+      await this.fetchManufacturersList()
     }
   }
 })

@@ -1,30 +1,85 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import text
-from database.models import CompressorType, CompressorSubtype, Manufacturer, Model, TechnicalAttribute
+from sqlalchemy import text, func
+from database.models import (
+    SystemSetting, EquipmentMaster, EquipmentType, EquipmentSubtype,
+    Manufacturer, Model, TechnicalAttribute
+)
 
+# ── Dynamic System Settings Helper Repository ────────────────────────────────
 
-def get_or_create_compressor_type(db: Session, name: str, description: str = None) -> CompressorType:
-    obj = db.query(CompressorType).filter(CompressorType.name.ilike(name)).first()
+def get_setting(db: Session, key: str, default: str = None) -> str:
+    obj = db.query(SystemSetting).filter(SystemSetting.key == key).first()
+    return obj.value if obj else default
+
+def get_setting_typed(db: Session, key: str, default = None):
+    obj = db.query(SystemSetting).filter(SystemSetting.key == key).first()
     if not obj:
-        obj = CompressorType(name=name, description=description)
+        return default
+    val = obj.value
+    vtype = obj.value_type
+    if vtype == "int":
+        try:
+            return int(val)
+        except ValueError:
+            return default
+    elif vtype == "float":
+        try:
+            return float(val)
+        except ValueError:
+            return default
+    elif vtype == "bool":
+        return val.strip().lower() in ["true", "1", "yes", "on"]
+    return val
+
+def update_setting(db: Session, key: str, value: str, value_type: str = "str") -> SystemSetting:
+    obj = db.query(SystemSetting).filter(SystemSetting.key == key).first()
+    if not obj:
+        obj = SystemSetting(key=key, value=str(value), value_type=value_type)
+        db.add(obj)
+    else:
+        obj.value = str(value)
+        if value_type != "str":
+            obj.value_type = value_type
+    db.commit()
+    db.refresh(obj)
+    return obj
+
+# ── Taxonomy Hierarchy Repository ───────────────────────────────────────────
+
+def get_or_create_equipment_master(db: Session, name: str, description: str = None) -> EquipmentMaster:
+    obj = db.query(EquipmentMaster).filter(EquipmentMaster.name.ilike(name)).first()
+    if not obj:
+        obj = EquipmentMaster(name=name, description=description)
         db.add(obj)
         db.commit()
         db.refresh(obj)
     return obj
 
-
-def get_or_create_compressor_subtype(db: Session, name: str, type_id: int) -> CompressorSubtype:
-    obj = db.query(CompressorSubtype).filter(
-        CompressorSubtype.name.ilike(name),
-        CompressorSubtype.type_id == type_id
+def get_or_create_equipment_type(db: Session, name: str, equipment_master_id: int, description: str = None) -> EquipmentType:
+    obj = db.query(EquipmentType).filter(
+        EquipmentType.name.ilike(name),
+        EquipmentType.equipment_master_id == equipment_master_id
     ).first()
     if not obj:
-        obj = CompressorSubtype(name=name, type_id=type_id)
+        obj = EquipmentType(name=name, equipment_master_id=equipment_master_id, description=description)
         db.add(obj)
         db.commit()
         db.refresh(obj)
     return obj
 
+def get_or_create_equipment_subtype(db: Session, name: str, type_id: int) -> EquipmentSubtype:
+    obj = db.query(EquipmentSubtype).filter(
+        EquipmentSubtype.name.ilike(name),
+        EquipmentSubtype.type_id == type_id
+    ).first()
+    if not obj:
+        obj = EquipmentSubtype(name=name, type_id=type_id)
+        db.add(obj)
+        db.commit()
+        db.refresh(obj)
+    return obj
+
+# ── Manufacturer & Model Repository ──────────────────────────────────────────
 
 def get_or_create_manufacturer(
     db: Session, 
@@ -45,7 +100,6 @@ def get_or_create_manufacturer(
         db.commit()
         db.refresh(obj)
     else:
-        # Update existing manufacturer website or country if provided and empty
         updated = False
         if country and not obj.country:
             obj.country = country
@@ -61,11 +115,11 @@ def get_or_create_manufacturer(
             db.refresh(obj)
     return obj
 
-
-def create_compressor_model(
+def create_equipment_model(
     db: Session,
-    type_id: int,
-    subtype_id: int | None,
+    equipment_master_id: int,
+    equipment_type_id: int,
+    equipment_subtype_id: int | None,
     manufacturer_id: int,
     model_name: str,
     series: str = None,
@@ -73,19 +127,21 @@ def create_compressor_model(
     embedding: list[float] = None
 ) -> Model:
     obj = Model(
-        type_id=type_id,
-        subtype_id=subtype_id,
+        equipment_master_id=equipment_master_id,
+        equipment_type_id=equipment_type_id,
+        equipment_subtype_id=equipment_subtype_id,
         manufacturer_id=manufacturer_id,
         model_name=model_name,
         series=series,
         product_url=product_url,
-        embedding=embedding
+        embedding=embedding,
+        is_approved=False,
+        is_harvested=False
     )
     db.add(obj)
     db.commit()
     db.refresh(obj)
     return obj
-
 
 def save_technical_attributes(db: Session, model_id: int, attributes: dict) -> TechnicalAttribute:
     obj = db.query(TechnicalAttribute).filter(TechnicalAttribute.model_id == model_id).first()
@@ -98,27 +154,27 @@ def save_technical_attributes(db: Session, model_id: int, attributes: dict) -> T
     db.refresh(obj)
     return obj
 
+# ── pgvector Cosine RAG Semantic Deduplication ──────────────────────────────
 
 def find_similar_model(
     db: Session,
-    type_id: int,
+    equipment_type_id: int,
     manufacturer_id: int,
     query_embedding: list[float] | None = None,
-    distance_threshold: float = 0.08,  # Cosine Distance <= 0.08 means Cosine Similarity >= 0.92
+    distance_threshold: float = 0.08,  # Default Cosine Distance <= 0.08 means Similarity >= 0.92
     model_name: str | None = None
 ) -> Model | None:
     """
     Search by exact name match (Tier 1) or pgvector embedding column similarity (Tier 2)
-    to find similar model under the same category & brand.
+    to find similar model under the same category & manufacturer.
     If database does not support pgvector, falls back to a pure-Python cosine similarity search.
     Returns Model object if a match is found, else None.
     """
     # Tier 1 (Exact Match): Case-insensitive, whitespace-trimmed name check
     if model_name:
-        from sqlalchemy import func
         trimmed_name = model_name.strip()
         exact_match = db.query(Model).filter(
-            Model.type_id == type_id,
+            Model.equipment_type_id == equipment_type_id,
             Model.manufacturer_id == manufacturer_id,
             func.lower(func.trim(Model.model_name)) == func.lower(trimmed_name)
         ).first()
@@ -138,7 +194,7 @@ def find_similar_model(
             Model,
             Model.embedding.cosine_distance(query_embedding).label("distance")
         ).filter(
-            Model.type_id == type_id,
+            Model.equipment_type_id == equipment_type_id,
             Model.manufacturer_id == manufacturer_id,
             Model.embedding.isnot(None)
         ).order_by(
@@ -165,9 +221,9 @@ def find_similar_model(
             similarity = dot_product / (magnitude_v1 * magnitude_v2)
             return 1.0 - similarity
 
-        # Fetch candidate models under the same category & brand
+        # Fetch candidate models under the same category & manufacturer
         candidates = db.query(Model).filter(
-            Model.type_id == type_id,
+            Model.equipment_type_id == equipment_type_id,
             Model.manufacturer_id == manufacturer_id,
             Model.embedding.isnot(None)
         ).all()
@@ -176,7 +232,6 @@ def find_similar_model(
         min_distance = 1.0
         
         for candidate in candidates:
-            # PostgreSQL floats arrays are mapped as python lists
             dist = cosine_distance(candidate.embedding, query_embedding)
             if dist < min_distance:
                 min_distance = dist

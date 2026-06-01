@@ -24,7 +24,7 @@ def _build_query(compressor: dict) -> str:
     subtypes = compressor.get("subtypes", [])
     apps = compressor.get("applications", [])
 
-    parts = [f'"{ctype}" manufacturers brands companies']
+    parts = [f'"{ctype}" manufacturers companies']
     if subtypes:
         parts.append(" ".join(subtypes[:2]))
     if apps:
@@ -34,13 +34,14 @@ def _build_query(compressor: dict) -> str:
     return " ".join(parts)
 
 
-def run(compressors: list[dict], db: Session = None) -> dict:
+def run(compressors: list[dict], db: Session = None, check_cancel=None) -> dict:
     """
     Run Stage 1 for all compressor types.
 
     Args:
         compressors: list of compressor dicts from data/compressors.json
         db: SQLAlchemy DB Session (optional)
+        check_cancel: Function to check if task was cancelled (optional)
 
     Returns:
         dict mapping compressor_type -> list of manufacturer dicts
@@ -52,6 +53,9 @@ def run(compressors: list[dict], db: Session = None) -> dict:
     print("=" * 60)
 
     for compressor in tqdm(compressors, desc="Compressor Types", unit="type"):
+        if check_cancel:
+            check_cancel()
+            
         ctype    = compressor["type"]
         subtypes = compressor.get("subtypes", [])
 
@@ -60,9 +64,10 @@ def run(compressors: list[dict], db: Session = None) -> dict:
         # -- DB Init Category -----------------------------------
         if db:
             import database.crud as crud
-            type_obj = crud.get_or_create_compressor_type(db, name=ctype)
+            master_id = compressor.get("equipment_master_id", 1)
+            type_obj = crud.get_or_create_equipment_type(db, name=ctype, equipment_master_id=master_id)
             for subtype in subtypes:
-                crud.get_or_create_compressor_subtype(db, name=subtype, type_id=type_obj.id)
+                crud.get_or_create_equipment_subtype(db, name=subtype, type_id=type_obj.id)
 
         # -- Step 1: Web Search ---------------------------------
         query   = _build_query(compressor)

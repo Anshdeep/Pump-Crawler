@@ -18,7 +18,7 @@ graph TD
     A[data/compressors.json] -->|Stage 1: Search & Scrape| B(stages/stage1_manufacturers.py)
     B -->|Enriched with Gemini| C[data/output/manufacturers.json]
     
-    C -->|Stage 2: Target Brand Lineups| D(stages/stage2_models.py)
+    C -->|Stage 2: Target Manufacturer Lineups| D(stages/stage2_models.py)
     D -->|Scrape Manufacturer Sites| E[data/output/models.json]
     
     E -->|Stage 3: Deep Technical Extraction| F(stages/stage3_attributes.py)
@@ -54,10 +54,10 @@ The project operates sequentially across **3 core stages**. Each stage saves its
 ### 📦 Stage 1: Manufacturer Discovery
 
 * **Code:** `stages/stage1_manufacturers.py`
-* **Functional Goal:** Find the leading global brands for each category listed in `data/compressors.json` (e.g., identifying Atlas Copco, Ariel Corp, Bauer, etc.).
+* **Functional Goal:** Find the leading global manufacturers for each category listed in `data/compressors.json` (e.g., identifying Atlas Copco, Ariel Corp, Bauer, etc.).
 * **Technical Details:**
   1. Reads `data/compressors.json` to extract compressor types, applications, and subtypes.
-  2. Constructs a highly optimized search query: `"{type}" manufacturers brands companies top global list`.
+  2. Constructs a highly optimized search query: `"{type}" manufacturers companies top global list`.
   3. Queries the **Tavily Search API** to fetch top ranked websites.
   4. Scrapes search content and forwards it to Gemini to extract clean records: `name`, `country`, and `website` (domain only).
   5. **Knowledge Fallback:** If search results fail or are empty, Gemini is prompted directly for its native technical knowledge to prevent pipeline stalls.
@@ -68,7 +68,7 @@ The project operates sequentially across **3 core stages**. Each stage saves its
 ### 📦 Stage 2: Model Discovery
 
 * **Code:** `stages/stage2_models.py`
-* **Functional Goal:** For each discovered brand, find the specific product model numbers and their page URLs.
+* **Functional Goal:** For each discovered manufacturer, find the specific product model numbers and their page URLs.
 * **Technical Details:**
   1. Loads `data/output/manufacturers.json`.
   2. Builds domain-specific search queries using Google operators: `"{manufacturer} official {compressor_type} product models lineup site:{website.domain}"`.

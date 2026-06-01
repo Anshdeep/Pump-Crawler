@@ -48,7 +48,7 @@ To verify the combined popup bypass and performance enhancements, we ran a fresh
 
 ### 2. Active Specs Harvester Run (Crawl ID 17)
 We completed Crawl ID 17 successfully:
-*   **Active Approved Brands**: `16 active brands`
+*   **Active Approved Manufacturers**: `16 active manufacturers`
 *   **Discovered Lineups**: `73 models`
 *   **Successfully Enriched**: `32 specifications sheets` populated in a single run!
 *   **Total Enriched Models in Postgres DB**: Increased from `54` to **`57`** unique specification sheets!

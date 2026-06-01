@@ -2,12 +2,12 @@
   "Air Compressors": [
     {
       "name": "Ingersoll Rand",
-      "country": "USA",
-      "website": "ingersollrand.com"
+      "country": null,
+      "website": null
     },
     {
-      "name": "Shinano",
-      "country": "Japan",
+      "name": "Sullair",
+      "country": "United States",
       "website": null
     },
     {
@@ -16,72 +16,12 @@
       "website": "atlascopco.com"
     },
     {
-      "name": "Chicago Pneumatic",
-      "country": "USA",
-      "website": null
-    },
-    {
-      "name": "Snap-On",
-      "country": "USA",
-      "website": null
-    },
-    {
-      "name": "DeWalt",
-      "country": "USA",
-      "website": null
-    },
-    {
-      "name": "Bosch",
-      "country": "Germany",
-      "website": null
-    },
-    {
-      "name": "Makita",
-      "country": "Japan",
-      "website": null
-    },
-    {
-      "name": "Metabo HPT",
-      "country": "Japan",
-      "website": null
-    },
-    {
-      "name": "Siemens Energy",
-      "country": "Germany",
-      "website": "siemens-energy.com"
-    },
-    {
-      "name": "Gardner Denver",
-      "country": "USA",
-      "website": "gardnerdenver.com"
-    },
-    {
-      "name": "Mitsubishi Heavy Industries",
-      "country": null,
-      "website": null
-    },
-    {
-      "name": "Bauer Group",
-      "country": null,
-      "website": null
-    },
-    {
-      "name": "Sullair",
-      "country": null,
-      "website": null
-    },
-    {
       "name": "Kaeser",
       "country": null,
       "website": null
     },
     {
-      "name": "Hanwha Power Systems",
-      "country": null,
-      "website": null
-    },
-    {
-      "name": "MINNUO Group",
+      "name": "Baldor Air",
       "country": null,
       "website": null
     }
@@ -93,27 +33,42 @@
       "website": "danfoss.com"
     },
     {
-      "name": "Frick India Ltd.",
-      "country": "India",
-      "website": null
-    },
-    {
-      "name": "Secop GmbH",
-      "country": "Germany",
-      "website": null
-    },
-    {
-      "name": "J & E Hall International",
-      "country": "United Kingdom",
-      "website": null
+      "name": "Ariel Corporation",
+      "country": "United States",
+      "website": "arielcorp.com"
     },
     {
       "name": "Gardner Denver",
       "country": "United States",
-      "website": "gardnerdenver.com"
+      "website": null
+    },
+    {
+      "name": "Howden",
+      "country": "United Kingdom",
+      "website": null
+    },
+    {
+      "name": "Fluid Aire Dynamics",
+      "country": null,
+      "website": null
+    },
+    {
+      "name": "KAESER COMPRESSORS",
+      "country": null,
+      "website": null
     }
   ],
   "Gas Compressors": [
+    {
+      "name": "Fluid Aire Dynamics",
+      "country": null,
+      "website": null
+    },
+    {
+      "name": "KAESER COMPRESSORS",
+      "country": null,
+      "website": "kaeser.com"
+    },
     {
       "name": "Ariel Corporation",
       "country": null,
@@ -147,42 +102,32 @@
     {
       "name": "Fornovo Gas",
       "country": null,
-      "website": "fornovogas.it"
+      "website": "fornovogas.com"
     },
     {
       "name": "Quincy",
       "country": null,
       "website": "quincycompressor.com"
-    },
-    {
-      "name": "PCCS",
-      "country": null,
-      "website": "pccs.com.sg"
-    },
-    {
-      "name": "Fluid Aire Dynamics",
-      "country": null,
-      "website": "fluidairedynamics.com"
-    },
-    {
-      "name": "KAESER COMPRESSORS",
-      "country": null,
-      "website": "kaeser.com"
     }
   ],
   "Turbochargers/Superchargers": [
     {
-      "name": "Magnuson Products LLC",
+      "name": "IHI Machinery and Furnace Co., Ltd.",
       "country": null,
+      "website": null
+    },
+    {
+      "name": "HKS CO.,LTD.",
+      "country": null,
+      "website": null
+    },
+    {
+      "name": "Magnuson Products LLC",
+      "country": "United States",
       "website": null
     },
     {
       "name": "Vortech Engineering, Inc.",
-      "country": null,
-      "website": null
-    },
-    {
-      "name": "ProCharger",
       "country": null,
       "website": null
     },
@@ -192,91 +137,46 @@
       "website": null
     },
     {
-      "name": "Hammer Kupplungen",
-      "country": "Turkey",
-      "website": null
+      "name": "Eaton",
+      "country": null,
+      "website": "eaton.com"
     },
     {
-      "name": "TURBO ENERGY PRIVATE LIMITED",
-      "country": "India",
-      "website": "turboenergy.com"
-    },
-    {
-      "name": "Garrett Motion",
-      "country": "Switzerland",
-      "website": "garrettmotion.com"
-    },
-    {
-      "name": "MasterTurbo",
-      "country": "Netherlands",
-      "website": "masterturbo.nl"
+      "name": "Whipple Superchargers",
+      "country": null,
+      "website": "whipplesuperchargers.com"
     }
   ],
   "Medical Compressors": [
     {
-      "name": "Air Squared",
-      "country": null,
-      "website": "airsquared.com"
+      "name": "Ningbo Yinzhou Maisi Mechanical & Electrical Co., Ltd.",
+      "country": "China",
+      "website": "maisigroup.com"
+    },
+    {
+      "name": "Hokaido Vacuum Technology(Int'l) Group",
+      "country": "China",
+      "website": "hokaidovac.com"
+    },
+    {
+      "name": "Hongbaoshi Vacuum Equipment Factory",
+      "country": "China",
+      "website": "hbspump.com"
     },
     {
       "name": "Atlas Copco",
-      "country": "Sweden",
+      "country": null,
       "website": "atlascopco.com"
     },
     {
-      "name": "AmcareMed",
+      "name": "Ingersoll Rand",
       "country": null,
-      "website": "amcaremed.com"
+      "website": "ingersollrand.com"
     },
     {
-      "name": "CompAir",
-      "country": null,
-      "website": "compair.com"
-    },
-    {
-      "name": "Denair",
+      "name": "WenLing Fine Air Compressor Manufacturing Co.,Ltd.",
       "country": "China",
-      "website": "denaircompressor.net"
-    },
-    {
-      "name": "BOGE Kompressoren",
-      "country": "Germany",
-      "website": "boge.com"
-    },
-    {
-      "name": "HANBELL",
-      "country": "Taiwan",
-      "website": "hanbell.com"
-    },
-    {
-      "name": "Gentilin",
-      "country": "Italy",
-      "website": "gentilinair.com"
-    },
-    {
-      "name": "SWARM TOP",
-      "country": null,
       "website": null
-    },
-    {
-      "name": "Pattons Medical",
-      "country": "United States",
-      "website": "pattonsmedical.com"
-    },
-    {
-      "name": "MIL'S",
-      "country": "France",
-      "website": "mils.fr"
-    },
-    {
-      "name": "Beneair",
-      "country": null,
-      "website": null
-    },
-    {
-      "name": "GlobalVac & Air",
-      "country": "United States",
-      "website": "globalvac.com"
     }
   ]
 }
