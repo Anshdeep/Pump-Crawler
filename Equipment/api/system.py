@@ -62,16 +62,16 @@ def get_dashboard_stats(db: Session = Depends(get_db)):
         ]
 
         # 2. Models metrics
-        models_total = db.query(Model).count()
-        models_approved = db.query(Model).filter(Model.is_approved == True).count()
+        models_total = db.query(Model).filter(Model.model_name != "TEMP_PLACEHOLDER").count()
+        models_approved = db.query(Model).filter(Model.is_approved == True, Model.model_name != "TEMP_PLACEHOLDER").count()
         models_pending = models_total - models_approved
-        models_harvested = db.query(Model).filter(Model.is_harvested == True).count()
+        models_harvested = db.query(Model).filter(Model.is_harvested == True, Model.model_name != "TEMP_PLACEHOLDER").count()
         models_unharvested = models_total - models_harvested
 
         models_by_type = db.query(
             EquipmentType.name,
             func.count(Model.id).label('count')
-        ).join(Model, Model.equipment_type_id == EquipmentType.id).group_by(EquipmentType.name).order_by(text('count DESC')).all()
+        ).join(Model, Model.equipment_type_id == EquipmentType.id).filter(Model.model_name != "TEMP_PLACEHOLDER").group_by(EquipmentType.name).order_by(text('count DESC')).all()
 
         by_type_list = [
             {"type_name": name, "count": cnt}

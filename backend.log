@@ -1,0 +1,1619 @@
+[2026-06-02 18:39:09] [System] Global timestamped logging active. Appending to: backend.log
+
+[2026-06-02 18:39:12] =================================================================
+[2026-06-02 18:39:12]    Industrial Equipment Specs Discovery CLI Pipeline
+[2026-06-02 18:39:12]    Powered by Gemini & PostgreSQL Vector Deduplication
+[2026-06-02 18:39:12] =================================================================
+
+
+[2026-06-02 18:39:12] ================================================================================
+[2026-06-02 18:39:12] [WARNING] The pgvector extension is not installed or available in PostgreSQL.
+[2026-06-02 18:39:12]   -> The system will automatically fall back to pure-Python cosine similarity search.
+[2026-06-02 18:39:12]   -> You do not need to compile pgvector now! The system is fully operational using safe fallbacks.
+[2026-06-02 18:39:12] ================================================================================
+
+[2026-06-02 18:39:12] [Healing] Retroactively matching existing models with null subtypes...
+[2026-06-02 18:39:12] [DB] Database and tables initialized successfully!
+[2026-06-02 18:39:12] ====================
+[2026-06-02 18:39:12] [<database.models.EquipmentType object at 0x000001EDB8B89550>, <database.models.EquipmentType object at 0x000001EDB8B97C50>, <database.models.EquipmentType object at 0x000001EDB8B97D90>, <database.models.EquipmentType object at 0x000001EDB8BF1810>, <database.models.EquipmentType object at 0x000001EDB8BF16E0>, <database.models.EquipmentType object at 0x000001EDB8B927B0>, <database.models.EquipmentType object at 0x000001EDB8B62CF0>]
+[2026-06-02 18:39:12] ====================
+[2026-06-02 18:39:12]   Target Types : ['Air Compressors', 'Refrigeration Compressors', 'Gas Compressors', 'Turbochargers/Superchargers', 'Medical Compressors', 'Piston', 'Plunger']
+[2026-06-02 18:39:12]   Stages       : [1, 2, 3]
+[2026-06-02 18:39:12]   Cache        : ON
+[2026-06-02 18:39:12]   Started at   : 2026-06-02 18:39:12
+
+
+[2026-06-02 18:39:12] ============================================================
+[2026-06-02 18:39:12]   STAGE 1 -- Manufacturer Discovery
+[2026-06-02 18:39:12] ============================================================
+[2026-06-02 18:39:12] Equipment Types:   0%|                                                                          | 0/7 [00:00<?, ?type/s]
+[2026-06-02 18:39:12] >  Air Compressors
+[2026-06-02 18:39:12]    🔍 Searching: "Air Compressors" manufacturers companies top global list...
+[2026-06-02 18:39:14]    🌐 Scraping 5 pages...
+[2026-06-02 18:39:20]    🤖 Extracting manufacturers with Gemini...
+[2026-06-02 18:39:20] equipment_master: Compressor
+[2026-06-02 18:39:20] equipment_type: Air Compressors
+[2026-06-02 18:39:20] subtypes: []
+[2026-06-02 18:39:20] text: At Market.us News, We strive to bring you the most accurate and up-to-date information by utilizing a variety of resources, including paid and free sources, primary research, and phone interviews. Our data is available to the public free of charge, and we encourage you to use it to inform your personal or business decisions. ## Air Compressor Market Overview. Industrial growth and automation, energy efficiency initiatives, infrastructural development, and the expansion of the healthcare sector drive the global air compressor market. Atlas Copco, a leading figure in the air compressor industry, continues to innovate with sustainable solutions. These initiatives highlight Atlas Copco’s dedication to sustainability, innovation, and market expansion in air compressor technologies. Ingersoll Rand, based in Davidson, North Carolina, USA, maintains a strong global footprint spanning North America, Europe (including Germany, France, the UK, and Italy), Asia-Pacific (including China, India, and Japan), Latin America (Brazil, Mexico, Argentina), and the Middle East/Africa (South Africa, UAE).
+
+[2026-06-02 18:39:20] ---
+
+[2026-06-02 18:39:20] Air Compressor Companies | Best Efficiency and Longevity
+[2026-06-02 18:39:20] email
+[2026-06-02 18:39:20] inquiry@market.us
+[2026-06-02 18:39:20] phone
+[2026-06-02 18:39:20] +1 718 874 1545 (International)
+[2026-06-02 18:39:20] phone
+[2026-06-02 18:39:20] +91 78878 22626 (Asia)
+[2026-06-02 18:39:20] menu
+[2026-06-02 18:39:20] more_vert
+[2026-06-02 18:39:20] Home
+[2026-06-02 18:39:20] Company
+[2026-06-02 18:39:20] Top 10 Air Compressor Companies | Best Efficiency and Longevity
+[2026-06-02 18:39:20] Tajammul Pangarkar
+[2026-06-02 18:39:20] Updated ·
+[2026-06-02 18:39:20] Jul 23, 2024
+[2026-06-02 18:39:20] SHARE:
+[2026-06-02 18:39:20] Market.us News, we strive to bring you the most accurate and up-to-date information by utilizing a variety of resources, including paid and free sources, primary research, and phone interviews.
+[2026-06-02 18:39:20] Learn
+[2026-06-02 18:39:20] more.
+[2026-06-02 18:39:20] close
+[2026-06-02 18:39:20] Advertiser Disclosure
+[2026-06-02 18:39:20] At Market.us News, We strive to bring you the most accurate and up-to-date information by utilizing a variety of resources, including paid and free sources, primary research, and phone interviews. Our data is available to the public free of charge, and we encourage you to use it to inform your personal or business decisions. If you choose to republish our data on your own website, we simply ask that you provide a proper citation or link back to the respective page on Market.us News. We appreciate your support and look forward to continuing to provide valuable insights for our audience.
+[2026-06-02 18:39:20] Table of Contents
+[2026-06-02 18:39:20] Air Compressor Market Overview
+[2026-06-02 18:39:20] Market Drivers
+[2026-06-02 18:39:20] Market Size
+[2026-06-02 18:39:20] List of Major Companies
+[2026-06-02 18:39:20] Atlas-Copco
+[2026-06-02 18:39:20] Ingersoll-Rand
+[2026-06-02 18:39:20] Hitachi
+[2026-06-02 18:39:20] Kobe-Steel
+[2026-06-02 18:39:20] Bauer
+[2026-06-02 18:39:20] Doosan
+[2026-06-02 18:39:20] Siemens
+[2026-06-02 18:39:20] Danfoss
+[2026-06-02 18:39:20] Sulzer
+[2026-06-02 18:39:20] Mitsubishi
+[2026-06-02 18:39:20] Air Compressor Market Overview
+[2026-06-02 18:39:20] An air compressor is a device that converts power into potential energy stored in pressurized air. They are used widely in industries like manufacturing, construction, and automotive.
+[2026-06-02 18:39:20] They come in various types, including reciprocating (piston) compressors for light and industrial use, and rotary screw compressors for continuous industrial operation. Centrifugal compressors for large-scale applications, and scroll compressors for quieter operations in HVAC systems.
+[2026-06-02 18:39:20] Key components include the motor, pump, tank, pressure switch, regulator, inlet, and outlet valves.
+[2026-06-02 18:39:20] Regular maintenance, such as checking filters and connections, draining moisture, and lubricating parts, ensures efficiency and longevity. Safety measures, including proper ventilation and PPE usage, are essential for safe operation.
+[2026-06-02 18:39:20] Market Drivers
+[2026-06-02 18:39:20] Industrial growth and automation, energy efficiency initiatives, infrastructural development, and the expansion of the healthcare sector drive the global air compressor market.
+[2026-06-02 18:39:20] Increased demand in the oil and gas industry and technological advancements, such as IoT integration, also propel market growth.
+[2026-06-02 18:39:20] Furthermore, the availability of comprehensive maintenance and aftermarket services encourages investment in high-quality air compressors, ensuring efficient and long-lasting operations.
+[2026-06-02 18:39:20] These factors collectively contribute to the market’s steady expansion, catering to diverse industrial needs.
+[2026-06-02 18:39:20] Market Size
+[2026-06-02 18:39:20] The Global
+[2026-06-02 18:39:20] Air Compressor Market
+[2026-06-02 18:39:20] is set to grow from USD
+[2026-06-02 18:39:20] 35.3
+[2026-06-02 18:39:20] billion in
+[2026-06-02 18:39:20] 2023
+[2026-06-02 18:39:20] to USD
+[2026-06-02 18:39:20] 55.9
+[2026-06-02 18:39:20] billion by
+[2026-06-02 18:39:20] 2033
+[2026-06-02 18:39:20] , with a
+[2026-06-02 18:39:20] 4.7%
+[2026-06-02 18:39:20] CAGR from
+[2026-06-02 18:39:20] 2024
+[2026-06-02 18:39:20] 2033
+[2026-06-02 18:39:20] List of Major Companies
+[2026-06-02 18:39:20] These are the top 10 companies operating in the Air Compressor
+
+[2026-06-02 18:39:20] ---
+
+[2026-06-02 18:39:20] # Top 10 Industrial Air Compressor Manufacturers in the World – 2025 Edition. In 2025, the global industrial air compressor market continues to evolve with increasing demands for energy efficiency, smart controls, and reliability. Below is our curated list of the **Top 10 Global Air Compressor Brands**, trusted across industries such as metal fabrication, food & beverage, electronics, and laser technology. Founded in 1873, **Atlas Copco** is the undisputed leader in industrial compressed air technology. Headquartered in Stockholm, Sweden, the company offers a full range of **oil-injected rotary screw, oil-free centrifugal, scroll, and piston compressors**. Their solutions are also backed by a vast global service network, making them a go-to for international enterprises. In addition to their oil-lubricated and oil-free rotary screw models, Kaeser also offers complete compressed air stations, including **dryers, filters, controllers, and air management systems**. As a rising star in the global air compressor industry, **Baldor Air** has established itself as a trusted manufacturer of **dry oil-free screw compressors, water-injected screw compressors, and integrated compressor systems**.
+
+[2026-06-02 18:39:20] ---
+
+[2026-06-02 18:39:20] Top 10 Industrial Air Compressor Manufacturers in the World – 2025 Edition - B&D Energy Saving Air Compressor
+[2026-06-02 18:39:20] Skip to content
+[2026-06-02 18:39:20] Top 10 Industrial Air Compressor Manufacturers in the World – 2025 Edition
+[2026-06-02 18:39:20] Baldor Air
+[2026-06-02 18:39:20] July 16, 2025
+[2026-06-02 18:39:20] 5:46 pm
+[2026-06-02 18:39:20] In 2025, the global industrial air compressor market continues to evolve with increasing demands for energy efficiency, smart controls, and reliability. Below is our curated list of the
+[2026-06-02 18:39:20] Top 10 Global Air Compressor Brands
+[2026-06-02 18:39:20] , trusted across industries such as metal fabrication, food & beverage, electronics, and laser technology.
+[2026-06-02 18:39:20] Atlas Copco (Sweden)
+[2026-06-02 18:39:20] Founded in 1873,
+[2026-06-02 18:39:20] Atlas Copco
+[2026-06-02 18:39:20] is the undisputed leader in industrial compressed air technolog
+[2026-06-02 18:39:24]    ✅ Found 10 manufacturers:
+[2026-06-02 18:39:24]       • Atlas Copco (Sweden) -- atlascopco.com
+[2026-06-02 18:39:24]       • Ingersoll Rand (USA) -- ingersollrand.com
+[2026-06-02 18:39:24]       • Kaeser Kompressoren (Germany) -- kaeser.com
+[2026-06-02 18:39:24]       • Hitachi (Japan) -- hitachi.com
+[2026-06-02 18:39:24]       • Kobe Steel (Kobelco) (Japan) -- kobelco.co.jp
+[2026-06-02 18:39:24]       • Bauer Kompressoren (Germany) -- bauer-kompressoren.de
+[2026-06-02 18:39:24]       • Doosan (South Korea) -- doosan.com
+[2026-06-02 18:39:24]       • Mitsubishi Heavy Industries (Japan) -- mhi.com
+[2026-06-02 18:39:24]       • Sulzer (Switzerland) -- sulzer.com
+[2026-06-02 18:39:24]       • Baldor Air (China) -- baldorair.com
+Equipment Types:  14%|█████████▍                                                        | 1/7 [00:12<01:15, 12.56s/type]
+[2026-06-02 18:39:24] >  Refrigeration Compressors
+[2026-06-02 18:39:24]    🔍 Searching: "Refrigeration Compressors" manufacturers companies Reciprocating Scro...
+[2026-06-02 18:39:26]    🌐 Scraping 5 pages...
+[2026-06-02 18:39:43]    🤖 Extracting manufacturers with Gemini...
+[2026-06-02 18:39:43] equipment_master: Compressor
+[2026-06-02 18:39:43] equipment_type: Refrigeration Compressors
+[2026-06-02 18:39:43] subtypes: ['Reciprocating', 'Scroll', 'Screw']
+[2026-06-02 18:39:43] text: Key Refrigeration Compressors Companies: · Panasonic Corporation · Kirloskar · The BITZER Group · LG · Huayi Compressor Barcelona · Copeland LP · Danfoss · Johnson
+
+[2026-06-02 18:39:43] ---
+
+[2026-06-02 18:39:43] ## 100 manufacturers for Refrigerator Compressor. Danfoss A/S's Logo. Danfoss Climate Solutions specializes in energy-efficient refrigeration compressors, offering a diverse range designed for various commercial applications. Refrigeration compressors | Commercial refrigeration | Danfoss. Danfoss provides energy efficient, sustainable and smart inverter, scroll and reciprocating refrigeration compressors for commercial applications. Their commitment to energy efficiency and innovative cooling solutions positions them as a leader in refrigeration technology, making them a key player in the development of sustainable compressor systems. J & E Hall is a prominent manufacturer of refrigeration solutions, specializing in industrial and commercial refrigeration products, including a focus on remanufactured compressors. Heatcraft Refrigeration Products, LLC specializes in advanced refrigeration solutions, including motor-compressor assemblies, which are essential components of refrigerator compressors. Carlyle is a prominent manufacturer of compressor technology, offering a range of solutions for refrigeration applications, including high-efficiency reciprocating and screw compressors. is a leading manufacturer of commercial refrigeration equipment in India, offering a diverse range of products, including reliable and energy-efficient commercial refrigerators.
+
+[2026-06-02 18:39:43] ---
+
+[2026-06-02 18:39:43] Top 100 Refrigerator Compressor Manufacturers in 2026 | ensun
+[2026-06-02 18:39:43] Top Refrigerator Compressor Manufacturers
+[2026-06-02 18:39:43] The B2B platform for the best purchasing decision. Identify and compare relevant B2B manufacturers, suppliers and retailers
+[2026-06-02 18:39:43] Close
+[2026-06-02 18:39:43] Filter
+[2026-06-02 18:39:43] Result configuration
+[2026-06-02 18:39:43] Longlist
+[2026-06-02 18:39:43] Balanced
+[2026-06-02 18:39:43] Shortlist
+[2026-06-02 18:39:43] Continents
+[2026-06-02 18:39:43] Select continent
+[2026-06-02 18:39:43] Locations
+[2026-06-02 18:39:43] Result types
+[2026-06-02 18:39:43] Products
+[2026-06-02 18:39:43] Services
+[2026-06-02 18:39:43] Core business
+[2026-06-02 18:39:43] Company type
+[2026-06-02 18:39:43] Select company type
+[2026-06-02 18:39:43] Industries
+[2026-06-02 18:39:43] Select industry
+[2026-06-02 18:39:43] Company status
+[2026-06-02 18:39:43] Select company status preset
+[2026-06-02 18:39:43] Number of employees
+[2026-06-02 18:39:43] Min.
+[2026-06-02 18:39:43] Max.
+[2026-06-02 18:39:43] Founding year
+[2026-06-02 18:39:43] Clear filters
+[2026-06-02 18:39:43] Show  results
+[2026-06-02 18:39:43] 100 manufacturers for Refrigerator Compressor
+[2026-06-02 18:39:43] Key Takeaways
+[2026-06-02 18:39:43] Export
+[2026-06-02 18:39:43] Sort by:
+[2026-06-02 18:39:43] Relevance
+[2026-06-02 18:39:43] Danfoss A/S
+[2026-06-02 18:39:43] Nordborg, Denmark
+[2026-06-02 18:39:43] 10001+
+[2026-06-02 18:39:43] Employees
+[2026-06-02 18:39:43] 1933
+[2026-06-02 18:39:43] Key takeaway
+[2026-06-02 18:39:43] Danfoss Climate Solutions specializes in energy-efficient refrigeration compressors, offering a diverse range designed for various commercial applications. Their products include advanced scroll and reciprocating compressors that comply with the latest refrigerant regulations, ensuring sustainability and optimal performance.
+[2026-06-02 18:39:43] Reference
+[2026-06-02 18:39:43] Find employees
+[2026-06-02 18:39:43] Similar companies
+[2026-06-02 18:39:43] Product
+[2026-06-02 18:39:43] Refrigeration compressors | Commercial refrigeration | Danfoss
+[2026-06-02 18:39:43] Danfoss provides energy efficient, sustainable and smart inverter, scroll and reciprocating refrigeration compressors for commercial applications. See the options here.
+[2026-06-02 18:39:43] Frick India Ltd.
+[2026-06-02 18:39:43] Faridabad, India
+[2026-06-02 18:39:43] 501-1000
+[2026-06-02 18:39:43] Employees
+[2026-06-02 18:39:43] 1962
+[2026-06-02 18:39:43] Key takeaway
+[2026-06-02 18:39:43] Frick India Limited specializes in manufacturing energy-efficient and environmentally friendly industrial refrigeration systems, including rotary twin screw compressors and high-speed reciprocating compressors. With over 50 years of experience, the company provides advanced refrigeration solutions and turnkey projects for various industrial applications, supporting the "Make in India" initiative.
+[2026-06-02 18:39:43] Reference
+[2026-06-02 18:39:43] Find employees
+[2026-06-02 18:39:43] Similar companies
+[2026-06-02 18:39:43] Core business
+[2026-06-02 18:39:43] Industrial Refrigeration-Ammonia Compressors-Refrigeration Equipment Manufacturer
+[2026-06-02 18:39:43] Secop GmbH
+[2026-06-02 18:39:43] Flensburg, Germany
+[2026-06-02 18:39:43] 1001-5000
+[2026-06-02 18:39:43] Employees
+[2026-06-02 18:39:43] 2010
+[2026-06-02 18:39:43] Key takeaway
+[2026-06-02 18:39:43] Secop specializes in advanced hermetic compressors for commercial refrigeration, including high-performance models for light commercial and mobile applications. Their commitment to energy efficiency and innovative cooling solutions positions them as a leader in refrigeration technology, making them a key player in the development of sustainable compressor systems.
+[2026-06-02 18:39:43] Reference
+[2026-06-02 18:39:43] Find employees
+[2026-06-02 18:39:43] Similar companies
+[2026-06-02 18:39:43] Core business
+[2026-06-02 18:39:43] Secop — Sustainable Cooling Solutions
+[2026-06-02 18:39:43] J & E Hall International
+[2026-06-02 18:39:43] United Kingdom
+[2026-06-02 18:39:43] 251-500
+[2026-06-02 18:39:43] Employees
+[2026-06-02 18:39:43] 1785
+[2026-06-02 18:39:43] Key takeaway
+[2026-06-02 18:39:43] J & E Hall is a prominent manufacturer of refrigeration solutions, specializing in industrial and commercial refrigeration products, including a focus on remanufactured compressors. Their expertise in compressor technology and dedicated remanufacturing services ensures efficient and reliable solutions for various refrigeration needs.
+[2026-06-02 18:39:43] Reference
+[2026-06-02 18:39:43] Find employees
+[2026-06-02 18:39:43] Similar companies
+[2026-06-02 18:39:43] Product
+[2026-06-02 18:39:43] Remanufactured Refrigeration Compressors - J & E Hall
+[2026-06-02 18:39:43] Heatcraft Worldwide Refrigeration
+
+[2026-06-02 18:39:43] ---
+
+[2026-06-02 18:39:43] Global Top 10 Compressor Manufacturers: Atlas Copco, Ingersoll Rand, Siemens Energy, Gardner Denver, Mitsubishi Heavy Industries, Bauer Group, Sullair, Kaeser
+
+[2026-06-02 18:39:43] ---
+
+[2026-06-02 18:39:43] [2026 Update] Largest 10 Air Compressor Manufacturers | Industrial Supplier Price Guide
+[2026-06-02 18:39:43] Free cookie consent management tool by
+[2026-06-02 18:39:43] TermsFeed
+[2026-06-02 18:39:43] Update cookies preferences
+[2026-06-02 18:39:43] Skip to content
+[2026-06-02 18:39:43] [2026 Update] Global Top 10 Air Compressor Manufacturers | Top Industrial Air Compressor Supplier Guide
+[2026-06-02 18:39:43] Table of Contents
+[2026-06-02 18:39:43] Global Top 10 Compressor Manufacturers: Atlas Copco, Ingersoll Rand, Siemens Energy, Gardner Denver, Mitsubishi Heavy Industries, Bauer Group, Sullair, Kaeser Kompressoren, Hanwha Power Systems, and MINNUO Group.
+[2026-06-02 18:39:43] I. Global Top 10 Compressor Manufacturers
+[2026-06-02 18:39:43] 1.Atlas Copco
+[2026-06-02 18:39:43] Country:
+[2026-06-02 18:39:43] Sweden
+[2026-06-02 18:39:43] As a world-leading industrial equipment manufacturer, Atlas Copco offers various types of compressors, including screw, centrifugal, and reciprocating compressors. Its products are renowned for their high energy efficiency and exceptional reliability, and they are widely used in the manufacturing, energy, and construction sectors. Through continuous technological innovation and optimized management, Atlas Copco has consistently maintained a leading position in the global market.
+[2026-06-02 18:39:43] Official website:
+[2026-06-02 18:39:43] www.atlascopco.com
+[2026-06-02 18:39:43] Logo:
+[2026-06-02 18:39:43] 2.Ingersoll Rand
+[2026-06-02 18:39:43] Country:
+[2026-06-02 18:39:43] United States
+[2026-06-02 18:39:43] With a history spanning over a century, Ingersoll Rand has deep expertise in air compressors, vacuum equipment, and fluid 
+[2026-06-02 18:39:48]    ✅ Found 8 manufacturers:
+[2026-06-02 18:39:48]       • Danfoss A/S (Denmark) -- danfoss.com
+[2026-06-02 18:39:48]       • The BITZER Group (Germany) -- bitzer.de
+[2026-06-02 18:39:48]       • Copeland LP (United States) -- copeland.com
+[2026-06-02 18:39:48]       • Frick India Ltd. (India) -- frickweb.com
+[2026-06-02 18:39:48]       • Secop GmbH (Germany) -- secop.com
+[2026-06-02 18:39:48]       • J & E Hall International (United Kingdom) -- jehall.com
+[2026-06-02 18:39:48]       • Carlyle Compressor (United States) -- carlylecompressor.com
+[2026-06-02 18:39:48]       • Kirloskar Pneumatic Company Limited (India) -- kirloskarpneumatic.com
+Equipment Types:  29%|██████████████████▊                                               | 2/7 [00:36<01:34, 18.97s/type]
+[2026-06-02 18:39:48] >  Gas Compressors
+[2026-06-02 18:39:48]    🔍 Searching: "Gas Compressors" manufacturers companies Reciprocating Centrifugal to...
+[2026-06-02 18:39:50]    🌐 Scraping 5 pages...
+[2026-06-02 18:40:12]    🤖 Extracting manufacturers with Gemini...
+[2026-06-02 18:40:12] equipment_master: Compressor
+[2026-06-02 18:40:12] equipment_type: Gas Compressors
+[2026-06-02 18:40:12] subtypes: ['Reciprocating', 'Centrifugal']
+[2026-06-02 18:40:12] text: Ariel Corporation is the largest manufacturer of separable reciprocating gas compressors, providing high-quality products and services essential for the energy industry. Their compressors play a crucial role in the extraction, processing, transportation, storage, and distribution of natural gas. Our compressors are utilized by the global energy industry to extract, process, transport, store, and distribute natural gas from the wellhead to the end-user. Gaspro has been a key player in providing innovative gas compression solutions since 2004, specializing in single and two-stage compressor packages that enhance efficiency from low to high pressure. Gardner Denver is a leading provider of gas compressors, offering a broad range of products, including the HG24 Series Gas Screw Compressors, which are designed for high-volume gas applications such as field gathering and vapor recovery. Global Compression Services is a key player in the gas compressor industry, offering a comprehensive range of OEM and aftermarket parts, components, and engine accessories specifically for reciprocating compressors.
+
+[2026-06-02 18:40:12] ---
+
+[2026-06-02 18:40:12] Top 100 Gas Compressor Companies in 2026 | ensun
+[2026-06-02 18:40:12] Top Gas Compressor Companies
+[2026-06-02 18:40:12] The B2B platform for the best purchasing decision. Identify and compare relevant B2B manufacturers, suppliers and retailers
+[2026-06-02 18:40:12] Close
+[2026-06-02 18:40:12] Filter
+[2026-06-02 18:40:12] Result configuration
+[2026-06-02 18:40:12] Longlist
+[2026-06-02 18:40:12] Balanced
+[2026-06-02 18:40:12] Shortlist
+[2026-06-02 18:40:12] Continents
+[2026-06-02 18:40:12] Select continent
+[2026-06-02 18:40:12] Locations
+[2026-06-02 18:40:12] Result types
+[2026-06-02 18:40:12] Products
+[2026-06-02 18:40:12] Services
+[2026-06-02 18:40:12] Core business
+[2026-06-02 18:40:12] Company type
+[2026-06-02 18:40:12] Select company type
+[2026-06-02 18:40:12] Industries
+[2026-06-02 18:40:12] Select industry
+[2026-06-02 18:40:12] Company status
+[2026-06-02 18:40:12] Select company status preset
+[2026-06-02 18:40:12] Number of employees
+[2026-06-02 18:40:12] Min.
+[2026-06-02 18:40:12] Max.
+[2026-06-02 18:40:12] Founding year
+[2026-06-02 18:40:12] Clear filters
+[2026-06-02 18:40:12] Show  results
+[2026-06-02 18:40:12] 100 companies for Gas Compressor
+[2026-06-02 18:40:12] Key Takeaways
+[2026-06-02 18:40:12] Export
+[2026-06-02 18:40:12] Sort by:
+[2026-06-02 18:40:12] Relevance
+[2026-06-02 18:40:12] Ariel Corporation
+[2026-06-02 18:40:12] Mount Vernon, United States
+[2026-06-02 18:40:12] 1001-5000
+[2026-06-02 18:40:12] Employees
+[2026-06-02 18:40:12] 1966
+[2026-06-02 18:40:12] Key takeaway
+[2026-06-02 18:40:12] Ariel Corporation is the largest manufacturer of separable reciprocating gas compressors, providing high-quality products and services essential for the energy industry. Their compressors play a crucial role in the extraction, processing, transportation, storage, and distribution of natural gas.
+[2026-06-02 18:40:12] Reference
+[2026-06-02 18:40:12] Find employees
+[2026-06-02 18:40:12] Similar companies
+[2026-06-02 18:40:12] Core business
+[2026-06-02 18:40:12] Energy | Natural Gas Compressor | High Speed Reciprocating Compressor - arielcorp.com
+[2026-06-02 18:40:12] Ariel is the largest manufacturer of separable reciprocating gas compressors world-wide. Our compressors are utilized by the global energy industry to extract, process, transport, store, and distribute natural gas from the wellhead to the end-user.
+[2026-06-02 18:40:12] GasPro Compression Corp.
+[2026-06-02 18:40:12] Three Hills, Canada
+[2026-06-02 18:40:12] 11-50
+[2026-06-02 18:40:12] Employees
+[2026-06-02 18:40:12] 2003
+[2026-06-02 18:40:12] Key takeaway
+[2026-06-02 18:40:12] Gaspro has been a key player in providing innovative gas compression solutions since 2004, specializing in single and two-stage compressor packages that enhance efficiency from low to high pressure. Their robust and user-friendly compressor units are designed for both gas well applications and emission control, ensuring reliability and excellent service.
+[2026-06-02 18:40:12] Reference
+[2026-06-02 18:40:12] Find employees
+[2026-06-02 18:40:12] Similar companies
+[2026-06-02 18:40:12] Core business
+[2026-06-02 18:40:12] About Us | Gaspro Compression | Oil Well Optimization
+[2026-06-02 18:40:12] Gaspro specializes in building single and two stage compressor packages from 1 psi suction to 400 psi discharge. Learn more about Gaspro today!
+[2026-06-02 18:40:12] Enerflex
+[2026-06-02 18:40:12] Calgary, Canada
+[2026-06-02 18:40:12] 1001-5000
+[2026-06-02 18:40:12] Employees
+[2026-06-02 18:40:12] 1980
+[2026-06-02 18:40:12] Key takeaway
+[2026-06-02 18:40:12] Enerflex specializes in gas compression, offering a range of solutions including high-pressure injection reciprocating compressors. Their commitment to sustainable energy practices and advanced technologies positions them as a key provider in the energy infrastructure sector.
+[2026-06-02 18:40:12] Reference
+[2026-06-02 18:40:12] Find employees
+[2026-06-02 18:40:12] Similar companies
+[2026-06-02 18:40:12] Product
+[2026-06-02 18:40:12] Compression | Enerflex Ltd.
+[2026-06-02 18:40:12] Euro Gas Systems
+[2026-06-02 18:40:12] Târgu Mureș, Romania
+[2026-06-02 18:40:12] 51-100
+[2026-06-02 18:40:12] Employees
+[2026-06-02 18:40:12] 2010
+[2026-06-02 18:40:12] Key takeaway
+[2026-06-02 18:40:12] Euro Gas Systems provides a range of gas compressor packages, including both gas engine and electric motor-driven options, with power outputs from 30 KW to 5.0 MW. They also offer comprehensive aftermarket support and services for compressor maintenance and modification.
+[2026-06-02 18:40:12] Reference
+[2026-06-02 18:40:12] Find employees
+[2026-06-02 18:40:12] Similar companies
+[2026-06-02 18:40:12] Core business
+[2026-06-02 18:40:12] Euro Gas Systems – Your compression source
+[2026-06-02 18:40:12] Gardner Denver
+[2026-06-02 18:40:12] Milwaukee, United States
+[2026-06-02 18:40:12] 10001+
+[2026-06-02 18:40:12] Employees
+[2026-06-02 18:40:12] 1859
+[2026-06-02 18:40:12] Key takeaway
+[2026-06-02 18:40:12] G
+
+[2026-06-02 18:40:12] ---
+
+[2026-06-02 18:40:12] These include Baker Hughes, Howden, Siemens Energy, Elliott Group, Atlas Copco Gas & Process, Kobelco, Mitsubishi Compressor, Man Energy
+
+[2026-06-02 18:40:12] ---
+
+[2026-06-02 18:40:12] # 53 Reciprocating Compressor Manufacturers in 2026. This section provides an overview for reciprocating compressors as well as their applications and principles. Also, please take a look at  the list of 53 reciprocating compressor manufacturers  and their company rankings. Here are the top-ranked reciprocating compressor companies as of May, 2026: 1.Fluid Aire Dynamics, 2.Aron Alpha Industrial Krazy Glue, 3.KAESER COMPRESSORS. * What Is a Reciprocating Compressor? A reciprocating compressor is a device that compresses air using the reciprocating motion of a piston. Reciprocating compressors are also referred to as piston compressors in Japan. One of the advantages of this type of compressor is its ability to achieve a higher pressure ratio compared to other compressors. ### Applications of Reciprocating Compressors. Reciprocating compressors are widely used in pneumatic systems to supply compressed air. They are used in factories for instrumentation air piping, as well as in machine shops to power tools and machinery, and for drying equipment.
+
+[2026-06-02 18:40:12] ---
+
+[2026-06-02 18:40:12] 53 Reciprocating Compressor Manufacturers in 2026 | Metoree
+[2026-06-02 18:40:12] All Categories
+[2026-06-02 18:40:12] History
+[2026-06-02 18:40:12] Sensors
+[2026-06-02 18:40:12] Test Equipment
+[2026-06-02 18:40:12] Motors
+[2026-06-02 18:40:12] Pumps
+[2026-06-02 18:40:12] Relays
+[2026-06-02 18:40:12] Testing Equipment
+[2026-06-02 18:40:12] Analyzers
+[2026-06-02 18:40:12] Diodes
+[2026-06-02 18:40:12] Measuring Equipment
+[2026-06-02 18:40:12] Observation Equipment
+[2026-06-02 18:40:12] Printers
+[2026-06-02 18:40:12] Capacitors
+[2026-06-02 18:40:12] Switches
+[2026-06-02 18:40:12] Robots
+[2026-06-02 18:40:12] Cameras
+[2026-06-02 18:40:12] Connectors
+[2026-06-02 18:40:12] Meters & Instruments
+[2026-06-02 18:40:12] Generators
+[2026-06-02 18:40:12] Light Sources
+[2026-06-02 18:40:12] Power Supplies
+[2026-06-02 18:40:12] FA Equipment
+[2026-06-02 18:40:12] Machining / Machine Tools
+[2026-06-02 18:40:12] Boards & Circuit Boards
+[2026-06-02 18:40:12] Transformers
+[2026-06-02 18:40:12] Integrated Circuits
+[2026-06-02 18:40:12] Cables
+[2026-06-02 18:40:12] Transistors
+[2026-06-02 18:40:12] Controllers
+[2026-06-02 18:40:12] Electromagnetic Countermeasures
+[2026-06-02 18:40:12] Surge Countermeasures
+[2026-06-02 18:40:12] Drive Mechanisms & Components
+[2026-06-02 18:40:12] Scanners
+[2026-06-02 18:40:12] Servers
+[2026-06-02 18:40:12] Magnetic Materials
+[2026-06-02 18:40:12] Amplifiers
+[2026-06-02 18:40:12] Semiconductor Manufacturing
+[2026-06-02 18:40:12] Metallic Materials
+[2026-06-02 18:40:12] Terminals / Interfaces
+[2026-06-02 18:40:12] Temperature Control
+
+[2026-06-02 18:40:17]    ✅ Found 11 manufacturers:
+[2026-06-02 18:40:17]       • Ariel Corporation (United States) -- arielcorp.com
+[2026-06-02 18:40:17]       • Enerflex Ltd. (Canada) -- enerflex.com
+[2026-06-02 18:40:17]       • Atlas Copco Gas and Process (Germany) -- atlascopco.com
+[2026-06-02 18:40:17]       • Baker Hughes (United States) -- bakerhughes.com
+[2026-06-02 18:40:17]       • Siemens Energy (Germany) -- siemens-energy.com
+[2026-06-02 18:40:17]       • Elliott Group (United States) -- elliott-turbo.com
+[2026-06-02 18:40:17]       • MAN Energy Solutions (Germany) -- man-es.com
+[2026-06-02 18:40:17]       • Howden (United Kingdom) -- howden.com
+[2026-06-02 18:40:17]       • Kobe Steel, Ltd. (Kobelco) (Japan) -- kobelco.co.jp
+[2026-06-02 18:40:17]       • Mitsubishi Heavy Industries Compressor Corporation (Japan) -- mhicompressor.com
+[2026-06-02 18:40:17]       • Kaeser Kompressoren (Germany) -- kaeser.com
+Equipment Types:  43%|████████████████████████████▎                                     | 3/7 [01:05<01:35, 23.85s/type]
+[2026-06-02 18:40:18] >  Turbochargers/Superchargers
+[2026-06-02 18:40:18]    🔍 Searching: "Turbochargers/Superchargers" compressors manufacturers companies Cent...
+[2026-06-02 18:40:20]    🌐 Scraping 5 pages...
+[2026-06-02 18:40:25]    🤖 Extracting manufacturers with Gemini...
+[2026-06-02 18:40:25] equipment_master: Compressor
+[2026-06-02 18:40:25] equipment_type: Turbochargers/Superchargers
+[2026-06-02 18:40:25] subtypes: ['Centrifugal', 'Roots']
+[2026-06-02 18:40:25] text: IHI Machinery and Furnace Co., Ltd. HKS CO.,LTD. # 9 Supercharger Manufacturers in 2026. This section provides an overview for superchargers as well as their applications and principles. the list of 9 supercharger manufacturers and their company rankings. Here are the top-ranked supercharger companies as of May, 2026: 1.Magnuson Products LLC, 2.Vortech Engineering, Inc., 3.Duryea Technologies. A supercharger is a device that increases the power output of an engine by forcing compressed air into the engine's cylinders. This is different from a turbocharger, which uses the engine's exhaust gases to power the compressor. Electric superchargers were developed to overcome the limitations of traditional superchargers at high RPMs. They maintain air compression efficiency at high speeds and are typically used in light vehicles with smaller engines. ## List of 9 Supercharger Manufacturers. ### Magnuson Products LLC Manufacturer Distributor Superchargers. Magnuson Products LLC, founded in 1970 and located in Ventura, California, United States, is a manufacturer and distributor of OEM and aftermarket superchargers and supercharger systems.
+
+[2026-06-02 18:40:25] ---
+
+[2026-06-02 18:40:25] 9 Supercharger Manufacturers in 2026 | Metoree
+[2026-06-02 18:40:25] All Categories
+[2026-06-02 18:40:25] History
+[2026-06-02 18:40:25] Sensors
+[2026-06-02 18:40:25] Test Equipment
+[2026-06-02 18:40:25] Motors
+[2026-06-02 18:40:25] Pumps
+[2026-06-02 18:40:25] Relays
+[2026-06-02 18:40:25] Testing Equipment
+[2026-06-02 18:40:25] Analyzers
+[2026-06-02 18:40:25] Diodes
+[2026-06-02 18:40:25] Measuring Equipment
+[2026-06-02 18:40:25] Observation Equipment
+[2026-06-02 18:40:25] Printers
+[2026-06-02 18:40:25] Capacitors
+[2026-06-02 18:40:25] Switches
+[2026-06-02 18:40:25] Robots
+[2026-06-02 18:40:25] Cameras
+[2026-06-02 18:40:25] Connectors
+[2026-06-02 18:40:25] Meters & Instruments
+[2026-06-02 18:40:25] Generators
+[2026-06-02 18:40:25] Light Sources
+[2026-06-02 18:40:25] Power Supplies
+[2026-06-02 18:40:25] FA Equipment
+[2026-06-02 18:40:25] Machining / Machine Tools
+[2026-06-02 18:40:25] Boards & Circuit Boards
+[2026-06-02 18:40:25] Transformers
+[2026-06-02 18:40:25] Integrated Circuits
+[2026-06-02 18:40:25] Cables
+[2026-06-02 18:40:25] Transistors
+[2026-06-02 18:40:25] Controllers
+[2026-06-02 18:40:25] Electromagnetic Countermeasures
+[2026-06-02 18:40:25] Surge Countermeasures
+[2026-06-02 18:40:25] Drive Mechanisms & Components
+[2026-06-02 18:40:25] Scanners
+[2026-06-02 18:40:25] Servers
+[2026-06-02 18:40:25] Magnetic Materials
+[2026-06-02 18:40:25] Amplifiers
+[2026-06-02 18:40:25] Semiconductor Manufacturing
+[2026-06-02 18:40:25] Metallic Materials
+[2026-06-02 18:40:25] Terminals / Interfaces
+[2026-06-02 18:40:25] Temperature Control
+[2026-06-02 18:40:25] Fastening Components
+[2026-06-02 18:40:25] Network-related Equipment
+[2026-06-02 18:40:25] Development & Design
+[2026-06-02 18:40:25] Safety Devices
+[2026-06-02 18:40:25] Input & Display Devices
+[2026-06-02 18:40:25] Polymeric Materials
+[2026-06-02 18:40:25] Optical Components
+[2026-06-02 18:40:25] Purification Equipment
+[2026-06-02 18:40:25] Storage Devices
+[2026-06-02 18:40:25] Fixtures
+[2026-06-02 18:40:25] Heat Sources
+[2026-06-02 18:40:25] Sealing Devices
+[2026-06-02 18:40:25] Storage Products
+[2026-06-02 18:40:25] Fittings
+[2026-06-02 18:40:25] Valves
+[2026-06-02 18:40:25] Gloves
+[2026-06-02 18:40:25] Sanitary
+[2026-06-02 18:40:25] Springs
+[2026-06-02 18:40:25] Conveyors
+[2026-06-02 18:40:25] Resistance / Load
+[2026-06-02 18:40:25] Filters
+[2026-06-02 18:40:25] Converters & Transducers
+[2026-06-02 18:40:25] Cleaning Agents & Equipment
+[2026-06-02 18:40:25] Protective Materials & Equipment
+[2026-06-02 18:40:25] Hoses / Tubes
+[2026-06-02 18:40:25] Clean Room Supplies
+[2026-06-02 18:40:25] Clamps & Fasteners
+[2026-06-02 18:40:25] Adhesives & Repair Materials
+[2026-06-02 18:40:25] Analysis Software
+[2026-06-02 18:40:25] Stages
+[2026-06-02 18:40:25] Freezers
+[2026-06-02 18:40:25] Terminals
+[2026-06-02 18:40:25] Nozzles
+[2026-06-02 18:40:25] Cooling Equipment
+[2026-06-02 18:40:25] Bio
+[2026-06-02 18:40:25] Separation and Extraction Equipment
+[2026-06-02 18:40:25] Lubricator-related Equipment
+[2026-06-02 18:40:25] Business Efficiency Systems / Software
+[2026-06-02 18:40:25] Coils
+[2026-06-02 18:40:25] Paints
+[2026-06-02 18:40:25] Inorganic & Mineral Materials
+[2026-06-02 18:40:25] Dryers
+[2026-06-02 18:40:25] Blowers
+[2026-06-02 18:40:25] Agitators
+[2026-06-02 18:40:25] Weighing Equipment
+[2026-06-02 18:40:25] Packing Materials
+[2026-06-02 18:40:25] Processing Services
+[2026-06-02 18:40:25] Testing Services
+[2026-06-02 18:40:25] Tools
+[2026-06-02 18:40:25] Elements
+[2026-06-02 18:40:25] Chemicals
+[2026-06-02 18:40:25] Pesticides
+[2026-06-02 18:40:25] Building Materials
+[2026-06-02 18:40:25] Agricultural Materials
+[2026-06-02 18:40:25] Painting Services
+[2026-06-02 18:40:25] Vehicle related
+[2026-06-02 18:40:25] Construction Machinery
+[2026-06-02 18:40:25] Ship related
+[2026-06-02 18:40:25] Aircraft
+[2026-06-02 18:40:25] Transport Vehicles
+[2026-06-02 18:40:25] Global Environment
+[2026-06-02 18:40:25] Choose a language and region
+[2026-06-02 18:40:25] English
+[2026-06-02 18:40:25] United States
+[2026-06-02 18:40:25] Español
+[2026-06-02 18:40:25] España
+[2026-06-02 18:40:25] 日本語
+[2026-06-02 18:40:25] Metoree
+[2026-06-02 18:40:25] Vehicle related
+[2026-06-02 18:40:25] Superchargers
+[2026-06-02 18:40:25] Manufacturers
+[2026-06-02 18:40:25] Description
+[2026-06-02 18:40:25] 9 Manufacturers
+[2026-06-02 18:40:25] 1 Products
+[2026-06-02 18:40:25] 9 Supercharger Manufacturers in 2026
+[2026-06-02 18:40:25] This section provides an overview for superchargers as well as their applications and principles. Also, please take a look at
+[2026-06-02 18:40:25] the list of 9 supercharger manufacturers
+[2026-06-02 18:40:25] and
+[2026-06-02 18:40:25] their company rankings
+[2026-06-02 18:40:25] . Here are the top-ranked supercharger companies as of May, 2026: 1.Magnuson Products LLC, 2.Vortech Engineering, Inc., 3.Duryea Technologies.
+[2026-06-02 18:40:25] Table of Contents
+[2026-06-02 18:40:25] What Is
+[2026-06-02 18:40:25] Supercharger?
+[2026-06-02 18:40:25] List of 9 Supercharger Manufacturers
+[2026-06-02 18:40:25] Global Distribution of Supercharger Manufacturers by Country
+[2026-06-02 18:40:25] Categories Related to Superchargers
+[2026-06-02 18:40:25] Automotive ECUs
+[2026-06-02 18:40:25] What Is a Supercharger?
+[2026-06-02 18:40:25] A supercharger is a device that increases the power output of an engine by forcing compressed air into the engine's
+[2026-06-02 18:40:25] cylinders
+[2026-06-02 18:40:25] . This process enhances the engine's ability to burn fuel, thereby boosting its power. Superchargers are particularly beneficial for smaller engines, enabling them to produce more power than their size would typically allow.
+[2026-06-02 18:40:25] Principle of Superchargers
+[2026-06-02 18:40:25] Superchargers function by using the engine's crankshaft and a belt. The belt's rotation activates a
+[2026-06-02 18:40:25] compressor
+[2026-06-02 18:40:25] , which then compresses the air and feeds it into the cylinders. This is different from a
+[2026-06-02 18:40:25] turbocharger
+[2026-06-02 18:40:25] , whic
+
+[2026-06-02 18:40:25] ---
+
+[2026-06-02 18:40:25] But cheap pricing to the OEM’s is compelling enough to make up for all the deficiencies associated with the roots type supercharger. Please note that the roots type can be called a supercharger, but not a compressor, because it is not; it’s an air mover. One misconception is about the airflow path for these Roots superchargers: the air does not flow through or between the rotors but rather around, on the housing sides within the voids of the rotors. The roots supercharger traps air in a chamber between the rotor and the housing, in the void between the rotor’s lobes, and transports this trapped air to the outlet side, at the engine’s intake manifold. When operating a Roots supercharger at higher pressures, it is probable that half of the input power is consumed to make heat rather than pressure. Some are eager to point out that the roots type supercharger will make boost [pressure] at very low engine RPM1.
+
+[2026-06-02 18:40:25] ---
+
+[2026-06-02 18:40:25] Centrifugal vs Roots-Type Superchargers | Vortech Superchargers
+[2026-06-02 18:40:25] Skip to content
+[2026-06-02 18:40:25] Need help? Call us at
+[2026-06-02 18:40:25] (805) 247-0226
+[2026-06-02 18:40:25] Search
+[2026-06-02 18:40:25] Supercharger Systems
+[2026-06-02 18:40:25] Supercharger Tuner Kits
+[2026-06-02 18:40:25] Supercharger Head Units
+[2026-06-02 18:40:25] Fuel & Air Components
+[2026-06-02 18:40:25] Accessories & Merch
+[2026-06-02 18:40:25] Impeller Speed Calculator
+[2026-06-02 18:40:25] Account
+[2026-06-02 18:40:25] Search
+[2026-06-02 18:40:25] Cart
+[2026-06-02 18:40:25] Supercharger Systems
+[2026-06-02 18:40:25] Ford
+[2026-06-02 18:40:25] Mustang / Mustang GT
+[2026-06-02 18:40:25] Small Block Ford
+[2026-06-02 18:40:25] Mopar
+[2026-06-02 18:40:25] Dodge Challenger
+[2026-06-02 18:40:25] Dodge Charger
+[2026-06-02 18:40:25] Dodge Viper
+[2026-06-02 18:40:25] Dodge Ram
+[2026-06-02 18:40:25] Chrysler 300
+[2026-06-02 18:40:25] Wrangler / Grand Cherokee
+[2026-06-02 18:40:25] Chevy/GMC/Cadillac
+[2026-06-02 18:40:25] Camaro
+[2026-06-02 18:40:25] Corvette
+[2026-06-02 18:40:25] Big Block Chevy
+[2026-06-02 18:40:25] Small Block Chevy
+[2026-06-02 18:40:25] Import
+[2026-06-02 18:40:25] FR-S / BRZ / 86
+[2026-06-02 18:40:25] Nissan 350Z
+[2026-06-02 18:40:25] Infiniti G35
+[2026-06-02 18:40:25] Supercharger Tuner Kits
+[2026-06-02 18:40:25] Ford
+[2026-06-02 18:40:25] Mustang / Mustang GT
+[2026-06-02 18:40:25] Ford Trucks
+[2026-06-02 18:40:25] Mopar
+[2026-06-02 18:40:25] Challenger
+[2026-06-02 18:40:25] Charger
+[2026-06-02 18:40:25] Viper
+[2026-06-02 18:40:25] Grand Cherokee SRT8
+[2026-06-02 18:40:25] Chrysler 300/300C
+[2026-06-02 18:40:25] Dodge Ram Trucks
+[2026-06-02 18:40:25] Chevy/GMC/Cadillac
+[2026-06-02 18:40:25] Camaro
+[2026-06-02 18:40:25] Trucks & SUVs
+[2026-06-02 18:40:25] Chevy Big Block
+[2026-06-02 18:40:25] Chevy Small Block
+[2026-06-02 18:40:25] Import
+[2026-06-02 18:40:25] FR-S / BRZ / 86
+[2026-06-02 18:40:25] Nissan 350Z
+[2026-06-02 18:40:25] Infiniti G35
+[2026-06-02 18:40:25] Supercharger Head Units
+[2026-06-02 18:40:25] Fuel & Air Components
+[2026-06-02 18:40:25] Fuel Components
+[2026-06-02 18:40:25] Fuel Management Units
+[2026-06-02 18:40:29]    ✅ Found 6 manufacturers:
+[2026-06-02 18:40:29]       • IHI Corporation (Japan) -- ihi.co.jp
+[2026-06-02 18:40:29]       • Eaton Corporation (Ireland) -- eaton.com
+[2026-06-02 18:40:29]       • Vortech Engineering, Inc. (United States) -- vortechsuperchargers.com
+[2026-06-02 18:40:29]       • Magnuson Products LLC (United States) -- magnusonsuperchargers.com
+[2026-06-02 18:40:29]       • Mitsubishi Heavy Industries, Ltd. (Japan) -- mhi.com
+[2026-06-02 18:40:29]       • Garrett Motion Inc. (Switzerland) -- garrettmotion.com
+Equipment Types:  57%|█████████████████████████████████████▋                            | 4/7 [01:17<00:57, 19.13s/type]
+[2026-06-02 18:40:29] >  Medical Compressors
+[2026-06-02 18:40:29]    🔍 Searching: "Medical Compressors" manufacturers companies Oil-free diaphragm Scrol...
+[2026-06-02 18:40:32]    🌐 Scraping 5 pages...
+[2026-06-02 18:40:32]    🤖 Extracting manufacturers with Gemini...
+[2026-06-02 18:40:32] equipment_master: Compressor
+[2026-06-02 18:40:32] equipment_type: Medical Compressors
+[2026-06-02 18:40:32] subtypes: ['Oil-free diaphragm', 'Scroll']
+[2026-06-02 18:40:32] text: China Diaphragm Vacuum Pump, Compressor Pump Manufacturer - Maisi Pumps. # 5 Best Oil Free Vacuum Pump Manufacturers in China 2025. Are you looking for an oil-free vacuum pump manufacturer? Check out our listings, maybe you can find an oil-free vacuum pump supplier that meets your needs. Ningbo Yinzhou Maisi Mechanical & Electrical Co., Ltd. Is a scientific and technological enterprise engaged in R&D, manufacturing, and sales of oil-free miniature vacuum pumps, compressor pumps, air compressors, and accessories. If you need to buy an oil-free vacuum pump, he is your best choice! * Oil-Free Rotary Vane Vacuum Pump And Compressor. is a high-tech enterprise in China dedicated to manufacturing oil-free scroll vacuum pumps and compressors. The above is a detailed list of China's oil-free vacuum pump manufacturers. As a leading manufacturer of oil-free vacuum pumps in China, we can provide you with high-quality vacuum pump products at a more competitive price. Top 5 Diaphragm Vacuum Pump Manufacturers in 2025.
+
+[2026-06-02 18:40:32] ---
+
+[2026-06-02 18:40:32] 5 best Oil Free Vacuum Pump Manufacturers in China 2025 - Maisi
+[2026-06-02 18:40:32] English
+[2026-06-02 18:40:32] Français
+[2026-06-02 18:40:32] Pусский
+[2026-06-02 18:40:32] Deutsch
+[2026-06-02 18:40:32] 한국어
+[2026-06-02 18:40:32] Home
+[2026-06-02 18:40:32] About Us
+[2026-06-02 18:40:32] Company Profile
+[2026-06-02 18:40:32] Certificates
+[2026-06-02 18:40:32] FAQ
+[2026-06-02 18:40:32] Video
+[2026-06-02 18:40:32] Products
+[2026-06-02 18:40:32] Diaphragm Vacuum Pump
+[2026-06-02 18:40:32] Scuba Diving Compressor
+[2026-06-02 18:40:32] Laboratory Vacuum Pump
+[2026-06-02 18:40:32] Piston Compressor Pump
+[2026-06-02 18:40:32] Miniature Pump
+[2026-06-02 18:40:32] Small Water Pump
+[2026-06-02 18:40:32] Vacuum Lifter Pump
+[2026-06-02 18:40:32] High Pressure Air Compressor
+[2026-06-02 18:40:32] Pump Accessories
+[2026-06-02 18:40:32] Blog
+[2026-06-02 18:40:32] Articles
+[2026-06-02 18:40:32] News
+[2026-06-02 18:40:32] Download
+[2026-06-02 18:40:32] Service support
+[2026-06-02 18:40:32] Overseas warehouse
+[2026-06-02 18:40:32] Distributor
+[2026-06-02 18:40:32] Contact Us
+[2026-06-02 18:40:32] Welcome to
+[2026-06-02 18:40:32] contact us
+[2026-06-02 18:40:32] kelly@maisigroup.com
+[2026-06-02 18:40:32] +8618357458065
+[2026-06-02 18:40:32] English
+[2026-06-02 18:40:32] Français
+[2026-06-02 18:40:32] Pусский
+[2026-06-02 18:40:32] Deutsch
+[2026-06-02 18:40:32] 한국어
+[2026-06-02 18:40:32] Home
+[2026-06-02 18:40:32] About Us
+[2026-06-02 18:40:32] Company Profile
+[2026-06-02 18:40:32] Certificates
+[2026-06-02 18:40:32] FAQ
+[2026-06-02 18:40:32] Video
+[2026-06-02 18:40:32] Products
+[2026-06-02 18:40:32] Diaphragm Vacuum Pump
+[2026-06-02 18:40:32] Scuba Diving Compressor
+[2026-06-02 18:40:32] Laboratory Vacuum Pump
+[2026-06-02 18:40:32] Piston Compressor Pump
+[2026-06-02 18:40:32] Miniature Pump
+[2026-06-02 18:40:32] Small Water Pump
+[2026-06-02 18:40:32] Vacuum Lifter Pump
+[2026-06-02 18:40:32] High Pressure Air Compressor
+[2026-06-02 18:40:32] Pump Accessories
+[2026-06-02 18:40:32] Blog
+[2026-06-02 18:40:32] Articles
+[2026-06-02 18:40:32] News
+[2026-06-02 18:40:32] Download
+[2026-06-02 18:40:32] Service support
+[2026-06-02 18:40:32] Overseas warehouse
+[2026-06-02 18:40:32] Distributor
+[2026-06-02 18:40:32] Contact Us
+[2026-06-02 18:40:32] Blog
+[2026-06-02 18:40:32] Articles
+[2026-06-02 18:40:32] Articles
+[2026-06-02 18:40:32] Menu
+[2026-06-02 18:40:32] Articles
+[2026-06-02 18:40:32] News
+[2026-06-02 18:40:32] 5 Best Oil Free Vacuum Pump Manufacturers in China 2025
+[2026-06-02 18:40:32] 2024-12-18
+[2026-06-02 18:40:32] Maisi
+[2026-06-02 18:40:32] Are you looking for an oil-free vacuum pump manufacturer? Check out our listings, maybe you can find an oil-free vacuum pump supplier that meets your needs.
+[2026-06-02 18:40:32] 1. Maisi Pumps
+[2026-06-02 18:40:32] Headquarters:
+[2026-06-02 18:40:32] Zhejiang, China
+[2026-06-02 18:40:32] Website:
+[2026-06-02 18:40:32] www.maisigroup.com
+[2026-06-02 18:40:32] Company Profile:
+[2026-06-02 18:40:32] Ningbo Yinzhou Maisi Mechanical & Electrical Co., Ltd. Is a scientific and technological enterprise engaged in R&D, manufacturing, and sales of oil-free miniature vacuum pumps, compressor pumps, air compressors, and accessories.
+[2026-06-02 18:40:32] The company learns from foreign advanced technology and constantly updates and perfects products so that our products are exported abroad and have won good reputation from the broad customers. If you need to buy an
+[2026-06-02 18:40:32] oil-free vacuum pump
+[2026-06-02 18:40:32] , he is your best choice!
+[2026-06-02 18:40:32] Key Products:
+[2026-06-02 18:40:32] Diaphragm Vacuum Pump
+[2026-06-02 18:40:32] Piston Compressor Pump
+[2026-06-02 18:40:32] Miniature Pump
+[2026-06-02 18:40:32] Small Water Pump
+[2026-06-02 18:40:32] Vacuum Lifter Pump
+[2026-06-02 18:40:32] Laboratory Vacuum Pump
+[2026-06-02 18:40:32] Scuba Diving Compressor
+[2026-06-02 18:40:32] Get a Free Quote
+[2026-06-02 18:40:32] 2. Hokaido Vacuum
+[2026-06-02 18:40:32] Founded:
+[2026-06-02 18:40:32] 2002
+[2026-06-02 18:40:32] Headquarters:
+[2026-06-02 18:40:32] Guangdong, China
+[2026-06-02 18:40:32] Website:
+[2026-06-02 18:40:32] www.hokaidovac.com
+[2026-06-02 18:40:32] Company Profile:
+[2026-06-02 18:40:32] As a recognized and well-known manufacturer of vacuum pumps, Hokaido Vacuum Technology(Int'l) Group has been leading the development of vacuum technology for industrial applications since the year of establishment. With the continuously developing and daily internationalizing, Hokaido has built 3 highly modernized manufacturing centers with first-class processing equipment installed throughout china.
+[2026-06-02 18:40:32] Key Products:
+[2026-06-02 18:40:32] Oil-Lubricated Rotary Vane Vacuum Pump
+[2026-06-02 18:40:32] Oil-Free Claw Vacuum Pump
+[2026-06-02 18:40:32] Dry Screw Vacuum Pump
+[2026-06-02 18:40:32] Roots Booster Vacuum Pump
+[2026-06-02 18:40:32] Oil-Free Rotary Vane Vacuum Pump And Compressor
+[2026-06-02 18:40:32] Scroll Vacuum Pump
+[2026-06-02 18:40:32] Turbo Molecular Vacuum Pump
+[2026-06-02 18:40:32] Magnetic Floating Vacuum Pump
+[2026-06-02 18:40:32] Get a Free Quote
+[2026-06-02 18:40:32] 3. Hongbaoshi
+[2026-06-02 18:40:32] Headquarters:
+[2026-06-02 18:40:32] Zhejiang, China
+[2026-06-02 18:40:32] Website:
+[2026-06-02 18:40:32] www.hbspump.com
+[2026-06-02 18:40:32] Company Profile:
+[2026-06-02 18:40:32] Hongbaoshi Vacuum Equipment Factory of Wenling City, Zhejiang Province is located in the beautiful and emerging coastal city of Taizhou City, Zhejiang Province, with convenient transportation.
+[2026-06-02 18:40:32] Hongbaoshi Vacuum Equipment Factory is a mo
+
+[2026-06-02 18:40:32] ---
+
+[2026-06-02 18:40:32] # Medical Scroll Air Compressors. ## Medical Scroll Air Compressor for Healthcare Facilities. GlobalVac & Air offers oil-free medical scroll air compressors engineered for hospitals, surgical centers, and medical research facilities. Our compressors are designed to provide clean, dry air with minimal maintenance and high efficiency, making them ideal for critical care applications where performance, reliability, and air purity are paramount. ### Download Our Scroll Air Compressor Brochure. medical/lab scroll compressed air skid package. | CC03D-XXM-08V | 3 | 115 | 9.0 | 10.2 | 80 Gallon Vertical |. ## Why Choose GlobalVac & Air’s Medical Scroll Air Compressors? At **GlobalVac & Air**, our **Medical Scroll Air Compressors** are specifically engineered to provide **oil-free** and **quiet operation** for **critical medical applications**. Our medical scroll air compressors are fully compliant with NFPA 99 standards, ensuring that your facility meets the highest safety and performance requirements for medical air systems. GlobalVac & Air provides high-performance, oil-free medical air compressors designed to meet the unique needs of healthcare facilities.
+
+[2026-06-02 18:40:32] ---
+
+[2026-06-02 18:40:32] Medical Scroll Air Compressors - GlobalVac & Air
+[2026-06-02 18:40:32] Skip to content
+[2026-06-02 18:40:32] Medical Scroll Air Compressor for Healthcare Facilities
+[2026-06-02 18:40:32] GlobalVac & Air offers oil-free medical scroll air compressors engineered for hospitals, surgical centers, and medical research facilities. Our compressors are designed to provide clean, dry air with minimal maintenance and high efficiency, making them ideal for critical care applications where performance, reliability, and air purity are paramount.
+[2026-06-02 18:40:32] Download Our Scroll Air Compressor Brochure
+[2026-06-02 18:40:32] Duplex Stack
+[2026-06-02 18:40:32] Model Number
+[2026-06-02 18:40:32] Pump Motor Rating (HP)
+[2026-06-02 18:40:32] Maximum Pressure (PSIG)
+[2026-06-02 18:40:32] System capacity @ 50 psig (SCFM)
+[2026-06-02 18:40:32] System capacity @ 50 psig (ICFM)
+[2026-06-02 18:40:32] Receiver / Orientation
+[2026-06-02 18:40:32] Spec Sheet
+[2026-06-02 18:40:32] CC02D-XXM-08V
+[2026-06-02 18:40:32] 115
+[2026-06-02 18:40:32] 6.2
+[2026-06-02 18:40:32] 7.0
+[2026-06-02 18:40:32] 80 Gallon Vertical
+[2026-06-02 18:40:32] CCXXD-XXM
+[2026-06-02 18:40:32] CC03D-XXM-08V
+[2026-06-02 18:40:32] 115
+[2026-06-02 18:40:32] 9.0
+[2026-06-02 18:40:32] 10.2
+[2026-06-02 18:40:32] 80 Gallon Vertical
+
+[2026-06-02 18:40:35]    ✅ Found 3 manufacturers:
+[2026-06-02 18:40:35]       • GlobalVac & Air (United States) -- globalvac.com
+[2026-06-02 18:40:35]       • Hokaido Vacuum Technology (Int'l) Group (China) -- hokaidovac.com
+[2026-06-02 18:40:35]       • Ningbo Yinzhou Maisi Mechanical & Electrical Co., Ltd. (China) -- maisigroup.com
+Equipment Types:  71%|███████████████████████████████████████████████▏                  | 5/7 [01:23<00:28, 14.41s/type]
+[2026-06-02 18:40:35] >  Piston
+[2026-06-02 18:40:35]    🔍 Searching: "Piston" pumps manufacturers companies Simplex Duplex top global list...
+[2026-06-02 18:40:37]    🌐 Scraping 5 pages...
+[2026-06-02 18:40:37]    🤖 Extracting manufacturers with Gemini...
+[2026-06-02 18:40:37] equipment_master: Pump
+[2026-06-02 18:40:37] equipment_type: Piston
+[2026-06-02 18:40:37] subtypes: ['Simplex', 'Duplex', 'Triplex', 'Quadruplex', 'Quintuplex']
+[2026-06-02 18:40:37] text: # Global Piston Pumps Companies. This report lists the top Global Piston Pumps companies based on the 2023 & 2024 market share reports. Mordor Intelligence expert advisors conducted extensive research and identified these brands to be the leaders in the Global Piston Pumps industry. Global Piston Pumps Market Major Players. ## Global Piston Pumps Market Concentration. ## Global Piston Pumps Company List. ## Global Piston Pumps Report Snapshots. Mordor Intelligence's images may only be used with attribution back to Mordor Intelligence. Using the Mordor Intelligence's embed code renders the image with an attribution line that satisfies this requirement. In addition, by using the embed code, you reduce the load on your web server, because the image will be hosted on the same worldwide content delivery network Mordor Intelligence uses instead of your web server. go to our linkedin page. go to our facebook page. go to our twitter page. go to our pinterest page. go to our instagram page.
+
+[2026-06-02 18:40:37] ---
+
+[2026-06-02 18:40:37] Global Piston Pumps Companies - Top Company List
+[2026-06-02 18:40:37] Global Piston Pumps Companies
+[2026-06-02 18:40:37] This report lists the top Global Piston Pumps companies based on the 2023 & 2024 market share reports. Mordor Intelligence expert advisors conducted extensive research and identified these brands to be the leaders in the Global Piston Pumps industry.
+[2026-06-02 18:40:37] Global Piston Pumps Top Companies
+[2026-06-02 18:40:37] Bosch Rexroth
+[2026-06-02 18:40:37] Moog
+[2026-06-02 18:40:37] DAIKIN INDUSTRIES
+[2026-06-02 18:40:37] ALFA LAVAL
+[2026-06-02 18:40:37] Danfoss
+[2026-06-02 18:40:37] *Disclaimer: Top companies sorted in no particular order
+[2026-06-02 18:40:37] Global Piston Pumps Market Concentration
+[2026-06-02 18:40:37] Global Piston Pumps Company List
+[2026-06-02 18:40:37] Bosch Rexroth AG
+[2026-06-02 18:40:37] Moog Inc.
+[2026-06-02 18:40:37] DAIKIN INDUSTRIES, Ltd.
+[2026-06-02 18:40:37] Alfa Laval
+[2026-06-02 18:40:37] Danfoss
+[2026-06-02 18:40:37] Parker Hannifin Corp
+[2026-06-02 18:40:37] NACHI-FUJIKOSHI CORP.
+[2026-06-02 18:40:37] YUKEN KOGYO CO.,LTD
+[2026-06-02 18:40:37] HAWE Hydraulik SE
+[2026-06-02 18:40:37] Continental Hydraulics Inc.
+[2026-06-02 18:40:37] Access Company Profiles
+[2026-06-02 18:40:37] Need More Details on Market Players and Competitors?
+[2026-06-02 18:40:37] Download PDF
+[2026-06-02 18:40:37] Global Piston Pumps Report Snapshots
+[2026-06-02 18:40:37] Global Piston Pumps Companies
+[2026-06-02 18:40:37] Table Of Content
+[2026-06-02 18:40:37] Download PDF
+[2026-06-02 18:40:37] Global Piston Pumps Market
+[2026-06-02 18:40:37] Get a free sample of this report
+[2026-06-02 18:40:37] Personalized to your industry & role.
+[2026-06-02 18:40:37] 80% of our clients seek made-to-order reports. How do you want us to tailor yours?
+[2026-06-02 18:40:37] Want to use this image?
+[2026-06-02 18:40:37] Please copy & paste this embed code onto your site:
+[2026-06-02 18:40:37] Images must be attributed to Mordor Intelligence.
+[2026-06-02 18:40:37] Learn more
+[2026-06-02 18:40:37] About The Embed Code
+[2026-06-02 18:40:37] Mordor Intelligence's images may only be used with attribution back to Mordor Intelligence. Using the Mordor Intelligence's embed code renders the image with an attribution line that satisfies this requirement.
+[2026-06-02 18:40:37] In addition, by using the embed code, you reduce the load on your web server, because the image will be hosted on the same worldwide content delivery network Mordor Intelligence uses instead of your web server.
+[2026-06-02 18:40:37] Copied!
+[2026-06-02 18:40:37] Share Content
+[2026-06-02 18:40:37] Facebook
+[2026-06-02 18:40:37] LinkedIn
+[2026-06-02 18:40:37] Email
+[2026-06-02 18:40:37] Copy Link
+[2026-06-02 18:40:37] Embed Code
+[2026-06-02 18:40:37] Add Citation
+[2026-06-02 18:40:37] APA
+[2026-06-02 18:40:37] MLA
+[2026-06-02 18:40:37] Chicago
+[2026-06-02 18:40:37] Copy Citation
+[2026-06-02 18:40:37] Embed Code
+[2026-06-02 18:40:37] Get Embed Code
+[2026-06-02 18:40:37] Copied!
+[2026-06-02 18:40:37] Access Company Profiles
+[2026-06-02 18:40:37] Get business overview, business operations details specific to this market, products and services, latest developments and more...
+[2026-06-02 18:40:37] Global Piston Pumps Market
+[2026-06-02 18:40:37] Download Free PDF
+[2026-06-02 18:40:37] Buy Now
+[2026-06-02 18:40:37] Customize Your Report
+[2026-06-02 18:40:37] Buy Now
+[2026-06-02 18:40:37] Download Free PDF Now
+[2026-06-02 18:40:37] Complete your form and get your market insights delivered to your inbox
+[2026-06-02 18:40:37] Complete My Request
+[2026-06-02 18:40:37] Takes less than 10 seconds
+
+[2026-06-02 18:40:37] ---
+
+[2026-06-02 18:40:37] At Southern Fluid Systems, we offer a wide range of high-performance piston pumps designed to meet the diverse needs of industrial applications.
+
+[2026-06-02 18:40:37] ---
+
+[2026-06-02 18:40:37] Piston Pumps - Single Acting, Double Acting, Duplex & Triplex
+[2026-06-02 18:40:37] Skip to content
+[2026-06-02 18:40:37] Piston Pumps
+[2026-06-02 18:40:37] Deirdre Cavener
+[2026-06-02 18:40:37] 2025-07-03T12:11:34+00:00
+[2026-06-02 18:40:37] Piston Pumps: Powerful Solutions for Every Application
+[2026-06-02 18:40:37] At Southern Fluid Systems, we offer a wide range of high-performance piston pumps designed to meet the diverse needs of industrial applications. Our selection includes Single Acting Piston Pumps, Double Acting Piston Pumps, Duplex Pumps, and Triplex Pumps, each engineered to provide exceptional performance and reliability. Whether you’re looking for fluid handling pumps or pressure pumps, our industrial pumps are built to handle the toughest challenges. We specialize in providing custom pump solutions tailored to your requirements, ensuring that you get the right pump systems for your specific needs. With Southern Fluid Systems pumps, you can trust in top-quality fluid pumps that deliver power, efficiency, and durability for all your industrial operations.
+[2026-06-02 18:40:37] Single Acting Piston Pumps
+[2026-06-02 18:40:37] Our single acting piston pumps are designed for applications that require efficient fluid movement in one direction. With a sturdy construction and precision engineering, these pumps deliver consistent performance, minimizing downtime and maximizing efficiency. Ideal for moderate pressure systems, these pumps are perfect for applications where simplicity and reliability are key.
+[2026-06-02 18:40:37] Key Features:
+[2026-06-02 18:40:37] Cost-effective and easy to maintain
+[2026-06-02 18:40:37] Efficient fluid delivery in one direction
+[2026-06-02 18:40:37] High reliability for medium pressure systems
+[2026-06-02 18:40:37] Perfect for a wide variety of industrial uses
+[2026-06-02 18:40:37] Double Acting Piston Pumps
+[2026-06-02 18:40:37] When you need a more robust solution for demanding applications, our double acting piston pumps provide the perfect balance of power and efficiency. Capable of delivering fluid in both directions, these pumps offer higher flow rates and improved performance for systems requiring more fluid delivery. Whether you’re working with heavy-duty fluids or high-pressure systems, our double acting pumps are built to handle the task.
+[2026-06-02 18:40:37] Key Features:
+[2026-06-02 18:40:37] Delivers fluid in both directions for higher efficiency
+[2026-06-02 18:40:37] Designed for high-pressure and high-flow applications
+[2026-06-02 18:40:37] Durable construction for demanding environments
+[2026-06-02 18:40:37] Ideal for use in industries like oil and gas, construction, and manufacturing
+[2026-06-02 18:40:37] Duplex Pumps
+[2026-06-02 18:40:37] Duplex piston pumps are designed to provide continuous operation with dual pumping chambers. With two pistons working in tandem, these pumps deliver a steady, reliable flow of fluid, making them ideal for applications that require continuous pressure. Perfect for medium to high-pressure systems, duplex pumps are commonly used in industries like automotive, food processing,
+[2026-06-02 18:40:42]    ✅ Found 10 manufacturers:
+[2026-06-02 18:40:42]       • Bosch Rexroth AG (Germany) -- boschrexroth.com
+[2026-06-02 18:40:42]       • Moog Inc. (United States) -- moog.com
+[2026-06-02 18:40:42]       • Daikin Industries, Ltd. (Japan) -- daikin.com
+[2026-06-02 18:40:42]       • Danfoss A/S (Denmark) -- danfoss.com
+[2026-06-02 18:40:42]       • Parker Hannifin Corp (United States) -- parker.com
+[2026-06-02 18:40:42]       • HAWE Hydraulik SE (Germany) -- hawe.com
+[2026-06-02 18:40:42]       • Nachi-Fujikoshi Corp. (Japan) -- nachi-fujikoshi.co.jp
+[2026-06-02 18:40:42]       • Yuken Kogyo Co., Ltd. (Japan) -- yuken.co.jp
+[2026-06-02 18:40:42]       • Alfa Laval (Sweden) -- alfalaval.com
+[2026-06-02 18:40:42]       • Continental Hydraulics Inc. (United States) -- continentalhydraulics.com
+Equipment Types:  86%|████████████████████████████████████████████████████████▌         | 6/7 [01:30<00:11, 11.78s/type]
+[2026-06-02 18:40:42] >  Plunger
+[2026-06-02 18:40:42]    🔍 Searching: "Plunger" pumps manufacturers companies Simplex Duplex top global list...
+[2026-06-02 18:40:44]    🌐 Scraping 5 pages...
+[2026-06-02 18:41:18]    🤖 Extracting manufacturers with Gemini...
+[2026-06-02 18:41:18] equipment_master: Pump
+[2026-06-02 18:41:18] equipment_type: Plunger
+[2026-06-02 18:41:18] subtypes: ['Simplex', 'Duplex', 'Triplex', 'Quadruplex', 'Quintuplex']
+[2026-06-02 18:41:18] text: Nanjing Yalong Petrochemical Equipment Technology Co., Ltd. is a leading enterprise in the field of petrochemical equipment, especially in the production of plunger pumps. A plunger pump is a type of positive - displacement pump that uses a plunger or piston to move fluid through a cylinder. Plunger pumps are known for their high - pressure capabilities, precise flow control, and durability. They are widely used in various industries such as oil and gas, chemical processing, water treatment, and power generation. The company is committed to providing high - quality, reliable, and efficient plunger pump solutions for the petrochemical and related industries. * **Reliability**: Through the use of high - quality materials and advanced manufacturing processes, Nanjing Yalong's plunger pumps have a long service life and high reliability, reducing the frequency of maintenance and replacement. Grundfos is a global leader in advanced pump solutions and a trendsetter in water technology. In the field of plunger pumps, Flowserve offers a wide range of products for various industries.
+
+[2026-06-02 18:41:18] ---
+
+[2026-06-02 18:41:18] Top 10 Plunger Pump Suppliers in the world - Blog - Nanjing Yalong
+[2026-06-02 18:41:18] sales@jspump.cn
+[2026-06-02 18:41:18] +86-025-8616 6871
+[2026-06-02 18:41:18] Language
+[2026-06-02 18:41:18] English
+[2026-06-02 18:41:18] Português
+[2026-06-02 18:41:18] Deutsch
+[2026-06-02 18:41:18] Français
+[2026-06-02 18:41:18] русский
+[2026-06-02 18:41:18] Italiano
+[2026-06-02 18:41:18] 日本語
+[2026-06-02 18:41:18] عربي
+[2026-06-02 18:41:18] Español
+[2026-06-02 18:41:18] Home
+[2026-06-02 18:41:18] Blog
+[2026-06-02 18:41:18] Content
+[2026-06-02 18:41:18] Dec 11, 2025
+[2026-06-02 18:41:18] Top 10 Plunger Pump Suppliers in the world
+[2026-06-02 18:41:18] Introduction to Plunger Pump
+[2026-06-02 18:41:18] A plunger pump is a type of positive - displacement pump that uses a plunger or piston to move fluid through a cylinder. It operates by reciprocating motion, where the plunger moves back and forth within the cylinder to create a vacuum that draws in fluid during the suction stroke and then forces the fluid out under pressure during the discharge stroke. Plunger pumps are known for their high - pressure capabilities, precise flow control, and durability. They are widely used in various industries such as oil and gas, chemical processing, water treatment, and power generation.
+[2026-06-02 18:41:18] 1. Nanjing Yalong Petrochemical Equipment Technology Co., Ltd.
+[2026-06-02 18:41:18] Company Introduction
+[2026-06-02 18:41:18] Nanjing Yalong Petrochemical Equipment Technology Co., Ltd. is a leading enterprise in the field of petrochemical equipment, especially in the production of plunger pumps. The company is committed to providing high - quality, reliable, and efficient plunger pump solutions for the petrochemical and related industries. With advanced manufacturing technology and a professional R & D team, Nanjing Yalong can customize plunger pumps according to different customer requirements. They have a strict quality control system to ensure that each product meets the highest industry standards.
+[2026-06-02 18:41:18] Features and Advantages in Plunger Pump
+[2026-06-02 18:41:18] High - Pressure Performance
+[2026-06-02 18:41:18] : Their plunger pumps are designed to handle extremely high pressures, making them suitable for applications in high - pressure injection, well - testing, and other demanding petrochemical processes.
+[2026-06-02 18:41:18] Customization
+[2026-06-02 18:41:18] : The company offers a high degree of customization. They can adjust the pump's flow rate, pressure, and other parameters according to the specific needs of the customer's project, providing a personalized solution.
+[2026-06-02 18:41:18] Reliability
+[2026-06-02 18:41:18] : Through the use of high - quality materials and advanced manufacturing processes, Nanjing Yalong's plunger pumps have a long service life and high reliability, reducing the frequency of maintenance and replacement.
+[2026-06-02 18:41:18] Technical Support
+[2026-06-02 18:41:18] : They provide comprehensive technical support to customers, including installation guidance, operation training, and after - sales service.
+[2026-06-02 18:41:18] Website
+[2026-06-02 18:41:18] https://www.ylapipump.com/
+[2026-06-02 18:41:18] 2. Grundfos Holding A/S
+[2026-06-02 18:41:18] Company Introduction
+[2026-06-02 18:41:18] Grundfos is a global leader in advanced pump solutions and a trendsetter in water technology. Founded in 1945 in Denmark, the company has grown to become a multinational corporation with a presence in more than 56 countries. Grundfos is committed to sustainable development and aims to solve water - related challenges around the world. In the field of plunger pumps, Grundfos has a long - standing reputation for innovation and quality.
+[2026-06-02 18:41:18] Features and Advantages in Plunger Pump
+[2026-06-02 18:41:18] Energy Efficiency
+[2026-06-02 18:41:18] : Gr
+
+[2026-06-02 18:41:18] ---
+
+[2026-06-02 18:41:18] Reciprocating Simplex / Duplex / Triplex Plunger Pumps. Capacity ... Shree Rajeshwari Engineering Works is a leading supplier of Chemical Dosing Pumps and
+
+[2026-06-02 18:41:18] ---
+
+[2026-06-02 18:41:18] Reciprocating Simplex / Duplex / Triplex Pumps – Shree Rajeshwari Engineering Works
+[2026-06-02 18:41:18] Skip to content
+[2026-06-02 18:41:18] SINCE 1967
+[2026-06-02 18:41:18] Career
+[2026-06-02 18:41:18] Contact Us
+[2026-06-02 18:41:18] Inquiry
+[2026-06-02 18:41:18] Contact
+[2026-06-02 18:41:18] Home
+[2026-06-02 18:41:18] Company
+[2026-06-02 18:41:18] About Us
+[2026-06-02 18:41:18] Our Infrastructure
+[2026-06-02 18:41:18] Research And Development
+[2026-06-02 18:41:18] Quality Assurance
+[2026-06-02 18:41:18] Client Satisfaction
+[2026-06-02 18:41:18] Products
+[2026-06-02 18:41:18] Metering / Dosing Pump – Plunger Type
+[2026-06-02 18:41:18] Metering / Dosing Pump – Diaphragm Type
+[2026-06-02 18:41:18] Air / Gas Operated Metering / Dosing Pump
+[2026-06-02 18:41:18] Economical Metering / Dosing Pumps
+[2026-06-02 18:41:18] Reciprocating Simplex / Duplex / Triplex Pumps
+[2026-06-02 18:41:18] Cryogenic High Pressure Reciprocating Plunger Pump
+[2026-06-02 18:41:18] Universal Dye Alkali Mixer
+[2026-06-02 18:41:18] Positive Displacement Rotary Gear Pumps
+[2026-06-02 18:41:18] Dosing Skid / System
+[2026-06-02 18:41:18] Chemical Injection Quills & Service Tool Kit
+[2026-06-02 18:41:18] Pneumatic Dosing Skid / System
+[2026-06-02 18:41:18] Liquid CO₂ Pumps
+[2026-06-02 18:41:18] Inline Static Mixer
+[2026-06-02 18:41:18] Industry Application
+[2026-06-02 18:41:18] Oil & Gas Industries
+[2026-06-02 18:41:18] Power Plants
+[2026-06-02 18:41:18] Petrochemical & Refineries
+[2026-06-02 18:41:18] Sugar Industries
+[2026-06-02 18:41:18] Soap & Detergent Industries
+[2026-06-02 18:41:18] Food And Beverages
+[2026-06-02 18:41:18] Water Treatment Plants
+[2026-06-02 18:41:18] Cryogenic Applications
+[2026-06-02 18:41:18] Chemical & Fertilizer Industries
+[2026-06-02 18:41:18] Pharmaceuticals Industries
+[2026-06-02 18:41:18] Paper Industries
+[2026-06-02 18:41:18] Miscellaneous
+[2026-06-02 18:41:18] Network
+[2026-06-02 18:41:18] Reciprocating Simplex / Duplex / Triplex Pumps
+[2026-06-02 18:41:18] You are here:
+[2026-06-02 18:41:18] Home
+[2026-06-02 18:41:18] Products
+[2026-06-02 18:41:18] Reciprocating Simplex / Duplex /…
+[2026-06-02 18:41:18] Series
+[2026-06-02 18:41:18] UMDG / UMHD
+[2026-06-02 18:41:18] Type
+[2026-06-02 18:41:18] Reciprocating Simplex / Duplex / Triplex Plunger Pumps
+[2026-06-02 18:41:18] Capacity Range
+[2026-06-02 18:41:18] 10 LPH to 30,000 LPH in Single Simplex Version
+[2026-06-02 18:41:18] Max. Discharge Pressure
+[2026-06-02 18:41:18] Up to 2.500 kg/cm² in Plunger Pump Head and Up to 250 kg/cm² in Diaphragm Pump Head.
+[2026-06-02 18:41:18] Material Of Construction
+[2026-06-02 18:41:18] AISI 410, 430, 440C, 304, 316, 321, 304L, 316L, Alloy-20, Nickel-Molybdenum alloys, Hastealloy A,B,C, Titanium, PTFE, PVDF, PVC.
+[2026-06-02 18:41:18] Capacity Adjustments
+[2026-06-02 18:41:18] By Speed Variation, Through AC Frequency Variator, Hydraulic / Mechanical Variator or DC motors.
+[2026-06-02 18:41:18] Temperature Range
+[2026-06-02 18:41:18] -70° C to 350° C in Plunger Pumps.
+[2026-06-02 18:41:18] -13° C to 75° C in Diaphragm Pumps.
+[2026-06-02 18:41:18] Other Execut
+[2026-06-02 18:41:22]    ✅ Found 4 manufacturers:
+[2026-06-02 18:41:22]       • Nanjing Yalong Petrochemical Equipment Technology Co., Ltd. (China) -- ylapipump.com
+[2026-06-02 18:41:22]       • Grundfos Holding A/S (Denmark) -- grundfos.com
+[2026-06-02 18:41:22]       • Flowserve Corporation (United States) -- flowserve.com
+[2026-06-02 18:41:22]       • Shree Rajeshwari Engineering Works (India) -- srew.in
+Equipment Types: 100%|██████████████████████████████████████████████████████████████████| 7/7 [02:10<00:00, 20.93s/type]Equipment Types: 100%|██████████████████████████████████████████████████████████████████| 7/7 [02:10<00:00, 18.58s/type]
+
+[2026-06-02 18:41:22] 💾 Saved -> d:\apps\AI\Pump-Crawler\Equipment\data\output\manufacturers.json
+[2026-06-02 18:41:22]    Total manufacturers: 52
+
+[2026-06-02 18:41:22] ============================================================
+[2026-06-02 18:41:22]   STAGE 2 -- Model Lineups Search
+[2026-06-02 18:41:22] ============================================================
+[2026-06-02 18:41:22] Model Lineups:   0%|                                                                            | 0/52 [00:00<?, ?mfr/s]
+[2026-06-02 18:41:22] >  Atlas Copco  [Air Compressors]
+[2026-06-02 18:41:22]    🔍 Searching: Atlas Copco official Air Compressors product models lineup specificati...
+[2026-06-02 18:41:22]    🤖 Extracting models with Gemini...
+[2026-06-02 18:41:26]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 18:41:26]   [Exact Match] Found model with identical name 'G series'
+[2026-06-02 18:41:26]       [RAG Match] 'G series' overlaps with existing model 'G series' (De-duplicated)
+[2026-06-02 18:41:26]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 18:41:26]   [Exact Match] Found model with identical name 'TCX 90A'
+[2026-06-02 18:41:26]       [RAG Match] 'TCX 90A' overlaps with existing model 'TCX 90A' (De-duplicated)
+[2026-06-02 18:41:26]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 18:41:26]   [Exact Match] Found model with identical name 'NGP plus'
+[2026-06-02 18:41:26]       [RAG Match] 'NGP plus' overlaps with existing model 'NGP plus' (De-duplicated)
+[2026-06-02 18:41:26]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 18:41:26]   [Exact Match] Found model with identical name 'NGP'
+[2026-06-02 18:41:26]       [RAG Match] 'NGP' overlaps with existing model 'NGP' (De-duplicated)
+[2026-06-02 18:41:27]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 18:41:27]   [Exact Match] Found model with identical name 'XAS 185 150'
+[2026-06-02 18:41:27]       [RAG Match] 'XAS 185 150' overlaps with existing model 'XAS 185 150' (De-duplicated)
+[2026-06-02 18:41:27]    ✅ Found 5 models:
+[2026-06-02 18:41:27]       • G series  [G Series] [Existing DB Hit]
+[2026-06-02 18:41:27]       • TCX 90A  [None] [Existing DB Hit]
+[2026-06-02 18:41:27]       • NGP plus  [NGP Plus Series] [Existing DB Hit]
+[2026-06-02 18:41:27]       • NGP  [NGP Series] [Existing DB Hit]
+[2026-06-02 18:41:27]       • XAS 185 150  [None] [Existing DB Hit]
+Model Lineups:   2%|█▎                                                                  | 1/52 [00:04<03:58,  4.68s/mfr]
+[2026-06-02 18:41:27] >  Ingersoll Rand  [Air Compressors]
+[2026-06-02 18:41:27]    🔍 Searching: Ingersoll Rand official Air Compressors product models lineup specific...
+[2026-06-02 18:41:27]    🤖 Extracting models with Gemini...
+[2026-06-02 18:41:31]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 18:41:31]   [Exact Match] Found model with identical name 'E90i'
+[2026-06-02 18:41:31]       [RAG Match] 'E90i' overlaps with existing model 'E90i' (De-duplicated)
+[2026-06-02 18:41:31]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 18:41:31]   [Exact Match] Found model with identical name 'E110i'
+[2026-06-02 18:41:31]       [RAG Match] 'E110i' overlaps with existing model 'E110i' (De-duplicated)
+[2026-06-02 18:41:31]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 18:41:31]   [Exact Match] Found model with identical name 'E132i'
+[2026-06-02 18:41:31]       [RAG Match] 'E132i' overlaps with existing model 'E132i' (De-duplicated)
+[2026-06-02 18:41:31]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 18:41:31]   [Exact Match] Found model with identical name 'E160i'
+[2026-06-02 18:41:31]       [RAG Match] 'E160i' overlaps with existing model 'E160i' (De-duplicated)
+[2026-06-02 18:41:32]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 18:41:32]   [Exact Match] Found model with identical name 'E90n'
+[2026-06-02 18:41:32]       [RAG Match] 'E90n' overlaps with existing model 'E90n' (De-duplicated)
+[2026-06-02 18:41:32]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 18:41:32]   [Exact Match] Found model with identical name 'E110n'
+[2026-06-02 18:41:32]       [RAG Match] 'E110n' overlaps with existing model 'E110n' (De-duplicated)
+[2026-06-02 18:41:32]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 18:41:32]   [Exact Match] Found model with identical name 'SS3L5'
+[2026-06-02 18:41:32]       [RAG Match] 'SS3L5' overlaps with existing model 'SS3L5' (De-duplicated)
+[2026-06-02 18:41:32]    ✅ Found 7 models:
+[2026-06-02 18:41:32]       • E90i  [E-Series] [Existing DB Hit]
+[2026-06-02 18:41:32]       • E110i  [E-Series] [Existing DB Hit]
+[2026-06-02 18:41:32]       • E132i  [E-Series] [Existing DB Hit]
+[2026-06-02 18:41:32]       • E160i  [E-Series] [Existing DB Hit]
+[2026-06-02 18:41:32]       • E90n  [E-Series] [Existing DB Hit]
+[2026-06-02 18:41:32]       • E110n  [E-Series] [Existing DB Hit]
+[2026-06-02 18:41:32]       • SS3L5  [None] [Existing DB Hit]
+Model Lineups:   4%|██▌                                                                 | 2/52 [00:10<04:15,  5.10s/mfr]
+[2026-06-02 18:41:32] >  Kaeser Kompressoren  [Air Compressors]
+[2026-06-02 18:41:32]    🔍 Searching: Kaeser Kompressoren official Air Compressors product models lineup spe...
+[2026-06-02 18:41:38]    🌐 Fetching product page: https://us.kaeser.com/products-and-solutions...
+[2026-06-02 18:41:52]   [WARN] Playwright failed (Page.goto: Timeout 10000ms exceeded.
+[2026-06-02 18:41:52] Call log:
+[2026-06-02 18:41:52]   - navigating to "https://us.kae), falling back to static fetch
+[2026-06-02 18:41:58]    🤖 Extracting models with Gemini...
+[2026-06-02 18:42:01]    🔄 Fallback: direct model search...
+Model Lineups:   4%|██▌                                                                 | 2/52 [00:57<24:05, 28.91s/mfr]
+[2026-06-02 18:42:20] Traceback (most recent call last):
+[2026-06-02 18:42:20]   File "d:\apps\AI\Pump-Crawler\Equipment\main.py", line 209, in <module>
+[2026-06-02 18:42:20]     main()
+[2026-06-02 18:42:20]     ~~~~^^
+[2026-06-02 18:42:20]   File "d:\apps\AI\Pump-Crawler\Equipment\main.py", line 205, in main
+[2026-06-02 18:42:20]     run_cli_pipeline(args)
+[2026-06-02 18:42:20]     ~~~~~~~~~~~~~~~~^^^^^^
+[2026-06-02 18:42:20]   File "d:\apps\AI\Pump-Crawler\Equipment\main.py", line 167, in run_cli_pipeline
+[2026-06-02 18:42:20]     models_data = stage2.run(mfrs_data, db=db)
+[2026-06-02 18:42:20]   File "d:\apps\AI\Pump-Crawler\Equipment\stages\stage2_models.py", line 141, in run
+[2026-06-02 18:42:20]     fallback_text    = scrape_search_results(fallback_results, max_chars=5000)
+[2026-06-02 18:42:20]   File "d:\apps\AI\Pump-Crawler\Equipment\utils\scraper.py", line 326, in scrape_search_results
+[2026-06-02 18:42:20]     page_text = fetch_static(url, max_chars=3000)
+[2026-06-02 18:42:20]   File "C:\Users\verma\AppData\Local\Programs\Python\Python313\Lib\site-packages\tenacity\__init__.py", line 331, in wrapped_f
+[2026-06-02 18:42:20]     return copy(f, *args, **kw)
+[2026-06-02 18:42:20]   File "C:\Users\verma\AppData\Local\Programs\Python\Python313\Lib\site-packages\tenacity\__init__.py", line 470, in __call__
+[2026-06-02 18:42:20]     do = self.iter(retry_state=retry_state)
+[2026-06-02 18:42:20]   File "C:\Users\verma\AppData\Local\Programs\Python\Python313\Lib\site-packages\tenacity\__init__.py", line 371, in iter
+[2026-06-02 18:42:20]     result = action(retry_state)
+[2026-06-02 18:42:20]   File "C:\Users\verma\AppData\Local\Programs\Python\Python313\Lib\site-packages\tenacity\__init__.py", line 393, in <lambda>
+[2026-06-02 18:42:20]     self._add_action_func(lambda rs: rs.outcome.result())
+[2026-06-02 18:42:20]                                      ~~~~~~~~~~~~~~~~~^^
+[2026-06-02 18:42:20]   File "C:\Users\verma\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 449, in result
+[2026-06-02 18:42:20]     return self.__get_result()
+[2026-06-02 18:42:20]            ~~~~~~~~~~~~~~~~~^^
+[2026-06-02 18:42:20]   File "C:\Users\verma\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 401, in __get_result
+[2026-06-02 18:42:20]     raise self._exception
+[2026-06-02 18:42:20]   File "C:\Users\verma\AppData\Local\Programs\Python\Python313\Lib\site-packages\tenacity\__init__.py", line 473, in __call__
+[2026-06-02 18:42:20]     result = fn(*args, **kwargs)
+[2026-06-02 18:42:20]   File "d:\apps\AI\Pump-Crawler\Equipment\utils\scraper.py", line 91, in fetch_static
+[2026-06-02 18:42:20]     time.sleep(REQUEST_DELAY_SECONDS)
+[2026-06-02 18:42:20]     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+[2026-06-02 18:42:20] KeyboardInterrupt
+[2026-06-02 18:42:20] [2026-06-02 18:42:55] [System] Global timestamped logging active. Appending to: backend.log
+
+[2026-06-02 18:43:12] =================================================================
+[2026-06-02 18:43:12]    Industrial Equipment Specs Discovery CLI Pipeline
+[2026-06-02 18:43:12]    Powered by Gemini & PostgreSQL Vector Deduplication
+[2026-06-02 18:43:12] =================================================================
+
+
+[2026-06-02 18:43:12] ================================================================================
+[2026-06-02 18:43:12] [WARNING] The pgvector extension is not installed or available in PostgreSQL.
+[2026-06-02 18:43:12]   -> The system will automatically fall back to pure-Python cosine similarity search.
+[2026-06-02 18:43:12]   -> You do not need to compile pgvector now! The system is fully operational using safe fallbacks.
+[2026-06-02 18:43:12] ================================================================================
+
+[2026-06-02 18:43:12] [Healing] Retroactively matching existing models with null subtypes...
+[2026-06-02 18:43:12] [DB] Database and tables initialized successfully!
+[2026-06-02 18:43:12] ====================
+[2026-06-02 18:43:12] [<database.models.EquipmentType object at 0x000002B54FC18590>, <database.models.EquipmentType object at 0x000002B54FAB6AD0>, <database.models.EquipmentType object at 0x000002B54FAB7610>, <database.models.EquipmentType object at 0x000002B54FC48180>, <database.models.EquipmentType object at 0x000002B54FC48510>, <database.models.EquipmentType object at 0x000002B54FC39FD0>, <database.models.EquipmentType object at 0x000002B54FAC1040>]
+[2026-06-02 18:43:12] ====================
+[2026-06-02 18:43:12]   Target Types : ['Air Compressors', 'Refrigeration Compressors', 'Gas Compressors', 'Turbochargers/Superchargers', 'Medical Compressors', 'Piston', 'Plunger']
+[2026-06-02 18:43:12]   Stages       : [1, 2, 3]
+[2026-06-02 18:43:12]   Cache        : ON
+[2026-06-02 18:43:12]   Started at   : 2026-06-02 18:43:12
+
+
+[2026-06-02 18:43:12] ============================================================
+[2026-06-02 18:43:12]   STAGE 1 -- Manufacturer Discovery
+[2026-06-02 18:43:12] ============================================================
+[2026-06-02 18:43:12] Equipment Types:   0%|                                                                          | 0/7 [00:00<?, ?type/s]
+[2026-06-02 18:43:12] >  Air Compressors
+[2026-06-02 18:43:12]    🔍 Searching: "Air Compressors" manufacturers companies top global list...
+[2026-06-02 18:43:12]    🌐 Scraping 5 pages...
+[2026-06-02 18:43:12]    🤖 Extracting manufacturers with Gemini...
+[2026-06-02 18:43:12] equipment_master: Compressor
+[2026-06-02 18:43:12] equipment_type: Air Compressors
+[2026-06-02 18:43:12] subtypes: []
+[2026-06-02 18:43:12] text: At Market.us News, We strive to bring you the most accurate and up-to-date information by utilizing a variety of resources, including paid and free sources, primary research, and phone interviews. Our data is available to the public free of charge, and we encourage you to use it to inform your personal or business decisions. ## Air Compressor Market Overview. Industrial growth and automation, energy efficiency initiatives, infrastructural development, and the expansion of the healthcare sector drive the global air compressor market. Atlas Copco, a leading figure in the air compressor industry, continues to innovate with sustainable solutions. These initiatives highlight Atlas Copco’s dedication to sustainability, innovation, and market expansion in air compressor technologies. Ingersoll Rand, based in Davidson, North Carolina, USA, maintains a strong global footprint spanning North America, Europe (including Germany, France, the UK, and Italy), Asia-Pacific (including China, India, and Japan), Latin America (Brazil, Mexico, Argentina), and the Middle East/Africa (South Africa, UAE).
+
+[2026-06-02 18:43:12] ---
+
+[2026-06-02 18:43:12] Air Compressor Companies | Best Efficiency and Longevity
+[2026-06-02 18:43:12] email
+[2026-06-02 18:43:12] inquiry@market.us
+[2026-06-02 18:43:12] phone
+[2026-06-02 18:43:12] +1 718 874 1545 (International)
+[2026-06-02 18:43:12] phone
+[2026-06-02 18:43:12] +91 78878 22626 (Asia)
+[2026-06-02 18:43:12] menu
+[2026-06-02 18:43:12] more_vert
+[2026-06-02 18:43:12] Home
+[2026-06-02 18:43:12] Company
+[2026-06-02 18:43:12] Top 10 Air Compressor Companies | Best Efficiency and Longevity
+[2026-06-02 18:43:12] Tajammul Pangarkar
+[2026-06-02 18:43:12] Updated ·
+[2026-06-02 18:43:12] Jul 23, 2024
+[2026-06-02 18:43:12] SHARE:
+[2026-06-02 18:43:12] Market.us News, we strive to bring you the most accurate and up-to-date information by utilizing a variety of resources, including paid and free sources, primary research, and phone interviews.
+[2026-06-02 18:43:12] Learn
+[2026-06-02 18:43:12] more.
+[2026-06-02 18:43:12] close
+[2026-06-02 18:43:12] Advertiser Disclosure
+[2026-06-02 18:43:12] At Market.us News, We strive to bring you the most accurate and up-to-date information by utilizing a variety of resources, including paid and free sources, primary research, and phone interviews. Our data is available to the public free of charge, and we encourage you to use it to inform your personal or business decisions. If you choose to republish our data on your own website, we simply ask that you provide a proper citation or link back to the respective page on Market.us News. We appreciate your support and look forward to continuing to provide valuable insights for our audience.
+[2026-06-02 18:43:12] Table of Contents
+[2026-06-02 18:43:12] Air Compressor Market Overview
+[2026-06-02 18:43:12] Market Drivers
+[2026-06-02 18:43:12] Market Size
+[2026-06-02 18:43:12] List of Major Companies
+[2026-06-02 18:43:12] Atlas-Copco
+[2026-06-02 18:43:12] Ingersoll-Rand
+[2026-06-02 18:43:12] Hitachi
+[2026-06-02 18:43:12] Kobe-Steel
+[2026-06-02 18:43:12] Bauer
+[2026-06-02 18:43:12] Doosan
+[2026-06-02 18:43:12] Siemens
+[2026-06-02 18:43:12] Danfoss
+[2026-06-02 18:43:12] Sulzer
+[2026-06-02 18:43:12] Mitsubishi
+[2026-06-02 18:43:12] Air Compressor Market Overview
+[2026-06-02 18:43:12] An air compressor is a device that converts power into potential energy stored in pressurized air. They are used widely in industries like manufacturing, construction, and automotive.
+[2026-06-02 18:43:12] They come in various types, including reciprocating (piston) compressors for light and industrial use, and rotary screw compressors for continuous industrial operation. Centrifugal compressors for large-scale applications, and scroll compressors for quieter operations in HVAC systems.
+[2026-06-02 18:43:12] Key components include the motor, pump, tank, pressure switch, regulator, inlet, and outlet valves.
+[2026-06-02 18:43:12] Regular maintenance, such as checking filters and connections, draining moisture, and lubricating parts, ensures efficiency and longevity. Safety measures, including proper ventilation and PPE usage, are essential for safe operation.
+[2026-06-02 18:43:12] Market Drivers
+[2026-06-02 18:43:12] Industrial growth and automation, energy efficiency initiatives, infrastructural development, and the expansion of the healthcare sector drive the global air compressor market.
+[2026-06-02 18:43:12] Increased demand in the oil and gas industry and technological advancements, such as IoT integration, also propel market growth.
+[2026-06-02 18:43:12] Furthermore, the availability of comprehensive maintenance and aftermarket services encourages investment in high-quality air compressors, ensuring efficient and long-lasting operations.
+[2026-06-02 18:43:12] These factors collectively contribute to the market’s steady expansion, catering to diverse industrial needs.
+[2026-06-02 18:43:12] Market Size
+[2026-06-02 18:43:12] The Global
+[2026-06-02 18:43:12] Air Compressor Market
+[2026-06-02 18:43:12] is set to grow from USD
+[2026-06-02 18:43:12] 35.3
+[2026-06-02 18:43:12] billion in
+[2026-06-02 18:43:12] 2023
+[2026-06-02 18:43:12] to USD
+[2026-06-02 18:43:12] 55.9
+[2026-06-02 18:43:12] billion by
+[2026-06-02 18:43:12] 2033
+[2026-06-02 18:43:12] , with a
+[2026-06-02 18:43:12] 4.7%
+[2026-06-02 18:43:12] CAGR from
+[2026-06-02 18:43:12] 2024
+[2026-06-02 18:43:12] 2033
+[2026-06-02 18:43:12] List of Major Companies
+[2026-06-02 18:43:12] These are the top 10 companies operating in the Air Compressor
+
+[2026-06-02 18:43:12] ---
+
+[2026-06-02 18:43:12] # Top 10 Industrial Air Compressor Manufacturers in the World – 2025 Edition. In 2025, the global industrial air compressor market continues to evolve with increasing demands for energy efficiency, smart controls, and reliability. Below is our curated list of the **Top 10 Global Air Compressor Brands**, trusted across industries such as metal fabrication, food & beverage, electronics, and laser technology. Founded in 1873, **Atlas Copco** is the undisputed leader in industrial compressed air technology. Headquartered in Stockholm, Sweden, the company offers a full range of **oil-injected rotary screw, oil-free centrifugal, scroll, and piston compressors**. Their solutions are also backed by a vast global service network, making them a go-to for international enterprises. In addition to their oil-lubricated and oil-free rotary screw models, Kaeser also offers complete compressed air stations, including **dryers, filters, controllers, and air management systems**. As a rising star in the global air compressor industry, **Baldor Air** has established itself as a trusted manufacturer of **dry oil-free screw compressors, water-injected screw compressors, and integrated compressor systems**.
+
+[2026-06-02 18:43:12] ---
+
+[2026-06-02 18:43:12] Top 10 Industrial Air Compressor Manufacturers in the World – 2025 Edition - B&D Energy Saving Air Compressor
+[2026-06-02 18:43:12] Skip to content
+[2026-06-02 18:43:12] Top 10 Industrial Air Compressor Manufacturers in the World – 2025 Edition
+[2026-06-02 18:43:12] Baldor Air
+[2026-06-02 18:43:12] July 16, 2025
+[2026-06-02 18:43:12] 5:46 pm
+[2026-06-02 18:43:12] In 2025, the global industrial air compressor market continues to evolve with increasing demands for energy efficiency, smart controls, and reliability. Below is our curated list of the
+[2026-06-02 18:43:12] Top 10 Global Air Compressor Brands
+[2026-06-02 18:43:12] , trusted across industries such as metal fabrication, food & beverage, electronics, and laser technology.
+[2026-06-02 18:43:12] Atlas Copco (Sweden)
+[2026-06-02 18:43:12] Founded in 1873,
+[2026-06-02 18:43:12] Atlas Copco
+[2026-06-02 18:43:12] is the undisputed leader in industrial compressed air technolog
+[2026-06-02 18:43:18]    ✅ Found 10 manufacturers:
+[2026-06-02 18:43:18]       • Atlas Copco (Sweden) -- atlascopco.com
+[2026-06-02 18:43:18]       • Ingersoll Rand (USA) -- ingersollrand.com
+[2026-06-02 18:43:18]       • Kaeser Kompressoren (Germany) -- kaeser.com
+[2026-06-02 18:43:18]       • Hitachi (Japan) -- hitachi.com
+[2026-06-02 18:43:18]       • Kobe Steel (Kobelco) (Japan) -- kobelco.co.jp
+[2026-06-02 18:43:18]       • Bauer Kompressoren (Germany) -- bauer-kompressoren.de
+[2026-06-02 18:43:18]       • Doosan (South Korea) -- doosan.com
+[2026-06-02 18:43:18]       • Mitsubishi Heavy Industries (Japan) -- mhi.com
+[2026-06-02 18:43:18]       • Sulzer (Switzerland) -- sulzer.com
+[2026-06-02 18:43:18]       • Baldor Air (China) -- baldorair.com
+Equipment Types:  14%|█████████▍                                                        | 1/7 [00:05<00:35,  5.89s/type]
+[2026-06-02 18:43:18] >  Refrigeration Compressors
+[2026-06-02 18:43:18]    🔍 Searching: "Refrigeration Compressors" manufacturers companies Reciprocating Scro...
+[2026-06-02 18:43:18]    🌐 Scraping 5 pages...
+[2026-06-02 18:44:41] [System] Global timestamped logging active. Appending to: backend.log
+
+[2026-06-02 18:45:17] =================================================================
+[2026-06-02 18:45:18]    Industrial Equipment Specs Discovery CLI Pipeline
+[2026-06-02 18:45:19]    Powered by Gemini & PostgreSQL Vector Deduplication
+[2026-06-02 18:45:19] =================================================================
+
+
+[2026-06-02 18:45:22] ================================================================================
+[2026-06-02 18:45:22] [WARNING] The pgvector extension is not installed or available in PostgreSQL.
+[2026-06-02 18:45:22]   -> The system will automatically fall back to pure-Python cosine similarity search.
+[2026-06-02 18:45:22]   -> You do not need to compile pgvector now! The system is fully operational using safe fallbacks.
+[2026-06-02 18:45:22] ================================================================================
+
+[2026-06-02 18:45:22] [Healing] Retroactively matching existing models with null subtypes...
+[2026-06-02 18:45:22] [DB] Database and tables initialized successfully!
+[2026-06-02 18:48:36] ====================
+[2026-06-02 18:48:38] [<database.models.EquipmentType object at 0x000001D299936120>, <database.models.EquipmentType object at 0x000001D29996FC50>, <database.models.EquipmentType object at 0x000001D299A44690>, <database.models.EquipmentType object at 0x000001D29995A3F0>, <database.models.EquipmentType object at 0x000001D29995A650>, <database.models.EquipmentType object at 0x000001D299A2F2F0>, <database.models.EquipmentType object at 0x000001D2999569C0>]
+[2026-06-02 18:48:40] ====================
+[2026-06-02 18:48:41]   Target Types : ['Air Compressors', 'Refrigeration Compressors', 'Gas Compressors', 'Turbochargers/Superchargers', 'Medical Compressors', 'Piston', 'Plunger']
+[2026-06-02 18:49:38]   Stages       : [1, 2, 3]
+[2026-06-02 18:50:49]   Cache        : ON
+[2026-06-02 18:50:52]   Started at   : 2026-06-02 18:50:52
+
+
+[2026-06-02 18:53:27] ============================================================
+[2026-06-02 18:53:27]   STAGE 1 -- Manufacturer Discovery
+[2026-06-02 18:53:27] ============================================================
+[2026-06-02 18:53:27] Equipment Types:   0%|                                                            | 0/7 [00:00<?, ?type/s]
+[2026-06-02 18:53:27] >  Air Compressors
+[2026-06-02 18:53:27]    🔍 Searching: "Air Compressors" manufacturers companies top global list...
+[2026-06-02 18:53:27]    🌐 Scraping 5 pages...
+[2026-06-02 18:53:27]    🤖 Extracting manufacturers with Gemini...
+[2026-06-02 18:53:27] equipment_master: Compressor
+[2026-06-02 18:53:27] equipment_type: Air Compressors
+[2026-06-02 18:53:27] subtypes: []
+[2026-06-02 18:53:27] text: At Market.us News, We strive to bring you the most accurate and up-to-date information by utilizing a variety of resources, including paid and free sources, primary research, and phone interviews. Our data is available to the public free of charge, and we encourage you to use it to inform your personal or business decisions. ## Air Compressor Market Overview. Industrial growth and automation, energy efficiency initiatives, infrastructural development, and the expansion of the healthcare sector drive the global air compressor market. Atlas Copco, a leading figure in the air compressor industry, continues to innovate with sustainable solutions. These initiatives highlight Atlas Copco’s dedication to sustainability, innovation, and market expansion in air compressor technologies. Ingersoll Rand, based in Davidson, North Carolina, USA, maintains a strong global footprint spanning North America, Europe (including Germany, France, the UK, and Italy), Asia-Pacific (including China, India, and Japan), Latin America (Brazil, Mexico, Argentina), and the Middle East/Africa (South Africa, UAE).
+
+[2026-06-02 18:53:27] ---
+
+[2026-06-02 18:53:27] Air Compressor Companies | Best Efficiency and Longevity
+[2026-06-02 18:53:27] email
+[2026-06-02 18:53:27] inquiry@market.us
+[2026-06-02 18:53:27] phone
+[2026-06-02 18:53:27] +1 718 874 1545 (International)
+[2026-06-02 18:53:27] phone
+[2026-06-02 18:53:27] +91 78878 22626 (Asia)
+[2026-06-02 18:53:27] menu
+[2026-06-02 18:53:27] more_vert
+[2026-06-02 18:53:27] Home
+[2026-06-02 18:53:27] Company
+[2026-06-02 18:53:27] Top 10 Air Compressor Companies | Best Efficiency and Longevity
+[2026-06-02 18:53:27] Tajammul Pangarkar
+[2026-06-02 18:53:27] Updated ·
+[2026-06-02 18:53:27] Jul 23, 2024
+[2026-06-02 18:53:27] SHARE:
+[2026-06-02 18:53:27] Market.us News, we strive to bring you the most accurate and up-to-date information by utilizing a variety of resources, including paid and free sources, primary research, and phone interviews.
+[2026-06-02 18:53:27] Learn
+[2026-06-02 18:53:27] more.
+[2026-06-02 18:53:27] close
+[2026-06-02 18:53:27] Advertiser Disclosure
+[2026-06-02 18:53:27] At Market.us News, We strive to bring you the most accurate and up-to-date information by utilizing a variety of resources, including paid and free sources, primary research, and phone interviews. Our data is available to the public free of charge, and we encourage you to use it to inform your personal or business decisions. If you choose to republish our data on your own website, we simply ask that you provide a proper citation or link back to the respective page on Market.us News. We appreciate your support and look forward to continuing to provide valuable insights for our audience.
+[2026-06-02 18:53:27] Table of Contents
+[2026-06-02 18:53:27] Air Compressor Market Overview
+[2026-06-02 18:53:27] Market Drivers
+[2026-06-02 18:53:27] Market Size
+[2026-06-02 18:53:27] List of Major Companies
+[2026-06-02 18:53:27] Atlas-Copco
+[2026-06-02 18:53:27] Ingersoll-Rand
+[2026-06-02 18:53:27] Hitachi
+[2026-06-02 18:53:27] Kobe-Steel
+[2026-06-02 18:53:27] Bauer
+[2026-06-02 18:53:27] Doosan
+[2026-06-02 18:53:27] Siemens
+[2026-06-02 18:53:27] Danfoss
+[2026-06-02 18:53:27] Sulzer
+[2026-06-02 18:53:27] Mitsubishi
+[2026-06-02 18:53:27] Air Compressor Market Overview
+[2026-06-02 18:53:27] An air compressor is a device that converts power into potential energy stored in pressurized air. They are used widely in industries like manufacturing, construction, and automotive.
+[2026-06-02 18:53:27] They come in various types, including reciprocating (piston) compressors for light and industrial use, and rotary screw compressors for continuous industrial operation. Centrifugal compressors for large-scale applications, and scroll compressors for quieter operations in HVAC systems.
+[2026-06-02 18:53:27] Key components include the motor, pump, tank, pressure switch, regulator, inlet, and outlet valves.
+[2026-06-02 18:53:27] Regular maintenance, such as checking filters and connections, draining moisture, and lubricating parts, ensures efficiency and longevity. Safety measures, including proper ventilation and PPE usage, are essential for safe operation.
+[2026-06-02 18:53:27] Market Drivers
+[2026-06-02 18:53:27] Industrial growth and automation, energy efficiency initiatives, infrastructural development, and the expansion of the healthcare sector drive the global air compressor market.
+[2026-06-02 18:53:27] Increased demand in the oil and gas industry and technological advancements, such as IoT integration, also propel market growth.
+[2026-06-02 18:53:27] Furthermore, the availability of comprehensive maintenance and aftermarket services encourages investment in high-quality air compressors, ensuring efficient and long-lasting operations.
+[2026-06-02 18:53:27] These factors collectively contribute to the market’s steady expansion, catering to diverse industrial needs.
+[2026-06-02 18:53:27] Market Size
+[2026-06-02 18:53:27] The Global
+[2026-06-02 18:53:27] Air Compressor Market
+[2026-06-02 18:53:27] is set to grow from USD
+[2026-06-02 18:53:27] 35.3
+[2026-06-02 18:53:27] billion in
+[2026-06-02 18:53:27] 2023
+[2026-06-02 18:53:27] to USD
+[2026-06-02 18:53:27] 55.9
+[2026-06-02 18:53:27] billion by
+[2026-06-02 18:53:27] 2033
+[2026-06-02 18:53:27] , with a
+[2026-06-02 18:53:27] 4.7%
+[2026-06-02 18:53:27] CAGR from
+[2026-06-02 18:53:27] 2024
+[2026-06-02 18:53:27] 2033
+[2026-06-02 18:53:27] List of Major Companies
+[2026-06-02 18:53:27] These are the top 10 companies operating in the Air Compressor
+
+[2026-06-02 18:53:27] ---
+
+[2026-06-02 18:53:27] # Top 10 Industrial Air Compressor Manufacturers in the World – 2025 Edition. In 2025, the global industrial air compressor market continues to evolve with increasing demands for energy efficiency, smart controls, and reliability. Below is our curated list of the **Top 10 Global Air Compressor Brands**, trusted across industries such as metal fabrication, food & beverage, electronics, and laser technology. Founded in 1873, **Atlas Copco** is the undisputed leader in industrial compressed air technology. Headquartered in Stockholm, Sweden, the company offers a full range of **oil-injected rotary screw, oil-free centrifugal, scroll, and piston compressors**. Their solutions are also backed by a vast global service network, making them a go-to for international enterprises. In addition to their oil-lubricated and oil-free rotary screw models, Kaeser also offers complete compressed air stations, including **dryers, filters, controllers, and air management systems**. As a rising star in the global air compressor industry, **Baldor Air** has established itself as a trusted manufacturer of **dry oil-free screw compressors, water-injected screw compressors, and integrated compressor systems**.
+
+[2026-06-02 18:53:27] ---
+
+[2026-06-02 18:53:27] Top 10 Industrial Air Compressor Manufacturers in the World – 2025 Edition - B&D Energy Saving Air Compressor
+[2026-06-02 18:53:27] Skip to content
+[2026-06-02 18:53:27] Top 10 Industrial Air Compressor Manufacturers in the World – 2025 Edition
+[2026-06-02 18:53:27] Baldor Air
+[2026-06-02 18:53:27] July 16, 2025
+[2026-06-02 18:53:27] 5:46 pm
+[2026-06-02 18:53:27] In 2025, the global industrial air compressor market continues to evolve with increasing demands for energy efficiency, smart controls, and reliability. Below is our curated list of the
+[2026-06-02 18:53:27] Top 10 Global Air Compressor Brands
+[2026-06-02 18:53:27] , trusted across industries such as metal fabrication, food & beverage, electronics, and laser technology.
+[2026-06-02 18:53:27] Atlas Copco (Sweden)
+[2026-06-02 18:53:27] Founded in 1873,
+[2026-06-02 18:53:27] Atlas Copco
+[2026-06-02 18:53:27] is the undisputed leader in industrial compressed air technolog
+[2026-06-02 18:53:32]    ✅ Found 10 manufacturers:
+[2026-06-02 18:53:32]       • Atlas Copco (Sweden) -- atlascopco.com
+[2026-06-02 18:53:32]       • Ingersoll Rand (USA) -- ingersollrand.com
+[2026-06-02 18:53:32]       • Kaeser Kompressoren (Germany) -- kaeser.com
+[2026-06-02 18:53:32]       • Hitachi (Japan) -- hitachi.com
+[2026-06-02 18:53:32]       • Kobe Steel (Kobelco) (Japan) -- kobelco.co.jp
+[2026-06-02 18:53:32]       • Bauer Kompressoren (Germany) -- bauer-kompressoren.de
+[2026-06-02 18:53:32]       • Doosan (South Korea) -- doosan.com
+[2026-06-02 18:53:32]       • Sulzer (Switzerland) -- sulzer.com
+[2026-06-02 18:53:32]       • Mitsubishi Heavy Industries (Japan) -- mhi.com
+[2026-06-02 18:53:32]       • Baldor Air (China) -- baldorair.com
+Equipment Types:  14%|███████▍                                            | 1/7 [00:04<00:29,  4.87s/type]
+[2026-06-02 18:53:32] >  Refrigeration Compressors
+[2026-06-02 18:53:32]    🔍 Searching: "Refrigeration Compressors" manufacturers companies Reciprocating Scro...
+[2026-06-02 18:53:32]    🌐 Scraping 5 pages...
+[2026-06-02 18:53:49]    🤖 Extracting manufacturers with Gemini...
+[2026-06-02 18:53:49] equipment_master: Compressor
+[2026-06-02 18:53:49] equipment_type: Refrigeration Compressors
+[2026-06-02 18:53:49] subtypes: ['Reciprocating', 'Scroll', 'Screw']
+[2026-06-02 18:53:49] text: Key Refrigeration Compressors Companies: · Panasonic Corporation · Kirloskar · The BITZER Group · LG · Huayi Compressor Barcelona · Copeland LP · Danfoss · Johnson
+
+[2026-06-02 18:53:49] ---
+
+[2026-06-02 18:53:49] ## 100 manufacturers for Refrigerator Compressor. Danfoss A/S's Logo. Danfoss Climate Solutions specializes in energy-efficient refrigeration compressors, offering a diverse range designed for various commercial applications. Refrigeration compressors | Commercial refrigeration | Danfoss. Danfoss provides energy efficient, sustainable and smart inverter, scroll and reciprocating refrigeration compressors for commercial applications. Their commitment to energy efficiency and innovative cooling solutions positions them as a leader in refrigeration technology, making them a key player in the development of sustainable compressor systems. J & E Hall is a prominent manufacturer of refrigeration solutions, specializing in industrial and commercial refrigeration products, including a focus on remanufactured compressors. Heatcraft Refrigeration Products, LLC specializes in advanced refrigeration solutions, including motor-compressor assemblies, which are essential components of refrigerator compressors. Carlyle is a prominent manufacturer of compressor technology, offering a range of solutions for refrigeration applications, including high-efficiency reciprocating and screw compressors. is a leading manufacturer of commercial refrigeration equipment in India, offering a diverse range of products, including reliable and energy-efficient commercial refrigerators.
+
+[2026-06-02 18:53:49] ---
+
+[2026-06-02 18:53:49] Top 100 Refrigerator Compressor Manufacturers in 2026 | ensun
+[2026-06-02 18:53:49] Top Refrigerator Compressor Manufacturers
+[2026-06-02 18:53:49] The B2B platform for the best purchasing decision. Identify and compare relevant B2B manufacturers, suppliers and retailers
+[2026-06-02 18:53:49] Close
+[2026-06-02 18:53:49] Filter
+[2026-06-02 18:53:49] Result configuration
+[2026-06-02 18:53:49] Longlist
+[2026-06-02 18:53:49] Balanced
+[2026-06-02 18:53:49] Shortlist
+[2026-06-02 18:53:49] Continents
+[2026-06-02 18:53:49] Select continent
+[2026-06-02 18:53:49] Locations
+[2026-06-02 18:53:49] Result types
+[2026-06-02 18:53:49] Products
+[2026-06-02 18:53:49] Services
+[2026-06-02 18:53:49] Core business
+[2026-06-02 18:53:49] Company type
+[2026-06-02 18:53:49] Select company type
+[2026-06-02 18:53:49] Industries
+[2026-06-02 18:53:49] Select industry
+[2026-06-02 18:53:49] Company status
+[2026-06-02 18:53:49] Select company status preset
+[2026-06-02 18:53:49] Number of employees
+[2026-06-02 18:53:49] Min.
+[2026-06-02 18:53:49] Max.
+[2026-06-02 18:53:49] Founding year
+[2026-06-02 18:53:49] Clear filters
+[2026-06-02 18:53:49] Show  results
+[2026-06-02 18:53:49] 100 manufacturers for Refrigerator Compressor
+[2026-06-02 18:53:49] Key Takeaways
+[2026-06-02 18:53:49] Export
+[2026-06-02 18:53:49] Sort by:
+[2026-06-02 18:53:49] Relevance
+[2026-06-02 18:53:49] Danfoss A/S
+[2026-06-02 18:53:49] Nordborg, Denmark
+[2026-06-02 18:53:49] 10001+
+[2026-06-02 18:53:49] Employees
+[2026-06-02 18:53:49] 1933
+[2026-06-02 18:53:49] Key takeaway
+[2026-06-02 18:53:49] Danfoss Climate Solutions specializes in energy-efficient refrigeration compressors, offering a diverse range designed for various commercial applications. Their products include advanced scroll and reciprocating compressors that comply with the latest refrigerant regulations, ensuring sustainability and optimal performance.
+[2026-06-02 18:53:49] Reference
+[2026-06-02 18:53:49] Find employees
+[2026-06-02 18:53:49] Similar companies
+[2026-06-02 18:53:49] Product
+[2026-06-02 18:53:49] Refrigeration compressors | Commercial refrigeration | Danfoss
+[2026-06-02 18:53:49] Danfoss provides energy efficient, sustainable and smart inverter, scroll and reciprocating refrigeration compressors for commercial applications. See the options here.
+[2026-06-02 18:53:49] Frick India Ltd.
+[2026-06-02 18:53:49] Faridabad, India
+[2026-06-02 18:53:49] 501-1000
+[2026-06-02 18:53:49] Employees
+[2026-06-02 18:53:49] 1962
+[2026-06-02 18:53:49] Key takeaway
+[2026-06-02 18:53:49] Frick India Limited specializes in manufacturing energy-efficient and environmentally friendly industrial refrigeration systems, including rotary twin screw compressors and high-speed reciprocating compressors. With over 50 years of experience, the company provides advanced refrigeration solutions and turnkey projects for various industrial applications, supporting the "Make in India" initiative.
+[2026-06-02 18:53:49] Reference
+[2026-06-02 18:53:49] Find employees
+[2026-06-02 18:53:49] Similar companies
+[2026-06-02 18:53:49] Core business
+[2026-06-02 18:53:49] Industrial Refrigeration-Ammonia Compressors-Refrigeration Equipment Manufacturer
+[2026-06-02 18:53:49] Secop GmbH
+[2026-06-02 18:53:49] Flensburg, Germany
+[2026-06-02 18:53:49] 1001-5000
+[2026-06-02 18:53:49] Employees
+[2026-06-02 18:53:49] 2010
+[2026-06-02 18:53:49] Key takeaway
+[2026-06-02 18:53:49] Secop specializes in advanced hermetic compressors for commercial refrigeration, including high-performance models for light commercial and mobile applications. Their commitment to energy efficiency and innovative cooling solutions positions them as a leader in refrigeration technology, making them a key player in the development of sustainable compressor systems.
+[2026-06-02 18:53:49] Reference
+[2026-06-02 18:53:49] Find employees
+[2026-06-02 18:53:49] Similar companies
+[2026-06-02 18:53:49] Core business
+[2026-06-02 18:53:49] Secop — Sustainable Cooling Solutions
+[2026-06-02 18:53:49] J & E Hall International
+[2026-06-02 18:53:49] United Kingdom
+[2026-06-02 18:53:49] 251-500
+[2026-06-02 18:53:49] Employees
+[2026-06-02 18:53:49] 1785
+[2026-06-02 18:53:49] Key takeaway
+[2026-06-02 18:53:49] J & E Hall is a prominent manufacturer of refrigeration solutions, specializing in industrial and commercial refrigeration products, including a focus on remanufactured compressors. Their expertise in compressor technology and dedicated remanufacturing services ensures efficient and reliable solutions for various refrigeration needs.
+[2026-06-02 18:53:49] Reference
+[2026-06-02 18:53:49] Find employees
+[2026-06-02 18:53:49] Similar companies
+[2026-06-02 18:53:49] Product
+[2026-06-02 18:53:49] Remanufactured Refrigeration Compressors - J & E Hall
+[2026-06-02 18:53:49] Heatcraft Worldwide Refrigeration
+
+[2026-06-02 18:53:49] ---
+
+[2026-06-02 18:53:49] Global Top 10 Compressor Manufacturers: Atlas Copco, Ingersoll Rand, Siemens Energy, Gardner Denver, Mitsubishi Heavy Industries, Bauer Group, Sullair, Kaeser
+
+[2026-06-02 18:53:49] ---
+
+[2026-06-02 18:53:49] [2026 Update] Largest 10 Air Compressor Manufacturers | Industrial Supplier Price Guide
+[2026-06-02 18:53:49] Free cookie consent management tool by
+[2026-06-02 18:53:49] TermsFeed
+[2026-06-02 18:53:49] Update cookies preferences
+[2026-06-02 18:53:49] Skip to content
+[2026-06-02 18:53:49] [2026 Update] Global Top 10 Air Compressor Manufacturers | Top Industrial Air Compressor Supplier Guide
+[2026-06-02 18:53:49] Table of Contents
+[2026-06-02 18:53:49] Global Top 10 Compressor Manufacturers: Atlas Copco, Ingersoll Rand, Siemens Energy, Gardner Denver, Mitsubishi Heavy Industries, Bauer Group, Sullair, Kaeser Kompressoren, Hanwha Power Systems, and MINNUO Group.
+[2026-06-02 18:53:49] I. Global Top 10 Compressor Manufacturers
+[2026-06-02 18:53:49] 1.Atlas Copco
+[2026-06-02 18:53:49] Country:
+[2026-06-02 18:53:49] Sweden
+[2026-06-02 18:53:49] As a world-leading industrial equipment manufacturer, Atlas Copco offers various types of compressors, including screw, centrifugal, and reciprocating compressors. Its products are renowned for their high energy efficiency and exceptional reliability, and they are widely used in the manufacturing, energy, and construction sectors. Through continuous technological innovation and optimized management, Atlas Copco has consistently maintained a leading position in the global market.
+[2026-06-02 18:53:49] Official website:
+[2026-06-02 18:53:49] www.atlascopco.com
+[2026-06-02 18:53:49] Logo:
+[2026-06-02 18:53:49] 2.Ingersoll Rand
+[2026-06-02 18:53:49] Country:
+[2026-06-02 18:53:49] United States
+[2026-06-02 18:53:49] With a history spanning over a century, Ingersoll Rand has deep expertise in air compressors, vacuum equipment, and fluid 
+[2026-06-02 18:54:10] [System] Global timestamped logging active. Appending to: backend.log
+[2026-06-02 18:55:21] [System] Global timestamped logging active. Appending to: backend.log
+[2026-06-02 18:56:04] [System] Global timestamped logging active. Appending to: backend.log
+
+[2026-06-02 18:56:20] =================================================================
+[2026-06-02 18:56:20]    Industrial Equipment Specs Discovery CLI Pipeline
+[2026-06-02 18:56:20]    Powered by Gemini & PostgreSQL Vector Deduplication
+[2026-06-02 18:56:20] =================================================================
+
+
+[2026-06-02 18:56:21] ================================================================================
+[2026-06-02 18:56:21] [WARNING] The pgvector extension is not installed or available in PostgreSQL.
+[2026-06-02 18:56:21]   -> The system will automatically fall back to pure-Python cosine similarity search.
+[2026-06-02 18:56:21]   -> You do not need to compile pgvector now! The system is fully operational using safe fallbacks.
+[2026-06-02 18:56:21] ================================================================================
+
+[2026-06-02 18:56:21] [Healing] Retroactively matching existing models with null subtypes...
+[2026-06-02 18:56:21] [DB] Database and tables initialized successfully!
+[2026-06-02 18:56:43] ====================
+[2026-06-02 18:56:45] [<database.models.EquipmentType object at 0x000002014C405FD0>, <database.models.EquipmentType object at 0x000002014C42BD90>, <database.models.EquipmentType object at 0x000002014C5E47D0>, <database.models.EquipmentType object at 0x000002014C432520>, <database.models.EquipmentType object at 0x000002014C432650>, <database.models.EquipmentType object at 0x000002014C5E1370>, <database.models.EquipmentType object at 0x000002014C5848D0>]
+[2026-06-02 18:56:45] ====================
+[2026-06-02 18:56:47]   Target Types : ['Air Compressors', 'Refrigeration Compressors', 'Gas Compressors', 'Turbochargers/Superchargers', 'Medical Compressors', 'Piston', 'Plunger']
+[2026-06-02 18:56:47]   Stages       : [1, 2, 3]
+[2026-06-02 18:56:47]   Cache        : ON
+[2026-06-02 18:56:47]   Started at   : 2026-06-02 18:56:47
+
+
+[2026-06-02 18:58:48] ============================================================
+[2026-06-02 18:58:48]   STAGE 1 -- Manufacturer Discovery
+[2026-06-02 18:58:49] ============================================================
+[2026-06-02 18:58:50] Equipment Types:   0%|                                                                          | 0/7 [00:00<?, ?type/s]
+[2026-06-02 18:59:56] >  Air Compressors
+[2026-06-02 19:01:21]    🔍 Searching: "Air Compressors" manufacturers companies top global list...

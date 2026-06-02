@@ -785,6 +785,15 @@
                   </div>
                   <div class="d-flex gap-2">
                     <v-btn
+                      v-if="selectedMfrs.length > 0"
+                      color="error"
+                      prepend-icon="mdi-delete"
+                      class="outfit-font text-capitalize font-weight-bold"
+                      @click="deleteSelectedManufacturers"
+                    >
+                      Delete Selected ({{ selectedMfrs.length }})
+                    </v-btn>
+                    <v-btn
                       color="success"
                       prepend-icon="mdi-plus"
                       class="outfit-font text-capitalize font-weight-bold"
@@ -862,6 +871,13 @@
                 <v-table v-if="mfrItems.length > 0" class="glass-table-card elevation-2" rounded="lg">
                   <thead>
                     <tr>
+                      <th style="width: 50px; padding-top: 16px; padding-bottom: 16px;">
+                        <v-checkbox-btn
+                          v-model="selectAllMfrs"
+                          :indeterminate="isMfrsIndeterminate"
+                          color="primary"
+                        ></v-checkbox-btn>
+                      </th>
                       <th class="text-left font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4 cursor-pointer" style="user-select: none;" @click="changeMfrSorting('name')">
                         Manufacturer
                         <v-icon :icon="mfrSortDesc ? 'mdi-arrow-down' : 'mdi-arrow-up'" size="14" class="ml-1" v-if="mfrSortBy === 'name'"></v-icon>
@@ -895,6 +911,13 @@
                   </thead>
                   <tbody>
                     <tr v-for="mfr in mfrItems" :key="mfr.id" class="glass-table-row">
+                      <td style="padding-top: 12px; padding-bottom: 12px;">
+                        <v-checkbox-btn
+                          v-model="selectedMfrs"
+                          :value="mfr.id"
+                          color="primary"
+                        ></v-checkbox-btn>
+                      </td>
                       <td class="text-white py-4 font-weight-bold text-subtitle-1">{{ mfr.name }}</td>
                       <td class="text-medium-emphasis py-4">{{ mfr.country || 'Global HQ' }}</td>
                       <td class="py-4">
@@ -1024,9 +1047,83 @@
                   <v-icon icon="mdi-robot-mower" class="mr-2"></v-icon>Enterprise Crawler Operations Control
                 </h3>
                 
+                <!-- Shared Filters at the Top -->
+                <div class="mb-6 border pa-4 rounded-xl bg-rgba-white-02">
+                  <div class="text-subtitle-1 font-weight-bold text-white mb-4 d-flex align-center">
+                    <v-icon icon="mdi-filter-cog-outline" color="secondary" class="mr-2"></v-icon>
+                    Global Crawl Targets & Filters
+                  </div>
+                  <v-row>
+                    <v-col cols="12" md="4">
+                      <v-autocomplete
+                        v-model="crawlParams.harvester_master_id"
+                        :items="equipmentMastersList"
+                        item-title="name"
+                        item-value="id"
+                        label="Target Master Category"
+                        variant="outlined"
+                        density="comfortable"
+                        color="secondary"
+                        clearable
+                        hide-details
+                        @update:model-value="onHarvesterMasterFilterChange"
+                      ></v-autocomplete>
+                    </v-col>
+                    <v-col cols="12" md="4">
+                      <v-autocomplete
+                        v-model="crawlParams.harvester_type_id"
+                        :items="filteredHarvesterTypes"
+                        item-title="name"
+                        item-value="id"
+                        label="Target Equipment Type"
+                        variant="outlined"
+                        density="comfortable"
+                        color="secondary"
+                        clearable
+                        hide-details
+                        @update:model-value="onHarvesterTypeFilterChange"
+                      ></v-autocomplete>
+                    </v-col>
+                    <v-col cols="12" md="4">
+                      <v-autocomplete
+                        v-model="crawlParams.harvester_subtype_id"
+                        :items="filteredHarvesterSubtypes"
+                        item-title="name"
+                        item-value="id"
+                        label="Target Subtype"
+                        variant="outlined"
+                        density="comfortable"
+                        color="secondary"
+                        clearable
+                        hide-details
+                        @update:model-value="onHarvesterSubtypeFilterChange"
+                      ></v-autocomplete>
+                    </v-col>
+                    <v-col cols="12" class="mt-4">
+                      <v-autocomplete
+                        v-model="crawlParams.selected_manufacturer_ids"
+                        :items="crawlManufacturers"
+                        item-title="name"
+                        item-value="id"
+                        label="Target Specific Manufacturers"
+                        variant="outlined"
+                        density="comfortable"
+                        color="secondary"
+                        multiple
+                        chips
+                        clearable
+                        hint="Only displays approved manufacturers matching selected category filters. Leave blank for all."
+                        persistent-hint
+                        :loading="crawlDropdownsLoading"
+                        @update:model-value="onHarvesterMfrFilterChange"
+                      ></v-autocomplete>
+                    </v-col>
+                  </v-row>
+                </div>
+
                 <v-row>
-                  <!-- Stage 1 Discovery -->
-                  <v-col cols="12" md="6" class="pr-md-6 border-right">
+                  <!-- Step 1: Manufacturer Discovery -->
+                  <v-col cols="12" md="4" class="pr-md-4 border-right">
                     <div class="mb-4">
                       <div class="text-h6 font-weight-bold outfit-font text-white d-flex align-center">
                         <v-avatar color="rgba(6, 182, 212, 0.1)" size="30" class="mr-2 text-subtitle-2 font-weight-black text-secondary">1</v-avatar>
@@ -1037,25 +1134,13 @@
                       </p>
                     </div>
 
-                    <v-select
-                      v-model="crawlParams.equipment_type_id"
-                      :items="equipmentTypesDropdown"
-                      item-title="name"
-                      item-value="id"
-                      label="Target Equipment Category"
-                      variant="outlined"
-                      density="comfortable"
-                      color="secondary"
-                      class="mb-3"
-                    ></v-select>
-                    
                     <v-switch
                       v-model="crawlParams.no_cache"
                       label="Bypass Local Web Cache"
                       color="secondary"
                       inset
                       density="compact"
-                      class="mb-4"
+                      class="mb-6"
                     ></v-switch>
 
                     <v-btn
@@ -1065,74 +1150,101 @@
                       prepend-icon="mdi-feature-search"
                       class="outfit-font text-capitalize font-weight-bold"
                       :disabled="store.crawlStatus.active"
-                      :loading="store.crawlLoading"
+                      :loading="store.discoveryLoading"
                       @click="triggerManufacturerDiscovery"
                     >
                       Run Discovery (Stage 1)
                     </v-btn>
                   </v-col>
 
-                  <!-- Stage 2/3 Harvester -->
-                  <v-col cols="12" md="6" class="pl-md-6">
+                  <!-- Step 2: Model Lineup Discovery -->
+                  <v-col cols="12" md="4" class="px-md-4 border-right">
                     <div class="mb-4">
                       <div class="text-h6 font-weight-bold outfit-font text-white d-flex align-center">
-                        <v-avatar color="rgba(6, 182, 212, 0.1)" size="30" class="mr-2 text-subtitle-2 font-weight-black text-secondary">2</v-avatar>
-                        Step 2: Specs & Model Harvester
+                        <v-avatar color="rgba(139, 92, 246, 0.1)" size="30" class="mr-2 text-subtitle-2 font-weight-black text-secondary">2</v-avatar>
+                        Step 2: Model Lineup Discovery
                       </div>
                       <p class="text-caption text-medium-emphasis mt-2" style="min-height: 50px;">
-                        Scrape model specs files and evaluate vector models matching ONLY for approved manufacturer directories.
+                        Discover product model lineups for approved manufacturers matching global category and brand filters.
                       </p>
                     </div>
 
-                    <div class="mb-3">
-                      <v-select
-                        v-model="crawlParams.selected_manufacturer_ids"
-                        :items="approvedManufacturers"
-                        item-title="name"
-                        item-value="id"
-                        label="Target Specific Manufacturers"
-                        variant="outlined"
-                        density="comfortable"
-                        color="secondary"
-                        multiple
-                        chips
-                        clearable
-                        hint="Bypasses all other manufacturers to restrict search quotas. Leave blank for all."
-                        persistent-hint
-                      ></v-select>
+                    <v-row class="mb-2">
+                      <v-col cols="6" class="py-0">
+                        <v-switch
+                          v-model="crawlParams.no_cache"
+                          label="Bypass Cache"
+                          color="secondary"
+                          inset
+                          density="compact"
+                          hide-details
+                        ></v-switch>
+                      </v-col>
+                      <v-col cols="6" class="py-0">
+                        <v-switch
+                          v-model="crawlParams.only_unharvested"
+                          label="Unharvested Only"
+                          color="secondary"
+                          inset
+                          density="compact"
+                          hide-details
+                        ></v-switch>
+                      </v-col>
+                    </v-row>
+
+                    <v-btn
+                      color="secondary"
+                      block
+                      height="45"
+                      prepend-icon="mdi-arrow-right-bold-box"
+                      class="outfit-font text-capitalize font-weight-bold mt-4"
+                      :disabled="store.crawlStatus.active"
+                      :loading="store.modelDiscoveryLoading"
+                      @click="triggerModelDiscovery"
+                    >
+                      Discover Lineups (Stage 2)
+                    </v-btn>
+                  </v-col>
+
+                  <!-- Step 3: Technical Specs Extraction -->
+                  <v-col cols="12" md="4" class="pl-md-4">
+                    <div class="mb-4">
+                      <div class="text-h6 font-weight-bold outfit-font text-white d-flex align-center">
+                        <v-avatar color="rgba(239, 68, 68, 0.1)" size="30" class="mr-2 text-subtitle-2 font-weight-black text-secondary">3</v-avatar>
+                        Step 3: Technical Specs Extractor
+                      </div>
+                      <p class="text-caption text-medium-emphasis mt-2" style="min-height: 50px;">
+                        Scrape specification sheets and extract structured attributes for discovered models.
+                      </p>
                     </div>
 
-                    <div class="d-flex justify-space-between mb-4 mt-2 flex-wrap gap-2">
-                      <v-switch
-                        v-model="crawlParams.deep_crawl"
-                        label="Deep Crawl (Model Discovery)"
-                        color="primary"
-                        inset
-                        density="compact"
-                        hide-details
-                      ></v-switch>
-                      <v-switch
-                        v-model="crawlParams.only_unharvested"
-                        label="Only Unharvested"
-                        color="secondary"
-                        inset
-                        density="compact"
-                        hide-details
-                      ></v-switch>
-                      <v-switch
-                        v-model="crawlParams.no_cache_specs"
-                        label="Bypass Cache"
-                        color="secondary"
-                        inset
-                        density="compact"
-                        hide-details
-                      ></v-switch>
-                    </div>
+                    <v-row class="mb-2">
+                      <v-col cols="6" class="py-0">
+                        <v-switch
+                          v-model="crawlParams.no_cache_specs"
+                          label="Bypass Cache"
+                          color="secondary"
+                          inset
+                          density="compact"
+                          hide-details
+                        ></v-switch>
+                      </v-col>
+                      <v-col cols="6" class="py-0">
+                        <v-switch
+                          v-model="crawlParams.target_approved_only"
+                          label="Approved Only"
+                          color="secondary"
+                          inset
+                          density="compact"
+                          hide-details
+                        ></v-switch>
+                      </v-col>
+                    </v-row>
 
-                    <div v-if="crawlParams.deep_crawl" class="mb-3">
-                      <v-select
+                    <div v-if="crawlParams.target_approved_only" class="mt-3 mb-2">
+                      <v-autocomplete
                         v-model="crawlParams.selected_model_ids"
-                        :items="availableModelsForSelection"
+                        :items="crawlModels"
                         item-title="model_name"
                         item-value="id"
                         label="Target Specific Models"
@@ -1142,22 +1254,27 @@
                         multiple
                         chips
                         clearable
-                        hint="Select specific models to harvest. (Bypasses Stage 2 discovery)"
+                        hint="Bypasses Stage 2. Only shows approved models matching category & manufacturer filters."
                         persistent-hint
-                      ></v-select>
+                        hide-details
+                        :loading="crawlDropdownsLoading"
+                      ></v-autocomplete>
+                    </div>
+                    <div v-else class="text-caption text-secondary py-3 font-italic">
+                      Will harvest specs for ALL discovered models (approved & unapproved) matching selected manufacturers.
                     </div>
 
                     <v-btn
-                      color="secondary"
+                      color="error"
                       block
                       height="45"
                       prepend-icon="mdi-database-import"
-                      class="outfit-font text-capitalize font-weight-bold"
-                      :disabled="store.crawlStatus.active || approvedManufacturersCount === 0"
-                      :loading="store.crawlLoading"
+                      class="outfit-font text-capitalize font-weight-bold mt-4"
+                      :disabled="store.crawlStatus.active"
+                      :loading="store.specsHarvesterLoading"
                       @click="triggerSpecsHarvester"
                     >
-                      Harvest Approved Manufacturers Specs
+                      Extract Specs (Stage 3)
                     </v-btn>
                   </v-col>
                 </v-row>
@@ -1224,7 +1341,7 @@
                         {{ store.crawlStatus.discovered_manufacturers }}
                       </div>
                       <div class="text-caption text-medium-emphasis text-uppercase font-weight-bold">
-                        Manufacturers Crawled
+                        {{ (store.crawlStatus.stage || '').toLowerCase().includes('stage 1') ? 'Manufacturers Crawled' : 'Targeted Manufacturers' }}
                       </div>
                     </v-card>
                   </v-col>
@@ -1720,14 +1837,78 @@ watch(filters, () => {
 }, { deep: true })
 
 const crawlParams = ref({
-  equipment_type_id: null,
+  harvester_master_id: null,
+  harvester_type_id: null,
+  harvester_subtype_id: null,
   selected_manufacturer_ids: [],
   selected_model_ids: [],
-  deep_crawl: true,
   only_unharvested: false,
   no_cache: false,
-  no_cache_specs: false
+  no_cache_specs: false,
+  target_approved_only: true
 })
+
+const crawlManufacturers = ref([])
+const crawlModels = ref([])
+const crawlDropdownsLoading = ref(false)
+
+const updateCrawlDropdowns = async () => {
+  crawlDropdownsLoading.value = true
+  try {
+    const mParams = {
+      equipment_master_id: crawlParams.value.harvester_master_id,
+      equipment_type_id: crawlParams.value.harvester_type_id,
+      equipment_subtype_id: crawlParams.value.harvester_subtype_id
+    }
+    const mRes = await axios.get('/api/manufacturers', { params: mParams })
+    const allMfrs = mRes.data.items || mRes.data || []
+    crawlManufacturers.value = allMfrs.filter(m => m.is_approved)
+
+    const moParams = {
+      equipment_master_id: crawlParams.value.harvester_master_id,
+      equipment_type_id: crawlParams.value.harvester_type_id,
+      equipment_subtype_id: crawlParams.value.harvester_subtype_id,
+      is_approved: true
+    }
+    const moRes = await axios.get('/api/models', { params: moParams })
+    let fetchedModels = moRes.data || []
+    
+    if (crawlParams.value.selected_manufacturer_ids && crawlParams.value.selected_manufacturer_ids.length > 0) {
+      fetchedModels = fetchedModels.filter(m => crawlParams.value.selected_manufacturer_ids.includes(m.manufacturer_id))
+    }
+    crawlModels.value = fetchedModels
+  } catch (err) {
+    console.error('Failed to update crawl dropdowns:', err)
+  } finally {
+    crawlDropdownsLoading.value = false
+  }
+}
+
+const onHarvesterMasterFilterChange = () => {
+  crawlParams.value.harvester_type_id = null
+  crawlParams.value.harvester_subtype_id = null
+  crawlParams.value.selected_manufacturer_ids = []
+  crawlParams.value.selected_model_ids = []
+  updateCrawlDropdowns()
+}
+
+const onHarvesterTypeFilterChange = () => {
+  crawlParams.value.harvester_subtype_id = null
+  crawlParams.value.selected_manufacturer_ids = []
+  crawlParams.value.selected_model_ids = []
+  updateCrawlDropdowns()
+}
+
+const onHarvesterSubtypeFilterChange = () => {
+  crawlParams.value.selected_manufacturer_ids = []
+  crawlParams.value.selected_model_ids = []
+  updateCrawlDropdowns()
+}
+
+const onHarvesterMfrFilterChange = () => {
+  crawlParams.value.selected_model_ids = []
+  updateCrawlDropdowns()
+}
 
 const toast = ref({
   active: false,
@@ -1779,6 +1960,7 @@ onMounted(async () => {
   await store.fetchTaxonomyTree()
   await store.fetchSettings()
   await store.fetchDashboardStats()
+  await updateCrawlDropdowns()
   
   // Polling crawler status dynamically
   setInterval(() => {
@@ -1802,6 +1984,38 @@ const manufacturersList = computed(() => store.manufacturersList || [])
 const crawlHistory = computed(() => store.crawlHistory || [])
 const approvedManufacturersCount = computed(() => manufacturersList.value.filter(b => b.is_approved).length)
 const taxonomyTree = computed(() => store.taxonomyTree || [])
+
+const filteredHarvesterTypes = computed(() => {
+  if (!crawlParams.value.harvester_master_id) {
+    const list = []
+    taxonomyTree.value.forEach(m => {
+      list.push(...(m.types || []))
+    })
+    return list
+  }
+  const match = taxonomyTree.value.find(m => m.id === crawlParams.value.harvester_master_id)
+  return match ? match.types : []
+})
+
+const filteredHarvesterSubtypes = computed(() => {
+  if (!crawlParams.value.harvester_type_id) {
+    const list = []
+    taxonomyTree.value.forEach(m => {
+      (m.types || []).forEach(t => {
+        list.push(...(t.subtypes || []))
+      })
+    })
+    return list
+  }
+  let subtypes = []
+  taxonomyTree.value.forEach(m => {
+    const matchedType = (m.types || []).find(t => t.id === crawlParams.value.harvester_type_id)
+    if (matchedType) {
+      subtypes = matchedType.subtypes || []
+    }
+  })
+  return subtypes
+})
 const availableModelsForSelection = computed(() => {
   const approvedModels = models.value.filter(m => m.is_approved)
   if (!crawlParams.value.selected_manufacturer_ids || crawlParams.value.selected_manufacturer_ids.length === 0) {
@@ -2057,12 +2271,33 @@ const triggerDbInit = async () => {
 const triggerManufacturerDiscovery = async () => {
   try {
     const res = await store.triggerManufacturerDiscovery(
-      crawlParams.value.equipment_type_id,
+      crawlParams.value.harvester_master_id,
+      crawlParams.value.harvester_type_id,
       crawlParams.value.no_cache
     )
     showToast(res.message, 'success')
   } catch (err) {
     showToast('Failed to trigger manufacturer discovery.', 'error')
+  }
+}
+
+const triggerModelDiscovery = async () => {
+  try {
+    const mfrIds = crawlParams.value.selected_manufacturer_ids.length > 0 
+      ? crawlParams.value.selected_manufacturer_ids 
+      : null
+
+    const res = await store.triggerModelDiscovery(
+      mfrIds,
+      crawlParams.value.only_unharvested,
+      crawlParams.value.no_cache,
+      crawlParams.value.harvester_master_id,
+      crawlParams.value.harvester_type_id,
+      crawlParams.value.harvester_subtype_id
+    )
+    showToast(res.message, 'success')
+  } catch (err) {
+    showToast('Failed to trigger model discovery.', 'error')
   }
 }
 
@@ -2072,7 +2307,7 @@ const triggerSpecsHarvester = async () => {
       ? crawlParams.value.selected_manufacturer_ids 
       : null
       
-    const modelIds = (crawlParams.value.deep_crawl && crawlParams.value.selected_model_ids.length > 0)
+    const modelIds = crawlParams.value.selected_model_ids.length > 0
       ? crawlParams.value.selected_model_ids
       : null
 
@@ -2081,7 +2316,11 @@ const triggerSpecsHarvester = async () => {
       crawlParams.value.only_unharvested,
       crawlParams.value.no_cache_specs,
       modelIds,
-      crawlParams.value.deep_crawl
+      false, // deepCrawl is false
+      crawlParams.value.harvester_master_id,
+      crawlParams.value.harvester_type_id,
+      crawlParams.value.harvester_subtype_id,
+      crawlParams.value.target_approved_only
     )
     showToast(res.message, 'success')
   } catch (err) {
@@ -2307,6 +2546,19 @@ const deleteManufacturer = async (id) => {
       showToast('Manufacturer registration deleted successfully.', 'success')
     } catch (err) {
       showToast('Delete manufacturer operation failed.', 'error')
+    }
+  }
+}
+
+const deleteSelectedManufacturers = async () => {
+  if (selectedMfrs.value.length === 0) return
+  if (confirm(`Warning: Deleting ${selectedMfrs.value.length} selected manufacturer(s) will permanently erase all their harvested models and spec worksheets from the database. Continue?`)) {
+    try {
+      await store.deleteManufacturersBulk(selectedMfrs.value)
+      selectedMfrs.value = []
+      showToast('Selected manufacturers deleted successfully.', 'success')
+    } catch (err) {
+      showToast('Delete selected manufacturers operation failed.', 'error')
     }
   }
 }
@@ -2763,6 +3015,21 @@ const mfrLoading = ref(false)
 const mfrSortBy = ref('name')
 const mfrSortDesc = ref(false)
 
+const selectedMfrs = ref([])
+const selectAllMfrs = computed({
+  get: () => mfrItems.value.length > 0 && selectedMfrs.value.length === mfrItems.value.length,
+  set: (val) => {
+    if (val) {
+      selectedMfrs.value = mfrItems.value.map(m => m.id)
+    } else {
+      selectedMfrs.value = []
+    }
+  }
+})
+const isMfrsIndeterminate = computed(() => {
+  return selectedMfrs.value.length > 0 && selectedMfrs.value.length < mfrItems.value.length
+})
+
 const changeMfrSorting = (column) => {
   if (mfrSortBy.value === column) {
     mfrSortDesc.value = !mfrSortDesc.value
@@ -2821,6 +3088,7 @@ const fetchPaginatedManufacturers = async () => {
     const res = await axios.get('/api/manufacturers', { params })
     mfrItems.value = res.data.items || []
     mfrTotal.value = res.data.total || 0
+    selectedMfrs.value = []
   } catch (err) {
     showToast('Failed to load manufacturers directory.', 'error')
   } finally {

@@ -1,6 +1,21 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
+const paramsSerializer = (params) => {
+  const parts = []
+  for (const [key, value] of Object.entries(params)) {
+    if (value === null || value === undefined) continue
+    if (Array.isArray(value)) {
+      value.forEach(val => {
+        parts.push(`${encodeURIComponent(key)}=${encodeURIComponent(val)}`)
+      })
+    } else {
+      parts.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+    }
+  }
+  return parts.join('&')
+}
+
 export const useCompressorStore = defineStore('compressors', {
   state: () => ({
     compressorTree: [],
@@ -20,6 +35,9 @@ export const useCompressorStore = defineStore('compressors', {
       discovered_models: 0,
       enriched_records: 0,
     },
+    discoveryLoading: false,
+    modelDiscoveryLoading: false,
+    specsHarvesterLoading: false,
     crawlLoading: false,
     crawlHistory: [],
     
@@ -139,11 +157,13 @@ export const useCompressorStore = defineStore('compressors', {
 
     // ── Crawler triggers ────────────────────────────────────────────────────
 
-    async triggerManufacturerDiscovery(equipmentTypeId = null, noCache = false) {
+    async triggerManufacturerDiscovery(equipmentMasterId = null, equipmentTypeId = null, noCache = false) {
+      this.discoveryLoading = true
       this.crawlLoading = true
       try {
         const res = await axios.post('/api/crawl/discover-manufacturers', null, {
           params: {
+            equipment_master_id: equipmentMasterId,
             equipment_type_id: equipmentTypeId,
             no_cache: noCache
           }
@@ -155,22 +175,55 @@ export const useCompressorStore = defineStore('compressors', {
         console.error('Failed to trigger background manufacturer discovery:', err)
         throw err
       } finally {
+        this.discoveryLoading = false
         this.crawlLoading = false
       }
     },
 
-    async triggerSpecsHarvester(manufacturerIds = null, onlyUnharvested = false, noCache = false, modelIds = null, deepCrawl = true) {
+    async triggerModelDiscovery(manufacturerIds = null, onlyUnharvested = false, noCache = false, equipmentMasterId = null, equipmentTypeId = null, equipmentSubtypeId = null) {
+      this.modelDiscoveryLoading = true
       this.crawlLoading = true
       try {
-        // Axios handles array parameters automatically
+        const res = await axios.post('/api/crawl/discover-models', null, {
+          params: {
+            manufacturer_ids: manufacturerIds,
+            only_unharvested: onlyUnharvested,
+            no_cache: noCache,
+            equipment_master_id: equipmentMasterId,
+            equipment_type_id: equipmentTypeId,
+            equipment_subtype_id: equipmentSubtypeId
+          },
+          paramsSerializer: { serialize: paramsSerializer }
+        })
+        await this.fetchCrawlStatus()
+        await this.fetchCrawlHistory()
+        return res.data
+      } catch (err) {
+        console.error('Failed to trigger model discovery:', err)
+        throw err
+      } finally {
+        this.modelDiscoveryLoading = false
+        this.crawlLoading = false
+      }
+    },
+
+    async triggerSpecsHarvester(manufacturerIds = null, onlyUnharvested = false, noCache = false, modelIds = null, deepCrawl = false, equipmentMasterId = null, equipmentTypeId = null, equipmentSubtypeId = null, targetApprovedOnly = true) {
+      this.specsHarvesterLoading = true
+      this.crawlLoading = true
+      try {
         const res = await axios.post('/api/crawl/harvest-specs', null, {
           params: {
             manufacturer_ids: manufacturerIds,
             model_ids: modelIds,
             deep_crawl: deepCrawl,
             only_unharvested: onlyUnharvested,
-            no_cache: noCache
-          }
+            no_cache: noCache,
+            equipment_master_id: equipmentMasterId,
+            equipment_type_id: equipmentTypeId,
+            equipment_subtype_id: equipmentSubtypeId,
+            target_approved_only: targetApprovedOnly
+          },
+          paramsSerializer: { serialize: paramsSerializer }
         })
         await this.fetchCrawlStatus()
         await this.fetchCrawlHistory()
@@ -179,6 +232,7 @@ export const useCompressorStore = defineStore('compressors', {
         console.error('Failed to trigger specs harvesting:', err)
         throw err
       } finally {
+        this.specsHarvesterLoading = false
         this.crawlLoading = false
       }
     },
@@ -307,6 +361,10 @@ export const useCompressorStore = defineStore('compressors', {
     },
     async deleteManufacturer(id) {
       await axios.delete(`/api/manufacturers/${id}`)
+      await this.fetchManufacturersList()
+    },
+    async deleteManufacturersBulk(ids) {
+      await axios.post('/api/manufacturers/bulk-delete', { ids })
       await this.fetchManufacturersList()
     }
   }

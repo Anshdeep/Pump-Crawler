@@ -1,182 +1,84 @@
 {
-  "Air Compressors": [
+  "Piston": [
     {
-      "name": "Ingersoll Rand",
-      "country": null,
-      "website": null
-    },
-    {
-      "name": "Sullair",
+      "name": "Flowserve Corporation",
       "country": "United States",
-      "website": null
+      "website": "flowserve.com",
+      "description": "A global leader in fluid motion control, providing high-performance industrial pump solutions including reciprocating piston designs."
     },
     {
-      "name": "Atlas Copco",
-      "country": "Sweden",
-      "website": "atlascopco.com"
-    },
-    {
-      "name": "Kaeser",
-      "country": null,
-      "website": null
-    },
-    {
-      "name": "Baldor Air",
-      "country": null,
-      "website": null
-    }
-  ],
-  "Refrigeration Compressors": [
-    {
-      "name": "Danfoss A/S",
-      "country": "Denmark",
-      "website": "danfoss.com"
-    },
-    {
-      "name": "Ariel Corporation",
-      "country": "United States",
-      "website": "arielcorp.com"
+      "name": "Bosch Rexroth AG",
+      "country": "Germany",
+      "website": "boschrexroth.com",
+      "description": "A premier manufacturer of hydraulic systems and high-precision axial piston pumps for industrial and mobile applications."
     },
     {
       "name": "Gardner Denver",
       "country": "United States",
-      "website": null
+      "website": "gardnerdenver.com",
+      "description": "Renowned for industrial flow control equipment, including specialized piston pump technology for demanding applications."
     },
     {
-      "name": "Howden",
-      "country": "United Kingdom",
-      "website": null
+      "name": "HAWE Hydraulik SE",
+      "country": "Germany",
+      "website": "hawe.com",
+      "description": "Specializes in high-pressure hydraulic components, including robust radial piston pumps for industrial machinery."
     },
     {
-      "name": "Fluid Aire Dynamics",
-      "country": null,
-      "website": null
+      "name": "Danfoss A/S",
+      "country": "Denmark",
+      "website": "danfoss.com",
+      "description": "A global leader in hydraulic power solutions, offering a wide range of high-efficiency axial piston pumps."
     },
     {
-      "name": "KAESER COMPRESSORS",
-      "country": null,
-      "website": null
-    }
-  ],
-  "Gas Compressors": [
-    {
-      "name": "Fluid Aire Dynamics",
-      "country": null,
-      "website": null
-    },
-    {
-      "name": "KAESER COMPRESSORS",
-      "country": null,
-      "website": "kaeser.com"
-    },
-    {
-      "name": "Ariel Corporation",
-      "country": null,
-      "website": "arielcorp.com"
-    },
-    {
-      "name": "Ingersoll Rand",
-      "country": null,
-      "website": "irco.com"
-    },
-    {
-      "name": "Bauer Compressors",
-      "country": null,
-      "website": "bauercomp.com"
-    },
-    {
-      "name": "Atlas Copco",
-      "country": null,
-      "website": "atlascopco.com"
-    },
-    {
-      "name": "Siemens",
-      "country": null,
-      "website": "siemens.com"
-    },
-    {
-      "name": "General Electric",
-      "country": null,
-      "website": "ge.com"
-    },
-    {
-      "name": "Fornovo Gas",
-      "country": null,
-      "website": "fornovogas.it"
-    },
-    {
-      "name": "Quincy",
-      "country": null,
-      "website": "quincycompressor.com"
-    }
-  ],
-  "Turbochargers/Superchargers": [
-    {
-      "name": "IHI Machinery and Furnace Co., Ltd.",
-      "country": null,
-      "website": null
-    },
-    {
-      "name": "HKS CO.,LTD.",
-      "country": null,
-      "website": null
-    },
-    {
-      "name": "Magnuson Products LLC",
+      "name": "Parker Hannifin Corporation",
       "country": "United States",
-      "website": null
+      "website": "parker.com",
+      "description": "A major manufacturer of motion and control technologies, widely recognized for their industrial piston pump product lines."
     },
     {
-      "name": "Vortech Engineering, Inc.",
-      "country": null,
-      "website": null
+      "name": "Nachi-Fujikoshi Corp.",
+      "country": "Japan",
+      "website": "nachi-fujikoshi.co.jp",
+      "description": "A leading manufacturer of hydraulic equipment, known for high-quality piston pumps used in industrial automation."
     },
     {
-      "name": "Duryea Technologies",
-      "country": null,
-      "website": null
-    },
-    {
-      "name": "Eaton",
-      "country": null,
-      "website": "eaton.com"
-    },
-    {
-      "name": "Whipple Superchargers",
-      "country": null,
-      "website": "whipplesuperchargers.com"
+      "name": "Yuken Kogyo Co., Ltd.",
+      "country": "Japan",
+      "website": "yuken.co.jp",
+      "description": "A well-established manufacturer of hydraulic components, including reliable piston pumps for various industrial sectors."
     }
   ],
-  "Medical Compressors": [
+  "Plunger": [
     {
-      "name": "Ningbo Yinzhou Maisi Mechanical & Electrical Co., Ltd.",
-      "country": "China",
-      "website": "maisigroup.com"
+      "name": "Flowserve Corporation",
+      "country": "USA",
+      "website": "flowserve.com",
+      "description": "A global leader in industrial pump solutions, including high-pressure reciprocating plunger pumps for oil, gas, and chemical processing."
     },
     {
-      "name": "Hokaido Vacuum Technology(Int'l) Group",
-      "country": "China",
-      "website": "hokaidovac.com"
+      "name": "Cat Pumps",
+      "country": "USA",
+      "website": "catpumps.com",
+      "description": "Renowned for high-quality, long-lasting triplex plunger pumps used in demanding industrial cleaning and fluid transfer applications."
     },
     {
-      "name": "Hongbaoshi Vacuum Equipment Factory",
-      "country": "China",
-      "website": "hbspump.com"
+      "name": "Pratissoli Pompe",
+      "country": "Italy",
+      "website": "pratissoli.it",
+      "description": "A specialized manufacturer of high-pressure plunger pumps known for robust engineering in industrial and heavy-duty cleaning sectors."
     },
     {
-      "name": "Atlas Copco",
-      "country": null,
-      "website": "atlascopco.com"
+      "name": "Kamat GmbH & Co. KG",
+      "country": "Germany",
+      "website": "kamat.de",
+      "description": "A premier manufacturer of high-pressure plunger pumps and systems, recognized for modular designs and extreme durability."
     },
     {
-      "name": "Ingersoll Rand",
-      "country": null,
-      "website": "ingersollrand.com"
-    },
-    {
-      "name": "WenLing Fine Air Compressor Manufacturing Co.,Ltd.",
-      "country": "China",
-      "website": null
+      "name": "Wanner Engineering, Inc.",
+      "country": "USA",
+      "website": "hydra-cell.com",
+      "description": "Manufacturer of Hydra-Cell pumps, which include high-performance plunger and diaphragm technology for challenging industrial fluids."
     }
   ]
 }

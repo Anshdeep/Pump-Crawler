@@ -78,6 +78,8 @@ def duckduckgo_search(query: str, max_results: int = 5) -> list[dict]:
 
 
 def search(query: str, max_results: int = 5) -> list[dict]:
+
+    print("########### Tavily Query ########### ",query)
     """
     Unified search: tries Tavily first, falls back to DuckDuckGo.
     """

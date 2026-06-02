@@ -12,38 +12,43 @@ import json
 from tqdm import tqdm
 from sqlalchemy.orm import Session
 
-from config import MODELS_JSON, MAX_MODELS_PER_MANUFACTURER
+import config
 from utils.web_search import search
 from utils.scraper import scrape_search_results, fetch_dynamic
 from utils.genai_extractor import extract_models, embed_text
 from database.models import EquipmentType
 
 
-def _build_model_query(manufacturer: str, compressor_type: str) -> str:
-    return f'{manufacturer} official {compressor_type} product models lineup specifications site:{manufacturer.lower().replace(" ","")}.com OR {manufacturer} {compressor_type} models datasheet'
+def _build_model_query(manufacturer: str, compressor_type: str, master_name: str = "compressor", subtype_name: str | None = None) -> str:
+    master_lower = master_name.lower()
+    type_str = f"{subtype_name} {compressor_type}" if subtype_name else compressor_type
+    return f'{manufacturer} official {type_str} product models lineup specifications site:{manufacturer.lower().replace(" ","")}.com OR {manufacturer} {type_str} {master_lower} models datasheet'
 
 
-def _find_product_page(manufacturer: str, website: str, compressor_type: str) -> str | None:
+def _find_product_page(manufacturer: str, website: str, compressor_type: str, master_name: str = "compressor") -> str | None:
     """
     Try to find the direct product catalog URL for a manufacturer.
     Returns the URL string or None.
     """
     if not website:
         return None
-    query = f'site:{website} {compressor_type} products compressors'
+    master_lower = master_name.lower()
+    master_plural = master_lower + "s" if not master_lower.endswith("s") else master_lower
+    query = f'site:{website} {compressor_type} products {master_plural}'
     results = search(query, max_results=5)
 
-    # Prefer URLs with 'product', 'catalog', 'compressor' in path
+    # Prefer URLs with 'product', 'catalog', or keyword matching master name in path
+    keywords = ["product", "catalog", master_lower, "range"]
     for r in results:
         url = r.get("url", "")
         lowered = url.lower()
-        if any(kw in lowered for kw in ["product", "catalog", "compressor", "range"]):
+        if any(kw in lowered for kw in keywords):
             return url
 
     return results[0]["url"] if results else None
 
 
-def run(manufacturers_data: dict, db: Session = None, check_cancel=None) -> dict:
+def run(manufacturers_data: dict, db: Session = None, check_cancel=None, equipment_subtype_id: int | None = None) -> dict:
     """
     Run Stage 2 for all manufacturers.
 
@@ -59,7 +64,7 @@ def run(manufacturers_data: dict, db: Session = None, check_cancel=None) -> dict
     results = {}
 
     print("\n" + "=" * 60)
-    print("  STAGE 2 -- Model Discovery")
+    print("  STAGE 2 -- Model Lineups Search")
     print("=" * 60)
 
     # Flatten manufacturers list for progress bar
@@ -68,7 +73,7 @@ def run(manufacturers_data: dict, db: Session = None, check_cancel=None) -> dict
         for mfr in mfrs:
             all_tasks.append((ctype, mfr))
 
-    for ctype, mfr in tqdm(all_tasks, desc="Manufacturers", unit="mfr"):
+    for ctype, mfr in tqdm(all_tasks, desc="Model Lineups", unit="mfr"):
         if check_cancel:
             check_cancel()
             
@@ -80,15 +85,26 @@ def run(manufacturers_data: dict, db: Session = None, check_cancel=None) -> dict
 
         print(f"\n>  {mfr_name}  [{ctype}]")
 
-        # Fetch subtype names for Gemini classification guidance
+        # Fetch subtype names for Gemini classification guidance and parent master name
         subtype_names = []
+        master_name = "compressor"
+        target_subtype_name = None
         if db:
             type_obj = db.query(EquipmentType).filter(EquipmentType.name == ctype).first()
             if type_obj:
-                subtype_names = [sub.name for sub in type_obj.subtypes]
+                if equipment_subtype_id:
+                    from database.models import EquipmentSubtype
+                    sub_obj = db.query(EquipmentSubtype).filter(EquipmentSubtype.id == equipment_subtype_id).first()
+                    if sub_obj:
+                        target_subtype_name = sub_obj.name
+                        subtype_names = [sub_obj.name]
+                else:
+                    subtype_names = [sub.name for sub in type_obj.subtypes]
+                if type_obj.equipment_master:
+                    master_name = type_obj.equipment_master.name
 
         # -- Step 1: Web search for models ----------------------
-        query = _build_model_query(mfr_name, ctype)
+        query = _build_model_query(mfr_name, ctype, master_name, target_subtype_name)
         print(f"   🔍 Searching: {query[:70]}...")
         search_results = search(query, max_results=5)
 
@@ -97,7 +113,7 @@ def run(manufacturers_data: dict, db: Session = None, check_cancel=None) -> dict
 
         # Also try direct product page if website known
         if website and len(page_text) < 2000:
-            direct_url = _find_product_page(mfr_name, website, ctype)
+            direct_url = _find_product_page(mfr_name, website, ctype, master_name)
             if direct_url:
                 print(f"   🌐 Fetching product page: {direct_url[:60]}...")
                 try:
@@ -107,34 +123,39 @@ def run(manufacturers_data: dict, db: Session = None, check_cancel=None) -> dict
                     print(f"   [WARN] Dynamic fetch failed: {e}")
 
         # -- Step 3: Gemini extraction --------------------------
+        type_context = f"{ctype} {master_name.lower()}" if master_name.lower() not in ctype.lower() else ctype
         models = []
         if page_text.strip():
             print(f"   🤖 Extracting models with Gemini...")
             try:
-                models = extract_models(mfr_name, ctype, page_text, allowed_subtypes=subtype_names)
+                models = extract_models(mfr_name, type_context, page_text, allowed_subtypes=subtype_names)
             except Exception as e:
                 print(f"   [WARN] Model extraction failed: {e}")
 
         # -- Step 4: Fallback search with model numbers ---------
         if not models:
             print(f"   🔄 Fallback: direct model search...")
-            fallback_query = f"{mfr_name} {ctype} model numbers specifications datasheet"
+            type_str = f"{target_subtype_name} {ctype}" if target_subtype_name else ctype
+            fallback_query = f"{mfr_name} {type_str} model numbers specifications datasheet"
             fallback_results = search(fallback_query, max_results=3)
             fallback_text    = scrape_search_results(fallback_results, max_chars=5000)
             try:
-                models = extract_models(mfr_name, ctype, fallback_text, allowed_subtypes=subtype_names)
+                models = extract_models(mfr_name, type_context, fallback_text, allowed_subtypes=subtype_names)
             except Exception as e:
                 print(f"   [ERROR] Fallback failed: {e}")
 
         # -- Step 5: Cap to limit -------------------------------
-        models = models[:MAX_MODELS_PER_MANUFACTURER]
+        models = models[:config.MAX_MODELS_PER_MANUFACTURER]
 
         # -- Step 6: DB Insertion & RAG Deduplication -----------
         if db:
             import database.crud as crud
             type_obj = db.query(EquipmentType).filter(EquipmentType.name == ctype).first()
             if not type_obj:
-                type_obj = crud.get_or_create_equipment_type(db, name=ctype, equipment_master_id=1)
+                from database.models import EquipmentMaster
+                first_master = db.query(EquipmentMaster).order_by(EquipmentMaster.id.asc()).first()
+                fallback_master_id = first_master.id if first_master else 1
+                type_obj = crud.get_or_create_equipment_type(db, name=ctype, equipment_master_id=fallback_master_id)
             master_id = type_obj.equipment_master_id
             
             mfr_obj = crud.get_or_create_manufacturer(
@@ -206,6 +227,21 @@ def run(manufacturers_data: dict, db: Session = None, check_cancel=None) -> dict
             
             models = processed_models
 
+            # Clean up the TEMP_PLACEHOLDER model for this manufacturer and category if real models exist
+            from database.models import Model as ModelTable
+            has_real_models = db.query(ModelTable).filter(
+                ModelTable.manufacturer_id == mfr_obj.id,
+                ModelTable.equipment_type_id == type_obj.id,
+                ModelTable.model_name != "TEMP_PLACEHOLDER"
+            ).first()
+            if has_real_models:
+                db.query(ModelTable).filter(
+                    ModelTable.manufacturer_id == mfr_obj.id,
+                    ModelTable.equipment_type_id == type_obj.id,
+                    ModelTable.model_name == "TEMP_PLACEHOLDER"
+                ).delete(synchronize_session=False)
+                db.commit()
+
         results[mfr_name] = {
             "compressor_type": ctype,
             "manufacturer_info": mfr,
@@ -218,11 +254,11 @@ def run(manufacturers_data: dict, db: Session = None, check_cancel=None) -> dict
             print(f"      • {m.get('model_name', '?')}  [{m.get('series', '')}]{dup_tag}")
 
     # -- Save output --------------------------------------------
-    with open(MODELS_JSON, "w", encoding="utf-8") as f:
+    with open(config.MODELS_JSON, "w", encoding="utf-8") as f:
         json.dump(results, f, ensure_ascii=False, indent=2)
 
     total_models = sum(len(v["models"]) for v in results.values())
-    print(f"\n💾 Saved -> {MODELS_JSON}")
+    print(f"\n💾 Saved -> {config.MODELS_JSON}")
     print(f"   Total models found: {total_models}")
 
     return results

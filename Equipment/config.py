@@ -18,11 +18,13 @@ CACHE_ENABLED                 = os.getenv("CACHE_ENABLED", "true").lower() == "t
 
 # -- Paths ------------------------------------------------------------------
 BASE_DIR          = os.path.dirname(os.path.abspath(__file__))
-OUTPUT_DIR        = os.path.join(BASE_DIR, "data", "output")
-CACHE_DIR         = os.path.join(BASE_DIR, "data", "cache")
+DATA_DIR          = os.path.join(BASE_DIR, "data")
+OUTPUT_DIR        = os.path.join(DATA_DIR, "output")
+CACHE_DIR         = os.path.join(DATA_DIR, "cache")
 
 # -- Input ------------------------------------------------------------------
-COMPRESSORS_JSON  = os.path.join(BASE_DIR, "data", "compressors.json")
+COMPRESSORS_JSON  = os.path.join(DATA_DIR, "compressors.json")
+PUMPS_JSON        = os.path.join(DATA_DIR, "pumps.json")
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 os.makedirs(CACHE_DIR,  exist_ok=True)
@@ -30,7 +32,7 @@ os.makedirs(CACHE_DIR,  exist_ok=True)
 # -- Output Files -----------------------------------------------------------
 MANUFACTURERS_JSON  = os.path.join(OUTPUT_DIR, "manufacturers.json")
 MODELS_JSON         = os.path.join(OUTPUT_DIR, "models.json")
-FINAL_OUTPUT_JSON   = os.path.join(OUTPUT_DIR, "compressors_data.json")
+FINAL_OUTPUT_JSON   = os.path.join(OUTPUT_DIR, "equipment_data.json")
 
 # -- Gemini Model -----------------------------------------------------------
 GEMINI_MODEL = "gemini-3.1-flash-lite"

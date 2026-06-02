@@ -32,7 +32,7 @@ def list_equipment_models(
     db: Session = Depends(get_db)
 ):
     """List all equipment models based on search filters (category, manufacturer, approval, and harvested flags)."""
-    query = db.query(Model)
+    query = db.query(Model).filter(Model.model_name != "TEMP_PLACEHOLDER")
     if q:
         query = query.filter(Model.model_name.ilike(f"%{q}%") | Model.series.ilike(f"%{q}%"))
     if manufacturer_id:
@@ -57,7 +57,7 @@ def list_equipment_models(
             "is_harvested": mo.is_harvested,
             "manufacturer": mo.manufacturer.name,
             "manufacturer_id": mo.manufacturer_id,
-            "equipment_master": mo.equipment_master.name if mo.equipment_master else "Compressor",
+            "equipment_master": mo.equipment_master.name if mo.equipment_master else (mo.equipment_type.equipment_master.name if mo.equipment_type and mo.equipment_type.equipment_master else "Unknown"),
             "equipment_type": mo.equipment_type.name,
             "created_at": mo.created_at,
         }
@@ -123,7 +123,7 @@ def get_model_specifications(model_id: int, db: Session = Depends(get_db)):
         "product_url": model.product_url,
         "is_approved": model.is_approved,
         "is_harvested": model.is_harvested,
-        "equipment_master": model.equipment_master.name if model.equipment_master else "Compressor",
+        "equipment_master": model.equipment_master.name if model.equipment_master else (model.equipment_type.equipment_master.name if model.equipment_type and model.equipment_type.equipment_master else "Unknown"),
         "equipment_type": model.equipment_type.name,
         "manufacturer": {
             "id": model.manufacturer.id,

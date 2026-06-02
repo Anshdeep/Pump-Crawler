@@ -1,0 +1,149 @@
+[
+  {
+    "compressor_type": "Piston",
+    "manufacturer": "Moog Inc.",
+    "manufacturer_info": {
+      "id": 91,
+      "name": "Moog Inc.",
+      "country": "United States",
+      "website": "moog.com",
+      "description": ""
+    },
+    "model": "Infinity",
+    "series": "Enteral Feeding Systems",
+    "product_url": null,
+    "attributes": {}
+  },
+  {
+    "compressor_type": "Piston",
+    "manufacturer": "Moog Inc.",
+    "manufacturer_info": {
+      "id": 91,
+      "name": "Moog Inc.",
+      "country": "United States",
+      "website": "moog.com",
+      "description": ""
+    },
+    "model": "D952-2026/C",
+    "series": "RKP-II",
+    "product_url": null,
+    "attributes": {
+      "phase": null,
+      "voltage": null,
+      "power_hp": null,
+      "power_kw": null,
+      "weight_kg": null,
+      "drive_type": null,
+      "duty_cycle": null,
+      "motor_type": null,
+      "weight_lbs": null,
+      "stage_count": null,
+      "capacity_cfm": null,
+      "cooling_type": null,
+      "frequency_hz": null,
+      "pressure_bar": null,
+      "pressure_psi": null,
+      "dimensions_mm": null,
+      "capacity_m3_hr": null,
+      "certifications": null,
+      "noise_level_db": null,
+      "warranty_years": null,
+      "inlet_size_inch": null,
+      "motor_speed_rpm": null,
+      "pump_life_hours": null,
+      "lubrication_type": null,
+      "outlet_size_inch": null,
+      "tank_size_liters": null,
+      "tank_size_gallons": null,
+      "efficiency_percent": null,
+      "oil_capacity_liters": null,
+      "operating_temp_max_c": null,
+      "operating_temp_min_c": null
+    }
+  },
+  {
+    "compressor_type": "Piston",
+    "manufacturer": "Moog Inc.",
+    "manufacturer_info": {
+      "id": 91,
+      "name": "Moog Inc.",
+      "country": "United States",
+      "website": "moog.com",
+      "description": ""
+    },
+    "model": "RKP",
+    "series": "Radial Piston Pump",
+    "product_url": null,
+    "attributes": {
+      "weight_kg": 236,
+      "weight_lbs": 521,
+      "pressure_bar": 350,
+      "pressure_psi": 5000,
+      "motor_speed_rpm": 2900,
+      "operating_temp_max_c": 60,
+      "operating_temp_min_c": -15
+    }
+  },
+  {
+    "compressor_type": "Piston",
+    "manufacturer": "Moog Inc.",
+    "manufacturer_info": {
+      "id": 91,
+      "name": "Moog Inc.",
+      "country": "United States",
+      "website": "moog.com",
+      "description": ""
+    },
+    "model": "RKP-D",
+    "series": "Radial Piston Pump",
+    "product_url": null,
+    "attributes": {
+      "weight_kg": 236,
+      "weight_lbs": 521,
+      "pressure_bar": 350,
+      "pressure_psi": 5000,
+      "motor_speed_rpm": 2900,
+      "operating_temp_max_c": 60,
+      "operating_temp_min_c": -15
+    }
+  },
+  {
+    "compressor_type": "Piston",
+    "manufacturer": "Moog Inc.",
+    "manufacturer_info": {
+      "id": 91,
+      "name": "Moog Inc.",
+      "country": "United States",
+      "website": "moog.com",
+      "description": ""
+    },
+    "model": "CURLIN",
+    "series": "Ambulatory Infusion Pumps",
+    "product_url": null,
+    "attributes": {
+      "weight_kg": 0.513,
+      "dimensions_mm": "130 x 102 x 64"
+    }
+  },
+  {
+    "compressor_type": "Piston",
+    "manufacturer": "Moog Inc.",
+    "manufacturer_info": {
+      "id": 91,
+      "name": "Moog Inc.",
+      "country": "United States",
+      "website": "moog.com",
+      "description": ""
+    },
+    "model": "AXP",
+    "series": "Axial Piston Pump",
+    "product_url": null,
+    "attributes": {
+      "weight_kg": 48.9,
+      "weight_lbs": 107.8,
+      "stage_count": 15,
+      "pressure_bar": 350,
+      "pressure_psi": 5000
+    }
+  }
+]

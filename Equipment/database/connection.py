@@ -31,6 +31,21 @@ except Exception:
     HAS_VECTOR_SUPPORT = False
 
 
+def get_master_name_from_filename(filename: str) -> str:
+    import os
+    name = os.path.splitext(os.path.basename(filename))[0].lower()
+    if name.endswith("ies"):
+        name = name[:-3] + "y"
+    elif name.endswith("es"):
+        if name.endswith("valves"):
+            name = "valve"
+        else:
+            name = name[:-2]
+    elif name.endswith("s"):
+        name = name[:-1]
+    return name.capitalize()
+
+
 def init_db():
     """Create pgvector extension, perform live table/column migrations, create tables, and seed defaults."""
     global HAS_VECTOR_SUPPORT
@@ -129,54 +144,108 @@ def init_db():
             except Exception:
                 pass
 
-            # Seed equipment_type categories
-            res_types = conn.execute(text("SELECT COUNT(*) FROM equipment_type;"))
-            if res_types.scalar() == 0:
-                print("[Seeding] Populating equipment_type defaults...")
-                comp_id = conn.execute(text("SELECT id FROM equipment_master WHERE name = 'Compressor';")).scalar()
-                pump_id = conn.execute(text("SELECT id FROM equipment_master WHERE name = 'Pump';")).scalar()
-                
-                if comp_id:
-                    conn.execute(text(
-                        "INSERT INTO equipment_type (equipment_master_id, name, description) VALUES "
-                        "(:comp_id, 'Air Compressors', 'Air compression systems for tools and utility air'), "
-                        "(:comp_id, 'Refrigeration Compressors', 'AC and low temperature thermal compression systems'), "
-                        "(:comp_id, 'Gas Compressors', 'Natural gas and hydrocarbon process compression pipeline equipment'), "
-                        "(:comp_id, 'Turbochargers/Superchargers', 'Automotive air induction systems'), "
-                        "(:comp_id, 'Medical Compressors', 'Clean sterile compressed air for healthcare devices');"
-                    ), {"comp_id": comp_id})
+            # Dynamic Seeding from json configuration files in DATA_DIR
+            import glob
+            import config
+            import json
+            
+            data_dir = getattr(config, "DATA_DIR", os.path.join(config.BASE_DIR, "data"))
+            json_files = glob.glob(os.path.join(data_dir, "*.json"))
+            
+            for jf in json_files:
+                filename = os.path.basename(jf)
+                if filename in ["manufacturers.json", "models.json", "equipment_data.json", "compressors_data.json"]:
+                    continue
                     
-                if pump_id:
-                    conn.execute(text(
-                        "INSERT INTO equipment_type (equipment_master_id, name, description) VALUES "
-                        "(:pump_id, 'Centrifugal Pumps', 'High velocity fluid impeller transfer pumps'), "
-                        "(:pump_id, 'Positive Displacement Pumps', 'Fixed volume mechanical displacement fluid pumps');"
-                    ), {"pump_id": pump_id})
+                master_name = get_master_name_from_filename(filename)
+                
+                # Check or insert master category
+                res_m = conn.execute(
+                    text("SELECT id FROM equipment_master WHERE name = :name;"),
+                    {"name": master_name}
+                ).first()
+                if not res_m:
+                    print(f"[Seeding] Adding equipment_master: {master_name}")
+                    conn.execute(
+                        text("INSERT INTO equipment_master (name, description) VALUES (:name, :desc);"),
+                        {"name": master_name, "desc": f"{master_name} equipment catalog"}
+                    )
+                    master_id = conn.execute(
+                        text("SELECT id FROM equipment_master WHERE name = :name;"),
+                        {"name": master_name}
+                    ).scalar()
+                else:
+                    master_id = res_m[0]
+                    
+                try:
+                    with open(jf, "r", encoding="utf-8") as f:
+                        content = f.read().strip()
+                        if not content:
+                            continue
+                        equip_types = json.loads(content)
+                except Exception as e:
+                    print(f"[Seeding Warning] Failed to parse {filename}: {e}")
+                    continue
+                    
+                if not isinstance(equip_types, list):
+                    continue
+                    
+                for item in equip_types:
+                    t_name = item.get("type")
+                    if not t_name:
+                        continue
+                    subtypes = item.get("subtypes", [])
+                    apps = item.get("applications", [])
+                    t_desc = f"Applications: {', '.join(apps)}" if apps else f"{t_name} equipment"
+                    
+                    # Check or insert equipment type under the resolved master category
+                    res_t = conn.execute(
+                        text("SELECT id FROM equipment_type WHERE name = :name AND equipment_master_id = :master_id;"),
+                        {"name": t_name, "master_id": master_id}
+                    ).first()
+                    if not res_t:
+                        print(f"[Seeding] Adding equipment_type: {t_name} under {master_name}")
+                        conn.execute(
+                            text("INSERT INTO equipment_type (equipment_master_id, name, description) VALUES (:master_id, :name, :desc);"),
+                            {"master_id": master_id, "name": t_name, "desc": t_desc}
+                        )
+                        type_id = conn.execute(
+                            text("SELECT id FROM equipment_type WHERE name = :name AND equipment_master_id = :master_id;"),
+                            {"name": t_name, "master_id": master_id}
+                        ).scalar()
+                    else:
+                        type_id = res_t[0]
+                        conn.execute(
+                            text("UPDATE equipment_type SET description = :desc WHERE id = :id;"),
+                            {"desc": t_desc, "id": type_id}
+                        )
+                        
+                    # Sync subtypes: delete obsolete ones no longer in the json configuration
+                    existing_subs = conn.execute(
+                        text("SELECT id, name FROM equipment_subtypes WHERE type_id = :type_id;"),
+                        {"type_id": type_id}
+                    ).all()
+                    for row in existing_subs:
+                        sub_id, sub_name = row[0], row[1]
+                        if sub_name not in subtypes:
+                            print(f"[Seeding] Deleting obsolete equipment_subtype: {sub_name} (ID: {sub_id}) under type {t_name}")
+                            conn.execute(
+                                text("DELETE FROM equipment_subtypes WHERE id = :sub_id;"),
+                                {"sub_id": sub_id}
+                            )
 
-            # Seed equipment_subtypes
-            res_sub = conn.execute(text("SELECT COUNT(*) FROM equipment_subtypes;"))
-            if res_sub.scalar() == 0:
-                print("[Seeding] Populating equipment_subtypes defaults...")
-                types = conn.execute(text("SELECT id, name FROM equipment_type;")).all()
-                type_map = {t[1]: t[0] for t in types}
-                
-                subtypes_data = {
-                    "Air Compressors": ["Reciprocating", "Scroll", "Screw", "Centrifugal"],
-                    "Refrigeration Compressors": ["Reciprocating", "Scroll", "Screw"],
-                    "Gas Compressors": ["Reciprocating", "Centrifugal"],
-                    "Turbochargers/Superchargers": ["Centrifugal", "Roots"],
-                    "Medical Compressors": ["Oil-free diaphragm", "Scroll"],
-                    "Centrifugal Pumps": ["Radial Flow", "Axial Flow", "Mixed Flow"],
-                    "Positive Displacement Pumps": ["Reciprocating", "Rotary", "Diaphragm", "Screw", "Plunger"]
-                }
-                
-                for type_name, subs in subtypes_data.items():
-                    type_id = type_map.get(type_name)
-                    if type_id:
-                        for s_name in subs:
-                            conn.execute(text(
-                                "INSERT INTO equipment_subtypes (type_id, name) VALUES (:t_id, :name);"
-                            ), {"t_id": type_id, "name": s_name})
+                    # Check or insert subtypes
+                    for s_name in subtypes:
+                        res_s = conn.execute(
+                            text("SELECT id FROM equipment_subtypes WHERE type_id = :type_id AND name = :name;"),
+                            {"type_id": type_id, "name": s_name}
+                        ).first()
+                        if not res_s:
+                            print(f"[Seeding] Adding equipment_subtype: {s_name} under {t_name}")
+                            conn.execute(
+                                text("INSERT INTO equipment_subtypes (type_id, name) VALUES (:type_id, :name);"),
+                                {"type_id": type_id, "name": s_name}
+                            )
 
             # Healing: Match existing models with null subtypes based on subtype name match in model_name or series
             print("[Healing] Retroactively matching existing models with null subtypes...")

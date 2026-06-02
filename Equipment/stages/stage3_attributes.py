@@ -12,13 +12,13 @@ import json
 from tqdm import tqdm
 from sqlalchemy.orm import Session
 
-from config import FINAL_OUTPUT_JSON
+import config
 from utils.scraper import fetch_dynamic, fetch_static, scrape_search_results, filter_technical_specs_only
 from utils.genai_extractor import extract_attributes
 from utils.web_search import search
 
 
-def _fetch_model_page(model: dict, manufacturer: str, compressor_type: str) -> str:
+def _fetch_model_page(model: dict, manufacturer: str, compressor_type: str, master_name: str = "compressor") -> str:
     """
     Attempt to fetch the product page for this model.
     Priority: product_url -> web search for spec sheet.
@@ -36,7 +36,12 @@ def _fetch_model_page(model: dict, manufacturer: str, compressor_type: str) -> s
     model_name = model.get("model_name", "")
     
     # Try a broader, highly flexible search query
-    query = f'{manufacturer} {model_name} {compressor_type} specifications datasheet technical'
+    kw_suffix = ""
+    master_lower = master_name.lower()
+    if not any(kw in compressor_type.lower() for kw in [master_lower, master_lower + "s"]):
+        kw_suffix = f" {master_lower}"
+
+    query = f'{manufacturer} {model_name} {compressor_type}{kw_suffix} specifications datasheet technical'
     results = search(query, max_results=4)
 
     if not results:
@@ -67,7 +72,7 @@ def _fetch_model_page(model: dict, manufacturer: str, compressor_type: str) -> s
 # In-memory shared page URL and series content cache
 URL_CONTENT_CACHE = {}
 
-def _fetch_model_page_cached(model: dict, manufacturer: str, compressor_type: str) -> str:
+def _fetch_model_page_cached(model: dict, manufacturer: str, compressor_type: str, master_name: str = "compressor") -> str:
     """
     Wrapper around _fetch_model_page using in-memory cache to reuse crawled 
     pages across models belonging to the same product series.
@@ -87,7 +92,7 @@ def _fetch_model_page_cached(model: dict, manufacturer: str, compressor_type: st
         return URL_CONTENT_CACHE[series_key]
         
     # Settle fresh crawl
-    text = _fetch_model_page(model, manufacturer, compressor_type)
+    text = _fetch_model_page(model, manufacturer, compressor_type, master_name)
     
     # Cache content for subsequent models to reuse
     if text and len(text.strip()) > 300:
@@ -137,15 +142,23 @@ def run(models_data: dict, db: Session = None, check_cancel=None) -> list[dict]:
 
         print(f"\n>  {mfr_name} -- {model_name}")
 
+        # Resolve parent master category name from DB
+        master_name = "compressor"
+        if db and model_id:
+            from database.models import Model
+            model_obj = db.query(Model).filter(Model.id == model_id).first()
+            if model_obj and model_obj.equipment_master:
+                master_name = model_obj.equipment_master.name
+
         # -- DB Spec Lookup -------------------------------------
         db_attributes = None
         if db and model_id:
-            from database.models import TechnicalAttribute, Model
+            from database.models import TechnicalAttribute, Model as ModelTable
             db_attr_record = db.query(TechnicalAttribute).filter(TechnicalAttribute.model_id == model_id).first()
             if db_attr_record and db_attr_record.attributes:
                 db_attributes = db_attr_record.attributes
                 print(f"   [RAG Hit] Loaded existing specs from DB for '{model_name}' (Crawling avoided!)")
-                model_obj = db.query(Model).filter(Model.id == model_id).first()
+                model_obj = db.query(ModelTable).filter(ModelTable.id == model_id).first()
                 if model_obj and not model_obj.is_harvested:
                     model_obj.is_harvested = True
                     db.commit()
@@ -158,7 +171,7 @@ def run(models_data: dict, db: Session = None, check_cancel=None) -> list[dict]:
             # -- Step 1: Fetch page ---------------------------------
             print(f"   🌐 Fetching product page...")
             try:
-                page_text = _fetch_model_page_cached(model, mfr_name, ctype)
+                page_text = _fetch_model_page_cached(model, mfr_name, ctype, master_name)
             except Exception as e:
                 print(f"   [WARN] Could not fetch page: {e}")
                 page_text = ""
@@ -172,7 +185,8 @@ def run(models_data: dict, db: Session = None, check_cancel=None) -> list[dict]:
                 if filtered_text.strip():
                     print(f"   🤖 Extracting attributes with Gemini...")
                     try:
-                        attributes = extract_attributes(mfr_name, model_name, ctype, filtered_text)
+                        type_context = f"{ctype} {master_name.lower()}" if master_name.lower() not in ctype.lower() else ctype
+                        attributes = extract_attributes(mfr_name, model_name, type_context, filtered_text)
                         
                         # Save to DB
                         if db and model_id and attributes:
@@ -211,10 +225,10 @@ def run(models_data: dict, db: Session = None, check_cancel=None) -> list[dict]:
             print(f"   (!)️  No attributes extracted")
 
     # -- Save final output --------------------------------------
-    with open(FINAL_OUTPUT_JSON, "w", encoding="utf-8") as f:
+    with open(config.FINAL_OUTPUT_JSON, "w", encoding="utf-8") as f:
         json.dump(final_records, f, ensure_ascii=False, indent=2)
 
-    print(f"\n💾 Saved -> {FINAL_OUTPUT_JSON}")
+    print(f"\n💾 Saved -> {config.FINAL_OUTPUT_JSON}")
     print(f"   Total records: {len(final_records)}")
     print(f"   Records with attributes: {sum(1 for r in final_records if r['attributes'])}")
 

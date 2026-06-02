@@ -1,0 +1,30 @@
+[
+    {
+        "type": "Piston",
+        "applications": [
+            "Oil and Gas",
+            "Heavy Industrial use"
+        ],
+        "subtypes": [
+            "Simplex",
+            "Duplex",
+            "Triplex",
+            "Quadruplex",
+            "Quintuplex"
+        ]
+    },
+    {
+        "type": "Plunger",
+        "applications": [
+            "Oil and Gas",
+            "Heavy Industrial use"
+        ],
+        "subtypes": [
+            "Simplex",
+            "Duplex",
+            "Triplex",
+            "Quadruplex",
+            "Quintuplex"
+        ]
+    }
+]

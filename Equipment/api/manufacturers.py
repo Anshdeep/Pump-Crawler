@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 from database.connection import get_db
 from database.models import Manufacturer, Model
 import database.crud as crud
@@ -16,6 +16,9 @@ class ManufacturerSchema(BaseModel):
     website: Optional[str] = None
     founded_year: Optional[int] = None
     description: Optional[str] = None
+
+class BulkDeleteSchema(BaseModel):
+    ids: List[int]
 
 # ── REST Endpoints ─────────────────────────────────────────────────────────
 
@@ -33,11 +36,11 @@ def list_manufacturers(
     """List manufacturers in the directory with optional pagination, filtering, model counts, and sorting."""
     from sqlalchemy import func
     
-    # Subquery to calculate model count per manufacturer
+    # Subquery to calculate model count per manufacturer (excluding placeholders)
     model_count_sub = db.query(
         Model.manufacturer_id,
         func.count(Model.id).label("model_count")
-    ).group_by(Model.manufacturer_id).subquery()
+    ).filter(Model.model_name != "TEMP_PLACEHOLDER").group_by(Model.manufacturer_id).subquery()
     
     # Base query selecting Manufacturer and the model count
     query = db.query(
@@ -173,6 +176,19 @@ def delete_manufacturer(id: int, db: Session = Depends(get_db)):
     db.delete(mfr)
     db.commit()
     return {"status": "success", "message": f"Manufacturer '{mfr.name}' deleted successfully."}
+
+@router.post("/manufacturers/bulk-delete")
+def bulk_delete_manufacturers(data: BulkDeleteSchema, db: Session = Depends(get_db)):
+    """Delete multiple manufacturer profiles and all their associated models."""
+    if not data.ids:
+        return {"status": "success", "message": "No manufacturers provided to delete."}
+    
+    mfrs = db.query(Manufacturer).filter(Manufacturer.id.in_(data.ids)).all()
+    count = len(mfrs)
+    for mfr in mfrs:
+        db.delete(mfr)
+    db.commit()
+    return {"status": "success", "message": f"Successfully deleted {count} manufacturers."}
 
 @router.put("/manufacturers/{id}/approve")
 def approve_manufacturer(

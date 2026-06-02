@@ -1,659 +1,173 @@
 {
-  "Ingersoll Rand": {
-    "compressor_type": "Gas Compressors",
+  "Moog Inc.": {
+    "compressor_type": "Piston",
     "manufacturer_info": {
-      "name": "Ingersoll Rand",
-      "country": null,
-      "website": "irco.com"
+      "id": 91,
+      "name": "Moog Inc.",
+      "country": "United States",
+      "website": "moog.com",
+      "description": ""
     },
     "models": [
       {
-        "model_name": "R160N-A145",
-        "series": null,
+        "model_name": "D952-2026/C",
+        "series": "RKP-II",
         "product_url": null,
-        "is_duplicate": true,
-        "model_id": 407
+        "subtype": "Septuplex",
+        "is_duplicate": false,
+        "model_id": 772
       },
       {
-        "model_name": "MSG 2/3",
-        "series": "MSG",
+        "model_name": "AXP",
+        "series": "Axial Piston Pump",
         "product_url": null,
-        "is_duplicate": true,
-        "model_id": 408
+        "subtype": null,
+        "is_duplicate": false,
+        "model_id": 773
       },
       {
-        "model_name": "H10T2",
-        "series": null,
+        "model_name": "RKP",
+        "series": "Radial Piston Pump",
         "product_url": null,
-        "is_duplicate": true,
-        "model_id": 409
+        "subtype": null,
+        "is_duplicate": false,
+        "model_id": 774
       },
       {
-        "model_name": "H15T4",
-        "series": null,
+        "model_name": "RKP-D",
+        "series": "Radial Piston Pump",
         "product_url": null,
-        "is_duplicate": true,
-        "model_id": 410
+        "subtype": null,
+        "is_duplicate": false,
+        "model_id": 775
+      },
+      {
+        "model_name": "Infinity",
+        "series": "Enteral Feeding Systems",
+        "product_url": null,
+        "subtype": null,
+        "is_duplicate": false,
+        "model_id": 776
+      },
+      {
+        "model_name": "CURLIN",
+        "series": "Ambulatory Infusion Pumps",
+        "product_url": null,
+        "subtype": null,
+        "is_duplicate": false,
+        "model_id": 777
       }
     ]
   },
-  "Shinano": {
-    "compressor_type": "Air Compressors",
+  "Bosch Rexroth AG": {
+    "compressor_type": "Piston",
     "manufacturer_info": {
-      "name": "Shinano",
-      "country": "Japan",
-      "website": null
-    },
-    "models": [
-      {
-        "model_name": "SI-AG4-A2PJ",
-        "series": "J-type",
-        "is_duplicate": true,
-        "model_id": 341
-      },
-      {
-        "model_name": "SI-AG4-A2RJ",
-        "series": "J-type",
-        "is_duplicate": true,
-        "model_id": 342
-      },
-      {
-        "model_name": "SI-AG4-A2LJ",
-        "series": "J-type",
-        "is_duplicate": true,
-        "model_id": 343
-      },
-      {
-        "model_name": "SI-AG2-U2P",
-        "series": null,
-        "is_duplicate": true,
-        "model_id": 344
-      },
-      {
-        "model_name": "SI-AG2-U2R",
-        "series": null,
-        "is_duplicate": true,
-        "model_id": 345
-      },
-      {
-        "model_name": "SI-1060",
-        "series": null,
-        "is_duplicate": true,
-        "model_id": 362
-      },
-      {
-        "model_name": "SI-1365D",
-        "series": null,
-        "is_duplicate": true,
-        "model_id": 363
-      },
-      {
-        "model_name": "SI-1356D",
-        "series": null,
-        "is_duplicate": true,
-        "model_id": 364
-      },
-      {
-        "model_name": "SI-1065",
-        "series": null,
-        "is_duplicate": true,
-        "model_id": 365
-      },
-      {
-        "model_name": "SI-1052",
-        "series": null,
-        "is_duplicate": true,
-        "model_id": 366
-      }
-    ]
-  },
-  "Atlas Copco": {
-    "compressor_type": "Medical Compressors",
-    "manufacturer_info": {
-      "name": "Atlas Copco",
-      "country": "Sweden",
-      "website": "atlascopco.com"
-    },
-    "models": [
-      {
-        "model_name": "GA 5 MED",
-        "series": "GA MED",
-        "is_duplicate": true,
-        "model_id": 102
-      },
-      {
-        "model_name": "GA 7 MED",
-        "series": "GA MED",
-        "is_duplicate": true,
-        "model_id": 103
-      },
-      {
-        "model_name": "GA 11 MED",
-        "series": "GA MED",
-        "is_duplicate": true,
-        "model_id": 104
-      },
-      {
-        "model_name": "GA 15 MED",
-        "series": "GA MED",
-        "is_duplicate": true,
-        "model_id": 105
-      },
-      {
-        "model_name": "GA 18 MED",
-        "series": "GA MED",
-        "is_duplicate": true,
-        "model_id": 106
-      },
-      {
-        "model_name": "GA 22 MED",
-        "series": "GA MED",
-        "is_duplicate": true,
-        "model_id": 401
-      },
-      {
-        "model_name": "GA 26 MED",
-        "series": "GA MED",
-        "is_duplicate": true,
-        "model_id": 402
-      },
-      {
-        "model_name": "LFx",
-        "series": "LFx oil-free piston",
-        "is_duplicate": true,
-        "model_id": 403
-      },
-      {
-        "model_name": "GA 160 VSD",
-        "series": "GA",
-        "is_duplicate": true,
-        "model_id": 404
-      },
-      {
-        "model_name": "ZT-MED",
-        "series": "ZT-MED",
-        "is_duplicate": true,
-        "model_id": 405
-      }
-    ]
-  },
-  "Siemens Energy": {
-    "compressor_type": "Air Compressors",
-    "manufacturer_info": {
-      "name": "Siemens Energy",
+      "id": 90,
+      "name": "Bosch Rexroth AG",
       "country": "Germany",
-      "website": "siemens-energy.com"
-    },
-    "models": []
-  },
-  "Ariel Corporation": {
-    "compressor_type": "Gas Compressors",
-    "manufacturer_info": {
-      "name": "Ariel Corporation",
-      "country": null,
-      "website": "arielcorp.com"
+      "website": "boschrexroth.com",
+      "description": ""
     },
     "models": [
       {
-        "model_name": "JGN",
-        "series": "Small Line",
+        "model_name": "CDL1",
+        "series": "CDL1 Series",
         "product_url": null,
+        "subtype": null,
         "is_duplicate": true,
-        "model_id": 23
-      },
-      {
-        "model_name": "JGQ",
-        "series": "Small Line",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 24
-      },
-      {
-        "model_name": "JGM",
-        "series": "Small Line",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 25
-      },
-      {
-        "model_name": "JGP",
-        "series": "Small Line",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 26
-      },
-      {
-        "model_name": "JG",
-        "series": "Small Line",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 27
-      },
-      {
-        "model_name": "JGA",
-        "series": "Small Line",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 372
-      },
-      {
-        "model_name": "JGR",
-        "series": "Small Line",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 373
-      },
-      {
-        "model_name": "KBK",
-        "series": "Mid-Line",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 374
-      },
-      {
-        "model_name": "KBT",
-        "series": "Mid-Line",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 375
-      },
-      {
-        "model_name": "KBH",
-        "series": "Hydrogen Mobility Compressor",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 376
+        "model_id": 761
       }
     ]
   },
-  "Bauer Compressors": {
-    "compressor_type": "Gas Compressors",
+  "Alfa Laval": {
+    "compressor_type": "Piston",
     "manufacturer_info": {
-      "name": "Bauer Compressors",
-      "country": null,
-      "website": "bauercomp.com"
+      "id": 93,
+      "name": "Alfa Laval",
+      "country": "Sweden",
+      "website": "alfalaval.com",
+      "description": ""
     },
     "models": [
       {
-        "model_name": "GRU",
-        "series": "GRU Series",
+        "model_name": "LKH-5",
+        "series": "LKH",
         "product_url": null,
+        "subtype": null,
         "is_duplicate": true,
-        "model_id": 377
-      }
-    ]
-  },
-  "Siemens": {
-    "compressor_type": "Gas Compressors",
-    "manufacturer_info": {
-      "name": "Siemens",
-      "country": null,
-      "website": "siemens.com"
-    },
-    "models": [
-      {
-        "model_name": "STC-GC",
-        "series": "STC-GC Series",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 384
+        "model_id": 762
       },
       {
-        "model_name": "SGT5-9000HL",
-        "series": "Heavy-duty gas turbines",
+        "model_name": "LKH-10",
+        "series": "LKH",
         "product_url": null,
+        "subtype": null,
         "is_duplicate": true,
-        "model_id": 385
+        "model_id": 763
       },
       {
-        "model_name": "SGT5-8000H",
-        "series": "Heavy-duty gas turbines",
+        "model_name": "LKH-15",
+        "series": "LKH",
         "product_url": null,
+        "subtype": null,
         "is_duplicate": true,
-        "model_id": 386
+        "model_id": 764
       },
       {
-        "model_name": "SGT5-4000F",
-        "series": "Heavy-duty gas turbines",
+        "model_name": "LKH-20",
+        "series": "LKH",
         "product_url": null,
+        "subtype": null,
         "is_duplicate": true,
-        "model_id": 387
+        "model_id": 765
       },
       {
-        "model_name": "SGT5-2000E",
-        "series": "Heavy-duty gas turbines",
+        "model_name": "LKH-25",
+        "series": "LKH",
         "product_url": null,
+        "subtype": null,
         "is_duplicate": true,
-        "model_id": 388
+        "model_id": 766
       },
       {
-        "model_name": "SGT6-9000HL",
-        "series": "Heavy-duty gas turbines",
+        "model_name": "LKH-35",
+        "series": "LKH",
         "product_url": null,
+        "subtype": null,
         "is_duplicate": true,
-        "model_id": 389
+        "model_id": 767
       },
       {
-        "model_name": "SGT6-8000H",
-        "series": "Heavy-duty gas turbines",
+        "model_name": "LKH-40",
+        "series": "LKH",
         "product_url": null,
+        "subtype": null,
         "is_duplicate": true,
-        "model_id": 390
+        "model_id": 768
       },
       {
-        "model_name": "SGT-800",
-        "series": "Industrial gas turbines",
+        "model_name": "LKH-45",
+        "series": "LKH",
         "product_url": null,
+        "subtype": null,
         "is_duplicate": true,
-        "model_id": 391
+        "model_id": 769
       },
       {
-        "model_name": "SGT-750",
-        "series": "Industrial gas turbines",
+        "model_name": "LKH-50",
+        "series": "LKH",
         "product_url": null,
+        "subtype": null,
         "is_duplicate": true,
-        "model_id": 392
+        "model_id": 770
       },
       {
-        "model_name": "SGT-A35",
-        "series": "Aeroderivative gas turbine",
+        "model_name": "LKH-60",
+        "series": "LKH",
         "product_url": null,
+        "subtype": null,
         "is_duplicate": true,
-        "model_id": 393
-      }
-    ]
-  },
-  "Magnuson Products LLC": {
-    "compressor_type": "Turbochargers/Superchargers",
-    "manufacturer_info": {
-      "name": "Magnuson Products LLC",
-      "country": null,
-      "website": null
-    },
-    "models": [
-      {
-        "model_name": "05-00-23-060-BL",
-        "series": "TVS2300",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 394
-      },
-      {
-        "model_name": "31-99-07-005",
-        "series": "Small Univ Cooling System",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 395
-      }
-    ]
-  },
-  "Vortech Engineering, Inc.": {
-    "compressor_type": "Turbochargers/Superchargers",
-    "manufacturer_info": {
-      "name": "Vortech Engineering, Inc.",
-      "country": null,
-      "website": null
-    },
-    "models": [
-      {
-        "model_name": "V-1 SC-Trim",
-        "series": "V-1",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 37
-      },
-      {
-        "model_name": "V-1 S-Trim",
-        "series": "V-1",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 38
-      },
-      {
-        "model_name": "V-1 SCi-Trim",
-        "series": "V-1",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 39
-      },
-      {
-        "model_name": "V-1 Si-Trim",
-        "series": "V-1",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 40
-      },
-      {
-        "model_name": "V-1 T-Trim",
-        "series": "V-1",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 210
-      },
-      {
-        "model_name": "V-1 Ti-Trim",
-        "series": "V-1",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 396
-      },
-      {
-        "model_name": "V-1 JT-Trim",
-        "series": "V-1",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 397
-      },
-      {
-        "model_name": "V-3 H67B",
-        "series": "V-3",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 398
-      },
-      {
-        "model_name": "V-3 SCi-Trim",
-        "series": "V-3",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 399
-      },
-      {
-        "model_name": "V-3 Si-Trim",
-        "series": "V-3",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 400
-      }
-    ]
-  },
-  "ProCharger": {
-    "compressor_type": "Turbochargers/Superchargers",
-    "manufacturer_info": {
-      "name": "ProCharger",
-      "country": null,
-      "website": null
-    },
-    "models": [
-      {
-        "model_name": "2024-2026 F-150 5.0L 4V Supercharger Kit",
-        "series": null,
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 356
-      },
-      {
-        "model_name": "2024-2026 S650 Ford Mustang GT Supercharger System",
-        "series": null,
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 357
-      },
-      {
-        "model_name": "2022 F-250 Supercharger Kit",
-        "series": null,
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 358
-      },
-      {
-        "model_name": "2020-2026 F-150 Supercharger Kit",
-        "series": null,
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 359
-      }
-    ]
-  },
-  "Air Squared": {
-    "compressor_type": "Medical Compressors",
-    "manufacturer_info": {
-      "name": "Air Squared",
-      "country": null,
-      "website": "airsquared.com"
-    },
-    "models": [
-      {
-        "model_name": "P09H015B-BLDC-LC",
-        "series": "Liquid-Cooled Series",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 101
-      }
-    ]
-  },
-  "AmcareMed": {
-    "compressor_type": "Medical Compressors",
-    "manufacturer_info": {
-      "name": "AmcareMed",
-      "country": null,
-      "website": "amcaremed.com"
-    },
-    "models": [
-      {
-        "model_name": "Horizontal Piston Medical Air Compressor",
-        "series": "Piston Series",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 346
-      },
-      {
-        "model_name": "Piston Medical Air Compressor",
-        "series": "Piston Series",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 347
-      },
-      {
-        "model_name": "Oil-free Scroll Medical Air Compressor",
-        "series": "Scroll Series",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 348
-      },
-      {
-        "model_name": "Skid-mounted oil free scroll air compressor",
-        "series": "Scroll Series",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 349
-      },
-      {
-        "model_name": "Screw Medical Air Compressor",
-        "series": "Screw Series",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 350
-      }
-    ]
-  },
-  "CompAir": {
-    "compressor_type": "Medical Compressors",
-    "manufacturer_info": {
-      "name": "CompAir",
-      "country": null,
-      "website": "compair.com"
-    },
-    "models": [
-      {
-        "model_name": "L07",
-        "series": "L Series",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 107
-      },
-      {
-        "model_name": "L11",
-        "series": "L Series",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 108
-      },
-      {
-        "model_name": "L15",
-        "series": "L Series",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 109
-      },
-      {
-        "model_name": "L22",
-        "series": "L Series",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 110
-      },
-      {
-        "model_name": "C35-10",
-        "series": "C Series",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 111
-      },
-      {
-        "model_name": "C50",
-        "series": "C Series",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 406
-      }
-    ]
-  },
-  "Gentilin": {
-    "compressor_type": "Medical Compressors",
-    "manufacturer_info": {
-      "name": "Gentilin",
-      "country": "Italy",
-      "website": "gentilinair.com"
-    },
-    "models": [
-      {
-        "model_name": "HUSH",
-        "series": "HUSH Series",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 414
-      },
-      {
-        "model_name": "SCROLL",
-        "series": "SCROLL Series",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 415
-      },
-      {
-        "model_name": "CLINIC",
-        "series": "CLINIC Series",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 416
-      },
-      {
-        "model_name": "PRO",
-        "series": "PRO Series",
-        "product_url": null,
-        "is_duplicate": true,
-        "model_id": 417
+        "model_id": 771
       }
     ]
   }

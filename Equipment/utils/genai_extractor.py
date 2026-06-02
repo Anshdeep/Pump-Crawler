@@ -32,18 +32,19 @@ class ManufacturerSchema(BaseModel):
     name: str = Field(description="The formal manufacturer name")
     country: Optional[str] = Field("", description="The country of headquarters, or empty if unknown")
     website: Optional[str] = Field("", description="The website homepage domain name only (e.g. atlascopco.com)")
+    description: Optional[str] = Field("", description="Reputation note or concise sentence on why they are reputable for this specific equipment")
 
 class ModelSchema(BaseModel):
     model_name: str = Field(description="The model number or alphanumeric identifier")
     series: Optional[str] = Field("", description="The series/product lineage name (e.g. GA Series)")
     product_url: Optional[str] = Field("", description="The direct URL link to this model page if found")
-    subtype: Optional[str] = Field("", description="The classified equipment subtype/technology from the page text (e.g., Rotary Screw, Centrifugal, Scroll)")
+    subtype: Optional[str] = Field("", description="The classified equipment subtype/technology from the page text (e.g., Rotary Screw, Centrifugal, Scroll, Simplex, Duplex)")
 
 class ManufacturerListSchema(BaseModel):
     manufacturers: List[ManufacturerSchema] = Field(description="List of discovered manufacturers")
 
 class ModelListSchema(BaseModel):
-    models: List[ModelSchema] = Field(description="List of discovered compressor models")
+    models: List[ModelSchema] = Field(description="List of discovered equipment models")
 
 class TechnicalSpecsSchema(BaseModel):
     capacity_cfm: Optional[float] = Field(None, description="Flow capacity in Cubic Feet per Minute")
@@ -132,25 +133,45 @@ def _truncate(text: str) -> str:
     return text[:_MAX_INPUT_CHARS]
 
 
-def extract_manufacturers(compressor_type: str, subtypes: list, text: str) -> list[dict]:
+def extract_manufacturers(equipment_master: str, equipment_type: str, subtypes: list, text: str) -> list[dict]:
+    print("equipment_master:", equipment_master)
+    print("equipment_type:", equipment_type)
+    print("subtypes:", subtypes)
+    print("text:", text)
+    
     """
     Extract manufacturer list from scraped text using schema guides.
     """
     subtype_str = ", ".join(subtypes) if subtypes else "general"
 
-    prompt = f"""You are a technical data extraction assistant.
-From the scraped content below, extract up to 20 well-known manufacturers matching:
-Compressor Type: {compressor_type}
-Subtypes: {subtype_str}
+    prompt = f"""You are an expert in industrial equipment and global manufacturing.
 
-Text:
+Return a list of reputable, well-established industrial manufacturers for the following equipment:
+
+Equipment Master : {equipment_master}
+Equipment Type   : {equipment_type}
+Sub-Type         : {subtype_str}
+
+IMPORTANT: Only return manufacturers that specifically make {equipment_master}s of the "{equipment_type}" type.
+Do NOT return manufacturers for other equipment categories (e.g. if the master is "Pump", do not return compressor or blower manufacturers).
+
+Requirements:
+- Only include manufacturers known for industrial-grade products (not consumer or light commercial).
+- Manufacturers must have a strong global or regional reputation for quality, reliability, and after-sales support.
+- Include only genuine, real-world manufacturers.
+- For each manufacturer provide:
+  1. Name — Full official company name
+  2. Country of Origin — Headquarters country
+  3. Website — Official website URL
+
+Scraped Text:
 {_truncate(text)}"""
 
     res = generate_json(prompt, schema=ManufacturerListSchema)
     return res.get("manufacturers", []) if isinstance(res, dict) else []
 
 
-def extract_models(manufacturer: str, compressor_type: str, text: str, allowed_subtypes: list[str] = None) -> list[dict]:
+def extract_models(manufacturer: str, equipment_type: str, text: str, allowed_subtypes: list[str] = None) -> list[dict]:
     """
     Extract model list for a manufacturer from scraped text using schema guides.
     """
@@ -160,7 +181,7 @@ def extract_models(manufacturer: str, compressor_type: str, text: str, allowed_s
 
     prompt = f"""You are a technical data extraction assistant.
 From the scraped content below, extract up to 10 actual product models made by {manufacturer}.
-Compressor Type: {compressor_type}{subtype_hint}
+Equipment Type: {equipment_type}{subtype_hint}
 
 Text:
 {_truncate(text)}"""
@@ -172,7 +193,7 @@ Text:
 def extract_attributes(
     manufacturer: str,
     model_name: str,
-    compressor_type: str,
+    equipment_type: str,
     text: str,
 ) -> dict:
     """
@@ -183,7 +204,7 @@ From the specifications text below, extract ALL measurable mechanical, electrica
 
 Manufacturer: {manufacturer}
 Model: {model_name}
-Compressor Type: {compressor_type}
+Equipment Type: {equipment_type}
 
 Text:
 {_truncate(text)}"""
@@ -191,13 +212,13 @@ Text:
     return generate_json(prompt, schema=TechnicalSpecsSchema)
 
 
-def enrich_manufacturer_info(manufacturer: str, compressor_type: str) -> dict:
+def enrich_manufacturer_info(manufacturer: str, equipment_type: str) -> dict:
     """
     Ask Gemini directly (without scraping) to provide known manufacturer info.
     Used as a fallback when web scraping yields no results.
     """
-    prompt = f"""Provide factual information about the compressor manufacturer: {manufacturer}
-Compressor type context: {compressor_type}
+    prompt = f"""Provide factual information about the manufacturer: {manufacturer}
+Equipment Type context: {equipment_type}
 
 Return ONLY a valid JSON object with these keys:
 {{

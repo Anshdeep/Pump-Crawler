@@ -124,6 +124,10 @@ def run_cli_pipeline(args):
         print(f"[ERROR] No equipment types found matching filters: {args.type}")
         sys.exit(1)
 
+    print("====================")
+    print(etype_objs)
+    print("====================")
+    
     print(f"  Target Types : {[et.name for et in etype_objs]}")
     print(f"  Stages       : {args.stage}")
     print(f"  Cache        : {'ON' if cache_on else 'OFF'}")
@@ -135,17 +139,17 @@ def run_cli_pipeline(args):
     mfrs_data = None
     if 1 in args.stage:
         import stages.stage1_manufacturers as stage1
-        compressors_list = []
+        equipment_list = []
         for et in etype_objs:
             subtypes = [sub.name for sub in et.subtypes]
-            compressors_list.append({
+            equipment_list.append({
                 "id": et.id,
                 "type": et.name,
                 "equipment_master_id": et.equipment_master_id,
                 "subtypes": subtypes,
-                "applications": ["Industrial processing"]
+                "applications": []
             })
-        mfrs_data = stage1.run(compressors_list, db=db)
+        mfrs_data = stage1.run(equipment_list, db=db)
     else:
         # Load from fallback json
         try:

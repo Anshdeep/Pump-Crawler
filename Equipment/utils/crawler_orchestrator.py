@@ -71,8 +71,12 @@ def _get_db_settings():
 
 # ── Background Process Operations ──────────────────────────────────────────
 
-def run_manufacturer_discovery_background(equipment_type_id: int | None, no_cache: bool):
-    """Stage 1: Discover manufacturers for a given equipment type (or all types)."""
+def run_manufacturer_discovery_background(
+    equipment_master_id: int | None,
+    equipment_type_id: int | None,
+    no_cache: bool
+):
+    """Stage 1: Discover manufacturers for a given equipment master/type (or all types)."""
     global CRAWL_PROGRESS, _CRAWL_STOP_REQUESTED
     _CRAWL_STOP_REQUESTED = False
     
@@ -85,12 +89,16 @@ def run_manufacturer_discovery_background(equipment_type_id: int | None, no_cach
 
     db = next(connection.get_db())
     
-    # Resolve category target name
+    # Resolve display name for progress tracking
     target_name = "All Categories"
     if equipment_type_id:
         etype = db.query(EquipmentType).filter(EquipmentType.id == equipment_type_id).first()
         if etype:
             target_name = etype.name
+    elif equipment_master_id:
+        master = db.query(EquipmentMaster).filter(EquipmentMaster.id == equipment_master_id).first()
+        if master:
+            target_name = f"All {master.name} types"
     CRAWL_PROGRESS["compressor_type"] = target_name
 
     history_record = CrawlHistory(
@@ -111,14 +119,30 @@ def run_manufacturer_discovery_background(equipment_type_id: int | None, no_cach
         import config
         config.CACHE_ENABLED = False if no_cache else settings["cache_on"]
         
-        # Pull taxonomies matching request
+        # Pull only the equipment types belonging to the requested master/type.
+        # Always apply master filter first so a stale type_id can't pull in
+        # types from a different master category (e.g. Compressor when Pump is selected).
         query_etypes = db.query(EquipmentType)
+        if equipment_master_id:
+            query_etypes = query_etypes.filter(EquipmentType.equipment_master_id == equipment_master_id)
         if equipment_type_id:
             query_etypes = query_etypes.filter(EquipmentType.id == equipment_type_id)
         etype_objs = query_etypes.all()
+
+        # Fallback: if a specific type_id was given but returned nothing (stale selection),
+        # drop the type filter and crawl all types under the selected master instead.
+        if not etype_objs and equipment_type_id and equipment_master_id:
+            print(f"[WARN] type_id={equipment_type_id} not found under master_id={equipment_master_id}. "
+                  f"Falling back to all types under master_id={equipment_master_id}.")
+            etype_objs = db.query(EquipmentType).filter(
+                EquipmentType.equipment_master_id == equipment_master_id
+            ).all()
         
         if not etype_objs:
-            raise ValueError(f"No equipment types found matching ID: {equipment_type_id}")
+            raise ValueError(
+                f"No equipment types found for master_id={equipment_master_id}, type_id={equipment_type_id}. "
+                "Go to the Taxonomy tab and ensure equipment types exist under this master category."
+            )
 
         # Assemble list of category dicts mimicking compressors.json
         compressors_list = []
@@ -176,12 +200,143 @@ def run_manufacturer_discovery_background(equipment_type_id: int | None, no_cach
         db.close()
 
 
+def run_model_discovery_background(
+    manufacturer_ids: list[int] | None, 
+    only_unharvested: bool, 
+    no_cache: bool,
+    equipment_master_id: int | None = None,
+    equipment_type_id: int | None = None,
+    equipment_subtype_id: int | None = None
+):
+    """Stage 2: Run model lineup discovery on approved manufacturers."""
+    global CRAWL_PROGRESS, _CRAWL_STOP_REQUESTED
+    _CRAWL_STOP_REQUESTED = False
+
+    CRAWL_PROGRESS["active"] = True
+    CRAWL_PROGRESS["compressor_type"] = "Approved Manufacturers"
+    CRAWL_PROGRESS["started_at"] = datetime.now().isoformat()
+    CRAWL_PROGRESS["completed_at"] = None
+    CRAWL_PROGRESS["discovered_manufacturers"] = 0
+    CRAWL_PROGRESS["discovered_models"] = 0
+    CRAWL_PROGRESS["enriched_records"] = 0
+
+    db = next(connection.get_db())
+
+    history_record = CrawlHistory(
+        started_at=datetime.now(),
+        status="active",
+        compressor_type="Approved Manufacturers",
+        log_message="Approved model lineup discovery background task started (Stage 2)."
+    )
+    db.add(history_record)
+    db.commit()
+    db.refresh(history_record)
+
+    initial_models = db.query(Model).count()
+
+    try:
+        # Load settings
+        settings = _get_db_settings()
+        import config
+        config.CACHE_ENABLED = False if no_cache else settings["cache_on"]
+        config.MAX_MODELS_PER_MANUFACTURER = settings["max_models"]
+        
+        # Load all approved manufacturers from PostgreSQL
+        mfr_query = db.query(Manufacturer).filter(Manufacturer.is_approved == True)
+        if manufacturer_ids:
+            mfr_query = mfr_query.filter(Manufacturer.id.in_(manufacturer_ids))
+        if only_unharvested:
+            mfr_query = mfr_query.filter(Manufacturer.is_harvested == False)
+            
+        # Apply category filters to filter manufacturers that are associated with models in this category
+        if equipment_master_id or equipment_type_id or equipment_subtype_id:
+            mfr_sub = db.query(Model.manufacturer_id)
+            if equipment_master_id:
+                mfr_sub = mfr_sub.filter(Model.equipment_master_id == equipment_master_id)
+            if equipment_type_id:
+                mfr_sub = mfr_sub.filter(Model.equipment_type_id == equipment_type_id)
+            if equipment_subtype_id:
+                mfr_sub = mfr_sub.filter(Model.equipment_subtype_id == equipment_subtype_id)
+            mfr_query = mfr_query.filter(Manufacturer.id.in_(mfr_sub))
+            
+        mfr_objs = mfr_query.all()
+        if not mfr_objs:
+            raise ValueError("No approved/selected manufacturers to crawl! Verify approvals in the Manufacturers tab.")
+
+        CRAWL_PROGRESS["discovered_manufacturers"] = len(mfr_objs)
+        print(f"[BG Model Discovery] Targeting {len(mfr_objs)} manufacturers.")
+
+        # Reconstruct manufacturers_data structure expected by Stage 2
+        manufacturers_data = {}
+        for mfr in mfr_objs:
+            # Query only equipment types that match the filter parameters
+            et_query = db.query(EquipmentType)
+            if equipment_type_id:
+                et_query = et_query.filter(EquipmentType.id == equipment_type_id)
+            elif equipment_master_id:
+                et_query = et_query.filter(EquipmentType.equipment_master_id == equipment_master_id)
+            all_types = et_query.all()
+            
+            for et in all_types:
+                manufacturers_data.setdefault(et.name, []).append({
+                    "id": mfr.id,
+                    "name": mfr.name,
+                    "country": mfr.country,
+                    "website": mfr.website,
+                    "description": mfr.description
+                })
+        
+        _update_progress("Stage 2: Model Search", 50, f"Searching product model lineups for {len(mfr_objs)} targeted manufacturers")
+        stage2.run(manufacturers_data, db=db, check_cancel=check_cancel, equipment_subtype_id=equipment_subtype_id)
+        time.sleep(1)
+
+        final_models = db.query(Model).count()
+        new_models = max(0, final_models - initial_models)
+
+        CRAWL_PROGRESS["completed_at"] = datetime.now().isoformat()
+        _update_progress(
+            "Completed", 
+            100, 
+            f"Lineup discovery complete: successfully discovered {new_models} models!",
+            discovered_models=new_models
+        )
+
+        history_record.status = "completed"
+        history_record.completed_at = datetime.now()
+        history_record.new_manufacturers_count = 0
+        history_record.new_models_count = new_models
+        history_record.log_message = f"Lineup discovery complete. Found {new_models} new models."
+        db.commit()
+
+    except Exception as e:
+        print(f"[BG Model Discovery Error] {e}")
+        is_stopped = isinstance(e, InterruptedError) or "stopped by user" in str(e).lower()
+        if is_stopped:
+            _update_progress("Stopped", CRAWL_PROGRESS["percent"], "Crawl stopped by user request.")
+            history_record.status = "stopped"
+            history_record.completed_at = datetime.now()
+            history_record.log_message = "Crawl stopped by user request."
+        else:
+            _update_progress("Failed", 0, f"Error occurred: {str(e)}")
+            history_record.status = "failed"
+            history_record.completed_at = datetime.now()
+            history_record.log_message = f"Error: {str(e)}"
+        db.commit()
+    finally:
+        CRAWL_PROGRESS["active"] = False
+        db.close()
+
+
 def run_specs_harvester_background(
     manufacturer_ids: list[int] | None, 
     only_unharvested: bool, 
     no_cache: bool,
     model_ids: list[int] | None = None,
-    deep_crawl: bool = True
+    deep_crawl: bool = False,
+    equipment_master_id: int | None = None,
+    equipment_type_id: int | None = None,
+    equipment_subtype_id: int | None = None,
+    target_approved_only: bool = True
 ):
     """Stages 2 & 3: Run model discovery and specs extraction on approved manufacturers."""
     global CRAWL_PROGRESS, _CRAWL_STOP_REQUESTED
@@ -216,28 +371,63 @@ def run_specs_harvester_background(
         config.CACHE_ENABLED = False if no_cache else settings["cache_on"]
         config.MAX_MODELS_PER_MANUFACTURER = settings["max_models"]
         
-        # Load all approved manufacturers from PostgreSQL
-        mfr_query = db.query(Manufacturer).filter(Manufacturer.is_approved == True)
-        if manufacturer_ids:
-            mfr_query = mfr_query.filter(Manufacturer.id.in_(manufacturer_ids))
-        if only_unharvested:
-            mfr_query = mfr_query.filter(Manufacturer.is_harvested == False)
+        if model_ids:
+            # Bypass manufacturer queries and load the targeted models directly
+            model_query = db.query(Model).filter(Model.id.in_(model_ids))
+            if only_unharvested:
+                model_query = model_query.filter(Model.is_harvested == False)
+            model_objs = model_query.all()
             
-        mfr_objs = mfr_query.all()
-        if not mfr_objs:
-            raise ValueError("No approved/selected manufacturers to crawl! Verify approvals in the Manufacturers tab.")
+            # Extract manufacturers from these models
+            mfr_objs = list({mo.manufacturer for mo in model_objs if mo.manufacturer})
+            mfr_ids_list = [m.id for m in mfr_objs]
+            deep_crawl = False
+        else:
+            # Load all approved manufacturers from PostgreSQL
+            mfr_query = db.query(Manufacturer).filter(Manufacturer.is_approved == True)
+            if manufacturer_ids:
+                mfr_query = mfr_query.filter(Manufacturer.id.in_(manufacturer_ids))
+            if only_unharvested:
+                mfr_query = mfr_query.filter(Manufacturer.is_harvested == False)
+                
+            # Apply category filters to filter manufacturers that are associated with models in this category
+            if equipment_master_id or equipment_type_id or equipment_subtype_id:
+                mfr_sub = db.query(Model.manufacturer_id)
+                if equipment_master_id:
+                    mfr_sub = mfr_sub.filter(Model.equipment_master_id == equipment_master_id)
+                if equipment_type_id:
+                    mfr_sub = mfr_sub.filter(Model.equipment_type_id == equipment_type_id)
+                if equipment_subtype_id:
+                    mfr_sub = mfr_sub.filter(Model.equipment_subtype_id == equipment_subtype_id)
+                mfr_query = mfr_query.filter(Manufacturer.id.in_(mfr_sub))
+                
+            mfr_objs = mfr_query.all()
+            if not mfr_objs:
+                raise ValueError("No approved/selected manufacturers to crawl! Verify approvals in the Manufacturers tab.")
+            mfr_ids_list = [m.id for m in mfr_objs]
+
+        # Coerce deep_crawl to strict boolean in case of string serialization
+        if isinstance(deep_crawl, str):
+            deep_crawl = deep_crawl.lower() in ("true", "1", "yes")
+        else:
+            deep_crawl = bool(deep_crawl)
 
         CRAWL_PROGRESS["discovered_manufacturers"] = len(mfr_objs)
-        print(f"[BG Harvester] Targeting {len(mfr_objs)} manufacturers.")
-
-        mfr_ids_list = [m.id for m in mfr_objs]
+        print(f"[BG Harvester] Targeting {len(mfr_objs)} manufacturers. deep_crawl={deep_crawl}")
 
         # ── Stage 2: Discover Lineups (Optional) ──
         if deep_crawl:
             # Reconstruct manufacturers_data structure expected by Stage 2
             manufacturers_data = {}
             for mfr in mfr_objs:
-                all_types = db.query(EquipmentType).all()
+                # Query only equipment types that match the filter parameters
+                et_query = db.query(EquipmentType)
+                if equipment_type_id:
+                    et_query = et_query.filter(EquipmentType.id == equipment_type_id)
+                elif equipment_master_id:
+                    et_query = et_query.filter(EquipmentType.equipment_master_id == equipment_master_id)
+                all_types = et_query.all()
+                
                 for et in all_types:
                     manufacturers_data.setdefault(et.name, []).append({
                         "id": mfr.id,
@@ -247,30 +437,36 @@ def run_specs_harvester_background(
                         "description": mfr.description
                     })
             
-            _update_progress("Stage 2: Models", 35, f"Discovering product models for {len(mfr_objs)} manufacturers")
-            stage2.run(manufacturers_data, db=db, check_cancel=check_cancel)
+            _update_progress("Stage 2: Model Search", 35, f"Searching product model lineups for {len(mfr_objs)} targeted manufacturers")
+            stage2.run(manufacturers_data, db=db, check_cancel=check_cancel, equipment_subtype_id=equipment_subtype_id)
             time.sleep(1)
 
         # ── Stage 3: Specs Extraction ──
-        # Resolve target model_objs to crawl
-        if model_ids:
-            model_query = db.query(Model).filter(Model.id.in_(model_ids))
-            if only_unharvested:
-                model_query = model_query.filter(Model.is_harvested == False)
-            model_objs = model_query.all()
-        else:
+        # Resolve target model_objs to crawl if not already resolved
+        if not model_ids:
             model_query = db.query(Model).filter(
-                Model.manufacturer_id.in_(mfr_ids_list),
-                Model.is_approved == True
+                Model.manufacturer_id.in_(mfr_ids_list)
             )
+            if target_approved_only:
+                model_query = model_query.filter(Model.is_approved == True)
+            
+            # Exclude placeholder models
+            model_query = model_query.filter(Model.model_name != "TEMP_PLACEHOLDER")
+
             if only_unharvested:
                 model_query = model_query.filter(Model.is_harvested == False)
+            if equipment_master_id:
+                model_query = model_query.filter(Model.equipment_master_id == equipment_master_id)
+            if equipment_type_id:
+                model_query = model_query.filter(Model.equipment_type_id == equipment_type_id)
+            if equipment_subtype_id:
+                model_query = model_query.filter(Model.equipment_subtype_id == equipment_subtype_id)
             model_objs = model_query.all()
 
         if not model_objs:
-            msg = "No approved models to harvest specs for. Approved models must be manually selected or approved in the Catalog."
-            if deep_crawl:
-                msg = "Stage 2 complete: discovered models have been saved as unapproved in the catalog. Approve them to harvest specs."
+            msg = "No target models found to harvest specs for."
+            if target_approved_only:
+                msg = "No approved models to harvest specs for. Approve discovered models in the Catalog, or disable 'Approved Models Only'."
             
             _update_progress("Completed", 100, msg)
             history_record.status = "completed"

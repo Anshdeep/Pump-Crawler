@@ -1,0 +1,120 @@
+[2026-06-02 15:28:28] INFO:     127.0.0.1:54521 - "POST /api/crawl/discover-models?manufacturer_ids%5B%5D=91&only_unharvested=false&no_cache=false&equipment_master_id=2&equipment_type_id=20 HTTP/1.1" 200 OK
+[2026-06-02 15:28:28] [BG Model Discovery] Targeting 3 manufacturers.
+
+[2026-06-02 15:28:28] ============================================================
+[2026-06-02 15:28:28]   STAGE 2 -- Model Lineups Search
+[2026-06-02 15:28:28] ============================================================
+[2026-06-02 15:28:28] 
+Model Lineups:   0%|                            | 0/3 [00:00<?, ?mfr/s]
+[2026-06-02 15:28:28] >  Moog Inc.  [Piston]
+[2026-06-02 15:28:28]    🔍 Searching: Moog Inc. official Piston product models lineup specifications site:mo...
+[2026-06-02 15:28:28] INFO:     127.0.0.1:50775 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:28:28] INFO:     127.0.0.1:55158 - "GET /api/crawl/history HTTP/1.1" 200 OK
+[2026-06-02 15:28:28] INFO:     127.0.0.1:58847 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:28:29] INFO:     127.0.0.1:59310 - "GET /api/dashboard-stats HTTP/1.1" 200 OK
+[2026-06-02 15:28:29] INFO:     127.0.0.1:64234 - "GET /api/crawl/history?page=1&limit=10 HTTP/1.1" 200 OK
+[2026-06-02 15:28:29] INFO:     127.0.0.1:64235 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:28:31] INFO:     127.0.0.1:51905 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:28:32] INFO:     127.0.0.1:51761 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:28:35] INFO:     127.0.0.1:55606 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:28:35] INFO:     127.0.0.1:64532 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:28:37] INFO:     127.0.0.1:50528 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:28:38] INFO:     127.0.0.1:57899 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:28:40] INFO:     127.0.0.1:55682 - "GET /api/manufacturers?equipment_master_id=2&page=1&limit=10&sort_by=is_approved&sort_desc=true HTTP/1.1" 200 OK
+[2026-06-02 15:28:40] INFO:     127.0.0.1:56533 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:28:41] INFO:     127.0.0.1:50792 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:28:42]    🤖 Extracting models with Gemini...
+[2026-06-02 15:28:43] INFO:     127.0.0.1:49681 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:28:44] INFO:     127.0.0.1:62011 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:28:45]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 15:28:46]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 15:28:46]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 15:28:46] INFO:     127.0.0.1:51548 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:28:46]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 15:28:47]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 15:28:47]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 15:28:47]    ✅ Found 6 models:
+[2026-06-02 15:28:47]       • D952-2026/C  [RKP-II]
+[2026-06-02 15:28:47]       • AXP  [Axial Piston Pump]
+[2026-06-02 15:28:47]       • RKP  [Radial Piston Pump]
+[2026-06-02 15:28:47]       • RKP-D  [Radial Piston Pump]
+[2026-06-02 15:28:47]       • Infinity  [Enteral Feeding Systems]
+[2026-06-02 15:28:47]       • CURLIN  [Ambulatory Infusion Pumps]
+
+Model Lineups:  33%|██████▋             | 1/3 [00:19<00:38, 19.19s/mfr]
+[2026-06-02 15:28:47] >  Bosch Rexroth AG  [Piston]
+[2026-06-02 15:28:47]    🔍 Searching: Bosch Rexroth AG official Piston product models lineup specifications ...
+[2026-06-02 15:28:47] INFO:     127.0.0.1:56937 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:28:49] INFO:     127.0.0.1:58686 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:28:49]    🌐 Fetching product page: https://store.boschrexroth.com/en/us/radial-piston-pumps...
+[2026-06-02 15:28:50] INFO:     127.0.0.1:61633 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:28:52] INFO:     127.0.0.1:56089 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:28:53] INFO:     127.0.0.1:58213 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:28:55] INFO:     127.0.0.1:50012 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:28:56] INFO:     127.0.0.1:59992 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:28:58] INFO:     127.0.0.1:62580 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:28:59] INFO:     127.0.0.1:57081 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:29:01] INFO:     127.0.0.1:59581 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:29:02] INFO:     127.0.0.1:59514 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:29:03]   [WARN] Playwright failed (Page.goto: Timeout 10000ms exceeded.
+[2026-06-02 15:29:03] Call log:
+[2026-06-02 15:29:03]   - navigating to "https://store.), falling back to static fetch
+[2026-06-02 15:29:03]    🤖 Extracting models with Gemini...
+[2026-06-02 15:29:04] INFO:     127.0.0.1:55192 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:29:05] INFO:     127.0.0.1:60797 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:29:06]    🔄 Fallback: direct model search...
+[2026-06-02 15:29:07] INFO:     127.0.0.1:52864 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:29:08] INFO:     127.0.0.1:52476 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:29:10] INFO:     127.0.0.1:62002 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:29:11] INFO:     127.0.0.1:56743 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:29:13] INFO:     127.0.0.1:49375 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:29:14] INFO:     127.0.0.1:58813 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:29:16] INFO:     127.0.0.1:62792 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:29:17]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 15:29:17]   [Exact Match] Found model with identical name 'CDL1'
+[2026-06-02 15:29:17]       [RAG Match] 'CDL1' overlaps with existing model 'CDL1' (De-duplicated)
+[2026-06-02 15:29:17]    ✅ Found 1 models:
+[2026-06-02 15:29:17]       • CDL1  [CDL1 Series] [Existing DB Hit]
+
+Model Lineups:  67%|█████████████▎      | 2/3 [00:48<00:25, 25.43s/mfr]
+[2026-06-02 15:29:17] >  Alfa Laval  [Piston]
+[2026-06-02 15:29:17]    🔍 Searching: Alfa Laval official Piston product models lineup specifications site:a...
+[2026-06-02 15:29:17]    🤖 Extracting models with Gemini...
+[2026-06-02 15:29:17] INFO:     127.0.0.1:57252 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:29:19] INFO:     127.0.0.1:58135 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:29:20] INFO:     127.0.0.1:61079 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:29:21]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 15:29:21]   [Exact Match] Found model with identical name 'LKH-5'
+[2026-06-02 15:29:21]       [RAG Match] 'LKH-5' overlaps with existing model 'LKH-5' (De-duplicated)
+[2026-06-02 15:29:21]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 15:29:21]   [Exact Match] Found model with identical name 'LKH-10'
+[2026-06-02 15:29:21]       [RAG Match] 'LKH-10' overlaps with existing model 'LKH-10' (De-duplicated)
+[2026-06-02 15:29:21]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 15:29:21]   [Exact Match] Found model with identical name 'LKH-15'
+[2026-06-02 15:29:21]       [RAG Match] 'LKH-15' overlaps with existing model 'LKH-15' (De-duplicated)
+[2026-06-02 15:29:21]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 15:29:21]   [Exact Match] Found model with identical name 'LKH-20'
+[2026-06-02 15:29:21]       [RAG Match] 'LKH-20' overlaps with existing model 'LKH-20' (De-duplicated)
+[2026-06-02 15:29:22]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 15:29:22]   [Exact Match] Found model with identical name 'LKH-25'
+[2026-06-02 15:29:22]       [RAG Match] 'LKH-25' overlaps with existing model 'LKH-25' (De-duplicated)
+[2026-06-02 15:29:22]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 15:29:22]   [Exact Match] Found model with identical name 'LKH-35'
+[2026-06-02 15:29:22]       [RAG Match] 'LKH-35' overlaps with existing model 'LKH-35' (De-duplicated)
+[2026-06-02 15:29:22]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 15:29:22]   [Exact Match] Found model with identical name 'LKH-40'
+[2026-06-02 15:29:22]       [RAG Match] 'LKH-40' overlaps with existing model 'LKH-40' (De-duplicated)
+[2026-06-02 15:29:22] INFO:     127.0.0.1:49681 - "GET /api/crawl/status HTTP/1.1" 200 OK
+[2026-06-02 15:29:22]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 15:29:22]   [Exact Match] Found model with identical name 'LKH-45'
+[2026-06-02 15:29:22]       [RAG Match] 'LKH-45' overlaps with existing model 'LKH-45' (De-duplicated)
+[2026-06-02 15:29:23]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 15:29:23]   [Exact Match] Found model with identical name 'LKH-50'
+[2026-06-02 15:29:23]       [RAG Match] 'LKH-50' overlaps with existing model 'LKH-50' (De-duplicated)
+[2026-06-02 15:29:23]   [Embedding Error] Failed to generate embedding: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+[2026-06-02 15:29:23]   [Exact Match] Found model with identical name 'LKH-60'
+[2026-06-02 15:29:23]       [RAG Match] 'LKH-60' overlaps with existing model 'LKH-60' (De-duplicated)
+[2026-06-02 15:29:23]    ✅ Found 10 models:
+[2026-06-02 15:29:23]       • LKH-5  [LKH] [Existing DB Hit]
+[2026-06-02 15:29:23]       • LKH-10  [LKH] [Existing DB Hit]
+[2026-06-02 15:29:23]       • LKH-15  [LKH] [Existing DB Hit]
