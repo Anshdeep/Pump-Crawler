@@ -26,42 +26,83 @@ def list_manufacturers(
     equipment_subtype_id: int = Query(None),
     page: int = Query(None, description="Page number for pagination"),
     limit: int = Query(10, description="Items per page"),
+    sort_by: str = Query("name", description="Column to sort by"),
+    sort_desc: bool = Query(False, description="Sort descending if true"),
     db: Session = Depends(get_db)
 ):
-    """List manufacturers in the directory with optional pagination, filtering, and model counts."""
-    query = db.query(Manufacturer)
+    """List manufacturers in the directory with optional pagination, filtering, model counts, and sorting."""
+    from sqlalchemy import func
     
-    # Filter manufacturers by their associated models' categories
+    # Subquery to calculate model count per manufacturer
+    model_count_sub = db.query(
+        Model.manufacturer_id,
+        func.count(Model.id).label("model_count")
+    ).group_by(Model.manufacturer_id).subquery()
+    
+    # Base query selecting Manufacturer and the model count
+    query = db.query(
+        Manufacturer,
+        func.coalesce(model_count_sub.c.model_count, 0).label("model_count")
+    ).outerjoin(
+        model_count_sub,
+        Manufacturer.id == model_count_sub.c.manufacturer_id
+    )
+    
+    # Filter manufacturers by their associated models' categories using IN subquery to avoid duplicates
     if equipment_master_id or equipment_type_id or equipment_subtype_id:
-        query = query.join(Model, Model.manufacturer_id == Manufacturer.id)
+        sub = db.query(Model.manufacturer_id)
         if equipment_master_id:
-            query = query.filter(Model.equipment_master_id == equipment_master_id)
+            sub = sub.filter(Model.equipment_master_id == equipment_master_id)
         if equipment_type_id:
-            query = query.filter(Model.equipment_type_id == equipment_type_id)
+            sub = sub.filter(Model.equipment_type_id == equipment_type_id)
         if equipment_subtype_id:
-            query = query.filter(Model.equipment_subtype_id == equipment_subtype_id)
-        query = query.distinct()
+            sub = sub.filter(Model.equipment_subtype_id == equipment_subtype_id)
+        query = query.filter(Manufacturer.id.in_(sub))
+
+    # Determine sorting column
+    if sort_by == "model_count":
+        sort_col = func.coalesce(model_count_sub.c.model_count, 0)
+    elif sort_by == "country":
+        sort_col = Manufacturer.country
+    elif sort_by == "website":
+        sort_col = Manufacturer.website
+    elif sort_by == "founded_year":
+        sort_col = Manufacturer.founded_year
+    elif sort_by == "is_approved":
+        sort_col = Manufacturer.is_approved
+    elif sort_by == "is_harvested":
+        sort_col = Manufacturer.is_harvested
+    elif sort_by == "created_at":
+        sort_col = Manufacturer.created_at
+    else:
+        sort_col = Manufacturer.name
+
+    if sort_desc:
+        query = query.order_by(sort_col.desc())
+    else:
+        query = query.order_by(sort_col.asc())
         
-    query = query.order_by(Manufacturer.name.asc())
-    
+    # Secondary order to keep pagination deterministic
+    query = query.order_by(Manufacturer.id.asc())
+
     if page is not None:
         total = query.count()
         mfrs = query.offset((page - 1) * limit).limit(limit).all()
         items = [
             {
-                "id": m.id,
-                "name": m.name,
-                "country": m.country,
-                "website": m.website,
-                "founded_year": m.founded_year,
-                "description": m.description,
-                "is_approved": m.is_approved,
-                "is_harvested": m.is_harvested,
-                "model_count": db.query(Model).filter(Model.manufacturer_id == m.id).count(),
-                "created_at": m.created_at,
-                "updated_at": m.updated_at
+                "id": row.Manufacturer.id,
+                "name": row.Manufacturer.name,
+                "country": row.Manufacturer.country,
+                "website": row.Manufacturer.website,
+                "founded_year": row.Manufacturer.founded_year,
+                "description": row.Manufacturer.description,
+                "is_approved": row.Manufacturer.is_approved,
+                "is_harvested": row.Manufacturer.is_harvested,
+                "model_count": row.model_count,
+                "created_at": row.Manufacturer.created_at,
+                "updated_at": row.Manufacturer.updated_at
             }
-            for m in mfrs
+            for row in mfrs
         ]
         return {
             "total": total,
@@ -73,19 +114,19 @@ def list_manufacturers(
         mfrs = query.all()
         return [
             {
-                "id": m.id,
-                "name": m.name,
-                "country": m.country,
-                "website": m.website,
-                "founded_year": m.founded_year,
-                "description": m.description,
-                "is_approved": m.is_approved,
-                "is_harvested": m.is_harvested,
-                "model_count": db.query(Model).filter(Model.manufacturer_id == m.id).count(),
-                "created_at": m.created_at,
-                "updated_at": m.updated_at
+                "id": row.Manufacturer.id,
+                "name": row.Manufacturer.name,
+                "country": row.Manufacturer.country,
+                "website": row.Manufacturer.website,
+                "founded_year": row.Manufacturer.founded_year,
+                "description": row.Manufacturer.description,
+                "is_approved": row.Manufacturer.is_approved,
+                "is_harvested": row.Manufacturer.is_harvested,
+                "model_count": row.model_count,
+                "created_at": row.Manufacturer.created_at,
+                "updated_at": row.Manufacturer.updated_at
             }
-            for m in mfrs
+            for row in mfrs
         ]
 
 @router.post("/manufacturers")

@@ -862,14 +862,35 @@
                 <v-table v-if="mfrItems.length > 0" class="glass-table-card elevation-2" rounded="lg">
                   <thead>
                     <tr>
-                      <th class="text-left font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4">Manufacturer</th>
-                      <th class="text-left font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4">HQ Country</th>
-                      <th class="text-left font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4">Official Website</th>
-                      <th class="text-center font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4">Models</th>
-                      <th class="text-center font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4">Harvest Status</th>
-                      <th class="text-center font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4">Date Added</th>
-                      <th class="text-center font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4" style="width: 110px;">Approval</th>
-                      <th class="text-center font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4" style="width: 120px;">Actions</th>
+                      <th class="text-left font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4 cursor-pointer" style="user-select: none;" @click="changeMfrSorting('name')">
+                        Manufacturer
+                        <v-icon :icon="mfrSortDesc ? 'mdi-arrow-down' : 'mdi-arrow-up'" size="14" class="ml-1" v-if="mfrSortBy === 'name'"></v-icon>
+                      </th>
+                      <th class="text-left font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4 cursor-pointer" style="user-select: none;" @click="changeMfrSorting('country')">
+                        HQ Country
+                        <v-icon :icon="mfrSortDesc ? 'mdi-arrow-down' : 'mdi-arrow-up'" size="14" class="ml-1" v-if="mfrSortBy === 'country'"></v-icon>
+                      </th>
+                      <th class="text-left font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4 cursor-pointer" style="user-select: none;" @click="changeMfrSorting('website')">
+                        Official Website
+                        <v-icon :icon="mfrSortDesc ? 'mdi-arrow-down' : 'mdi-arrow-up'" size="14" class="ml-1" v-if="mfrSortBy === 'website'"></v-icon>
+                      </th>
+                      <th class="text-center font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4 cursor-pointer" style="user-select: none;" @click="changeMfrSorting('model_count')">
+                        Models
+                        <v-icon :icon="mfrSortDesc ? 'mdi-arrow-down' : 'mdi-arrow-up'" size="14" class="ml-1" v-if="mfrSortBy === 'model_count'"></v-icon>
+                      </th>
+                      <th class="text-center font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4 cursor-pointer" style="user-select: none;" @click="changeMfrSorting('is_harvested')">
+                        Harvest Status
+                        <v-icon :icon="mfrSortDesc ? 'mdi-arrow-down' : 'mdi-arrow-up'" size="14" class="ml-1" v-if="mfrSortBy === 'is_harvested'"></v-icon>
+                      </th>
+                      <th class="text-center font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4 cursor-pointer" style="user-select: none;" @click="changeMfrSorting('created_at')">
+                        Date Added
+                        <v-icon :icon="mfrSortDesc ? 'mdi-arrow-down' : 'mdi-arrow-up'" size="14" class="ml-1" v-if="mfrSortBy === 'created_at'"></v-icon>
+                      </th>
+                      <th class="text-center font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4 cursor-pointer" style="width: 110px; user-select: none;" @click="changeMfrSorting('is_approved')">
+                        Approval
+                        <v-icon :icon="mfrSortDesc ? 'mdi-arrow-down' : 'mdi-arrow-up'" size="14" class="ml-1" v-if="mfrSortBy === 'is_approved'"></v-icon>
+                      </th>
+                      <th class="text-center font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4" style="width: 120px; user-select: none;">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -1233,7 +1254,14 @@
               </v-card>
 
               <!-- Crawl Run History Log -->
-              <v-card class="glass-card pa-6" rounded="xl">
+              <v-card class="glass-card pa-6" rounded="xl" style="position: relative;">
+                <!-- Loading overlay -->
+                <v-fade-transition>
+                  <div v-if="historyLoading" class="glass-loading-overlay d-flex justify-center align-center">
+                    <v-progress-circular color="primary" indeterminate size="48"></v-progress-circular>
+                  </div>
+                </v-fade-transition>
+
                 <div class="d-flex justify-space-between align-center mb-6">
                   <div>
                     <h3 class="outfit-font text-h5 font-weight-black text-white">
@@ -1244,7 +1272,7 @@
                   <v-btn color="secondary" variant="tonal" size="small" prepend-icon="mdi-refresh" @click="store.fetchCrawlHistory">Refresh Logs</v-btn>
                 </div>
 
-                <v-table v-if="crawlHistory.length > 0" class="glass-table-card elevation-2" rounded="lg">
+                <v-table v-if="historyItems.length > 0" class="glass-table-card elevation-2" rounded="lg">
                   <thead>
                     <tr>
                       <th class="text-left font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4">Started At</th>
@@ -1257,7 +1285,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="run in crawlHistory" :key="run.id" class="glass-table-row">
+                    <tr v-for="run in historyItems" :key="run.id" class="glass-table-row">
                       <td class="text-white py-3 font-weight-medium">{{ formatDateTime(run.started_at) }}</td>
                       <td class="text-medium-emphasis py-3">{{ run.compressor_type || 'All' }}</td>
                       <td class="text-medium-emphasis py-3">{{ formatDuration(run.started_at, run.completed_at) }}</td>
@@ -1278,7 +1306,37 @@
                   </tbody>
                 </v-table>
 
-                <div v-else class="text-center py-10 text-medium-emphasis">
+                <!-- Pagination & Page Count Row -->
+                <div v-if="historyItems.length > 0" class="d-flex justify-space-between align-center flex-wrap gap-4 mt-6 pt-4 border-top">
+                  <div class="d-flex align-center gap-2">
+                    <span class="text-caption text-medium-emphasis outfit-font font-weight-bold">ROWS PER PAGE:</span>
+                    <v-select
+                      v-model="historyLimit"
+                      :items="[5, 10, 20, 50]"
+                      variant="outlined"
+                      density="compact"
+                      hide-details
+                      color="secondary"
+                      style="max-width: 80px;"
+                      @update:model-value="historyPage = 1; fetchPaginatedHistory();"
+                    ></v-select>
+                    <span class="text-caption text-medium-emphasis outfit-font font-weight-black uppercase ml-4">
+                      Showing {{ (historyPage - 1) * historyLimit + 1 }} - {{ Math.min(historyPage * historyLimit, historyTotal) }} of {{ historyTotal }} items
+                    </span>
+                  </div>
+
+                  <v-pagination
+                    v-model="historyPage"
+                    :length="Math.ceil(historyTotal / historyLimit)"
+                    total-visible="5"
+                    density="comfortable"
+                    active-color="primary"
+                    variant="tonal"
+                    @update:model-value="fetchPaginatedHistory"
+                  ></v-pagination>
+                </div>
+
+                <div v-else-if="!historyLoading" class="text-center py-10 text-medium-emphasis">
                   <v-icon icon="mdi-history" size="48" class="mb-2"></v-icon>
                   <p>No historical crawl records found. Trigger a crawl to start logging runs.</p>
                 </div>
@@ -2702,6 +2760,19 @@ const mfrLimit = ref(10)
 const mfrTotal = ref(0)
 const mfrItems = ref([])
 const mfrLoading = ref(false)
+const mfrSortBy = ref('name')
+const mfrSortDesc = ref(false)
+
+const changeMfrSorting = (column) => {
+  if (mfrSortBy.value === column) {
+    mfrSortDesc.value = !mfrSortDesc.value
+  } else {
+    mfrSortBy.value = column
+    mfrSortDesc.value = false
+  }
+  mfrPage.value = 1
+  fetchPaginatedManufacturers()
+}
 
 const filteredMfrTypes = computed(() => {
   if (!mfrFilters.value.equipment_master_id) {
@@ -2743,7 +2814,9 @@ const fetchPaginatedManufacturers = async () => {
       equipment_type_id: mfrFilters.value.equipment_type_id,
       equipment_subtype_id: mfrFilters.value.equipment_subtype_id,
       page: mfrPage.value,
-      limit: mfrLimit.value
+      limit: mfrLimit.value,
+      sort_by: mfrSortBy.value,
+      sort_desc: mfrSortDesc.value
     }
     const res = await axios.get('/api/manufacturers', { params })
     mfrItems.value = res.data.items || []
@@ -2776,6 +2849,46 @@ watch(manufacturersList, () => {
 watch(tab, (newTab) => {
   if (newTab === 'manufacturers') {
     fetchPaginatedManufacturers()
+  }
+})
+
+// ── CRAWL RUN HISTORY PAGINATION LOGIC ──
+const historyPage = ref(1)
+const historyLimit = ref(10)
+const historyTotal = ref(0)
+const historyItems = ref([])
+const historyLoading = ref(false)
+
+const fetchPaginatedHistory = async () => {
+  historyLoading.value = true
+  try {
+    const params = {
+      page: historyPage.value,
+      limit: historyLimit.value
+    }
+    const res = await axios.get('/api/crawl/history', { params })
+    if (res.data && res.data.items) {
+      historyItems.value = res.data.items || []
+      historyTotal.value = res.data.total || 0
+    } else {
+      historyItems.value = res.data || []
+      historyTotal.value = res.data.length || 0
+    }
+  } catch (err) {
+    showToast('Failed to load crawl run history.', 'error')
+  } finally {
+    historyLoading.value = false
+  }
+}
+
+// Watchers for crawl history mutations or tab changes
+watch(crawlHistory, () => {
+  fetchPaginatedHistory()
+}, { deep: true, immediate: true })
+
+watch(tab, (newTab) => {
+  if (newTab === 'crawler') {
+    fetchPaginatedHistory()
   }
 })
 </script>
@@ -2840,6 +2953,19 @@ watch(tab, (newTab) => {
 }
 .glow-progress {
   box-shadow: 0 0 8px rgba(6, 182, 212, 0.2);
+}
+
+.glass-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(9, 10, 15, 0.75) !important;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 5;
+  border-radius: inherit;
 }
 
 /* Glassmorphism General Card */

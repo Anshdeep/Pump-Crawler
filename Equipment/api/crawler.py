@@ -13,23 +13,52 @@ def get_crawl_status():
     return orchestrator.CRAWL_PROGRESS
 
 @router.get("/crawl/history")
-def get_crawl_history(db: Session = Depends(get_db)):
+def get_crawl_history(
+    page: int = Query(None, description="Page number for pagination"),
+    limit: int = Query(10, description="Items per page for pagination"),
+    db: Session = Depends(get_db)
+):
     """Retrieve historical logs for all background crawl operations."""
-    history = db.query(CrawlHistory).order_by(CrawlHistory.started_at.desc()).all()
-    return [
-        {
-            "id": h.id,
-            "started_at": h.started_at.isoformat() if h.started_at else None,
-            "completed_at": h.completed_at.isoformat() if h.completed_at else None,
-            "status": h.status,
-            "compressor_type": h.compressor_type,  # Categorization target name
-            "new_manufacturers_count": h.new_manufacturers_count,
-            "new_models_count": h.new_models_count,
-            "total_specs_enriched": h.total_specs_enriched,
-            "log_message": h.log_message
+    query = db.query(CrawlHistory).order_by(CrawlHistory.started_at.desc())
+    if page is not None:
+        total = query.count()
+        offset = (page - 1) * limit
+        history = query.offset(offset).limit(limit).all()
+        return {
+            "total": total,
+            "page": page,
+            "limit": limit,
+            "items": [
+                {
+                    "id": h.id,
+                    "started_at": h.started_at.isoformat() if h.started_at else None,
+                    "completed_at": h.completed_at.isoformat() if h.completed_at else None,
+                    "status": h.status,
+                    "compressor_type": h.compressor_type,  # Categorization target name
+                    "new_manufacturers_count": h.new_manufacturers_count,
+                    "new_models_count": h.new_models_count,
+                    "total_specs_enriched": h.total_specs_enriched,
+                    "log_message": h.log_message
+                }
+                for h in history
+            ]
         }
-        for h in history
-    ]
+    else:
+        history = query.all()
+        return [
+            {
+                "id": h.id,
+                "started_at": h.started_at.isoformat() if h.started_at else None,
+                "completed_at": h.completed_at.isoformat() if h.completed_at else None,
+                "status": h.status,
+                "compressor_type": h.compressor_type,  # Categorization target name
+                "new_manufacturers_count": h.new_manufacturers_count,
+                "new_models_count": h.new_models_count,
+                "total_specs_enriched": h.total_specs_enriched,
+                "log_message": h.log_message
+            }
+            for h in history
+        ]
 
 @router.post("/crawl/discover-manufacturers")
 def trigger_manufacturer_discovery(
