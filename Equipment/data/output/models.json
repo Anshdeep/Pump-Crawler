@@ -1,173 +1,93 @@
 {
-  "Moog Inc.": {
-    "compressor_type": "Piston",
+  "Cat Pumps": {
+    "equipment_type": "Plunger",
     "manufacturer_info": {
-      "id": 91,
-      "name": "Moog Inc.",
+      "id": 123,
+      "name": "Cat Pumps",
       "country": "United States",
-      "website": "moog.com",
-      "description": ""
+      "website": "catpumps.com",
+      "description": "Specializes in high-pressure triplex plunger and piston pumps known for extreme durability and long service life."
     },
     "models": [
       {
-        "model_name": "D952-2026/C",
-        "series": "RKP-II",
-        "product_url": null,
-        "subtype": "Septuplex",
-        "is_duplicate": false,
-        "model_id": 772
-      },
-      {
-        "model_name": "AXP",
-        "series": "Axial Piston Pump",
+        "model_name": "6835",
+        "series": null,
         "product_url": null,
         "subtype": null,
         "is_duplicate": false,
-        "model_id": 773
+        "model_id": 962
       },
       {
-        "model_name": "RKP",
-        "series": "Radial Piston Pump",
+        "model_name": "3810",
+        "series": null,
         "product_url": null,
         "subtype": null,
         "is_duplicate": false,
-        "model_id": 774
+        "model_id": 963
       },
       {
-        "model_name": "RKP-D",
-        "series": "Radial Piston Pump",
+        "model_name": "1731",
+        "series": null,
         "product_url": null,
         "subtype": null,
         "is_duplicate": false,
-        "model_id": 775
+        "model_id": 964
       },
       {
-        "model_name": "Infinity",
-        "series": "Enteral Feeding Systems",
+        "model_name": "4DX03ELR",
+        "series": null,
         "product_url": null,
         "subtype": null,
         "is_duplicate": false,
-        "model_id": 776
+        "model_id": 965
       },
       {
-        "model_name": "CURLIN",
-        "series": "Ambulatory Infusion Pumps",
+        "model_name": "2SFX30GES",
+        "series": null,
         "product_url": null,
         "subtype": null,
         "is_duplicate": false,
-        "model_id": 777
-      }
-    ]
-  },
-  "Bosch Rexroth AG": {
-    "compressor_type": "Piston",
-    "manufacturer_info": {
-      "id": 90,
-      "name": "Bosch Rexroth AG",
-      "country": "Germany",
-      "website": "boschrexroth.com",
-      "description": ""
-    },
-    "models": [
-      {
-        "model_name": "CDL1",
-        "series": "CDL1 Series",
-        "product_url": null,
-        "subtype": null,
-        "is_duplicate": true,
-        "model_id": 761
-      }
-    ]
-  },
-  "Alfa Laval": {
-    "compressor_type": "Piston",
-    "manufacturer_info": {
-      "id": 93,
-      "name": "Alfa Laval",
-      "country": "Sweden",
-      "website": "alfalaval.com",
-      "description": ""
-    },
-    "models": [
-      {
-        "model_name": "LKH-5",
-        "series": "LKH",
-        "product_url": null,
-        "subtype": null,
-        "is_duplicate": true,
-        "model_id": 762
+        "model_id": 966
       },
       {
-        "model_name": "LKH-10",
-        "series": "LKH",
+        "model_name": "2SFQ25SEEL",
+        "series": null,
         "product_url": null,
         "subtype": null,
-        "is_duplicate": true,
-        "model_id": 763
+        "is_duplicate": false,
+        "model_id": 967
       },
       {
-        "model_name": "LKH-15",
-        "series": "LKH",
+        "model_name": "5CPQ6241CS",
+        "series": null,
         "product_url": null,
         "subtype": null,
-        "is_duplicate": true,
-        "model_id": 764
+        "is_duplicate": false,
+        "model_id": 968
       },
       {
-        "model_name": "LKH-20",
-        "series": "LKH",
+        "model_name": "1061X",
+        "series": null,
         "product_url": null,
         "subtype": null,
-        "is_duplicate": true,
-        "model_id": 765
+        "is_duplicate": false,
+        "model_id": 969
       },
       {
-        "model_name": "LKH-25",
-        "series": "LKH",
+        "model_name": "1061XD",
+        "series": null,
         "product_url": null,
         "subtype": null,
-        "is_duplicate": true,
-        "model_id": 766
+        "is_duplicate": false,
+        "model_id": 970
       },
       {
-        "model_name": "LKH-35",
-        "series": "LKH",
+        "model_name": "1CX05ELS.MIST",
+        "series": null,
         "product_url": null,
         "subtype": null,
-        "is_duplicate": true,
-        "model_id": 767
-      },
-      {
-        "model_name": "LKH-40",
-        "series": "LKH",
-        "product_url": null,
-        "subtype": null,
-        "is_duplicate": true,
-        "model_id": 768
-      },
-      {
-        "model_name": "LKH-45",
-        "series": "LKH",
-        "product_url": null,
-        "subtype": null,
-        "is_duplicate": true,
-        "model_id": 769
-      },
-      {
-        "model_name": "LKH-50",
-        "series": "LKH",
-        "product_url": null,
-        "subtype": null,
-        "is_duplicate": true,
-        "model_id": 770
-      },
-      {
-        "model_name": "LKH-60",
-        "series": "LKH",
-        "product_url": null,
-        "subtype": null,
-        "is_duplicate": true,
-        "model_id": 771
+        "is_duplicate": false,
+        "model_id": 971
       }
     ]
   }

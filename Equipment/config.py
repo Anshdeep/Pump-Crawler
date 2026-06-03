@@ -23,8 +23,9 @@ OUTPUT_DIR        = os.path.join(DATA_DIR, "output")
 CACHE_DIR         = os.path.join(DATA_DIR, "cache")
 
 # -- Input ------------------------------------------------------------------
-COMPRESSORS_JSON  = os.path.join(DATA_DIR, "compressors.json")
-PUMPS_JSON        = os.path.join(DATA_DIR, "pumps.json")
+# Equipment types are seeded dynamically from JSON files in DATA_DIR at startup
+# (see database/connection.py init_db). Add a new <master>.json to DATA_DIR to
+# introduce a new equipment master category (e.g. pumps.json, valves.json).
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 os.makedirs(CACHE_DIR,  exist_ok=True)

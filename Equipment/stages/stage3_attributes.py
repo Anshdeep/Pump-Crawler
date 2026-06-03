@@ -5,7 +5,7 @@ Stage 3: For each model, fetch its product page and extract
 technical attributes using Gemini.
 Supports loading cached specs directly from the database to avoid search/crawls.
 
-Output: data/output/compressors_data.json
+Output: data/output/equipment_data.json
 """
 
 import json
@@ -18,7 +18,7 @@ from utils.genai_extractor import extract_attributes
 from utils.web_search import search
 
 
-def _fetch_model_page(model: dict, manufacturer: str, compressor_type: str, master_name: str = "compressor") -> str:
+def _fetch_model_page(model: dict, manufacturer: str, equipment_type: str, master_name: str = "equipment") -> str:
     """
     Attempt to fetch the product page for this model.
     Priority: product_url -> web search for spec sheet.
@@ -38,10 +38,10 @@ def _fetch_model_page(model: dict, manufacturer: str, compressor_type: str, mast
     # Try a broader, highly flexible search query
     kw_suffix = ""
     master_lower = master_name.lower()
-    if not any(kw in compressor_type.lower() for kw in [master_lower, master_lower + "s"]):
+    if not any(kw in equipment_type.lower() for kw in [master_lower, master_lower + "s"]):
         kw_suffix = f" {master_lower}"
 
-    query = f'{manufacturer} {model_name} {compressor_type}{kw_suffix} specifications datasheet technical'
+    query = f'{manufacturer} {model_name} {equipment_type}{kw_suffix} specifications datasheet technical'
     results = search(query, max_results=4)
 
     if not results:
@@ -72,7 +72,7 @@ def _fetch_model_page(model: dict, manufacturer: str, compressor_type: str, mast
 # In-memory shared page URL and series content cache
 URL_CONTENT_CACHE = {}
 
-def _fetch_model_page_cached(model: dict, manufacturer: str, compressor_type: str, master_name: str = "compressor") -> str:
+def _fetch_model_page_cached(model: dict, manufacturer: str, equipment_type: str, master_name: str = "equipment") -> str:
     """
     Wrapper around _fetch_model_page using in-memory cache to reuse crawled 
     pages across models belonging to the same product series.
@@ -92,7 +92,7 @@ def _fetch_model_page_cached(model: dict, manufacturer: str, compressor_type: st
         return URL_CONTENT_CACHE[series_key]
         
     # Settle fresh crawl
-    text = _fetch_model_page(model, manufacturer, compressor_type, master_name)
+    text = _fetch_model_page(model, manufacturer, equipment_type, master_name)
     
     # Cache content for subsequent models to reuse
     if text and len(text.strip()) > 300:
@@ -110,12 +110,12 @@ def run(models_data: dict, db: Session = None, check_cancel=None) -> list[dict]:
 
     Args:
         models_data: output from Stage 2
-            {manufacturer_name: {"compressor_type": str, "models": [...]}}
+            {manufacturer_name: {"equipment_type": str, "models": [...]}}
         db: SQLAlchemy DB Session (optional)
         check_cancel: Function to check if task was cancelled (optional)
 
     Returns:
-        list of flat compressor records with full attributes
+        list of flat equipment records with full attributes
     """
     final_records = []
 
@@ -126,7 +126,7 @@ def run(models_data: dict, db: Session = None, check_cancel=None) -> list[dict]:
     # Build flat task list
     all_tasks = []
     for mfr_name, mfr_data in models_data.items():
-        ctype    = mfr_data.get("compressor_type", "")
+        ctype    = mfr_data.get("equipment_type", "")
         mfr_info = mfr_data.get("manufacturer_info", {})
         for model in mfr_data.get("models", []):
             all_tasks.append((ctype, mfr_name, mfr_info, model))
@@ -143,7 +143,7 @@ def run(models_data: dict, db: Session = None, check_cancel=None) -> list[dict]:
         print(f"\n>  {mfr_name} -- {model_name}")
 
         # Resolve parent master category name from DB
-        master_name = "compressor"
+        master_name = "equipment"  # Neutral fallback; overridden by DB model lookup below
         if db and model_id:
             from database.models import Model
             model_obj = db.query(Model).filter(Model.id == model_id).first()
@@ -186,7 +186,7 @@ def run(models_data: dict, db: Session = None, check_cancel=None) -> list[dict]:
                     print(f"   🤖 Extracting attributes with Gemini...")
                     try:
                         type_context = f"{ctype} {master_name.lower()}" if master_name.lower() not in ctype.lower() else ctype
-                        attributes = extract_attributes(mfr_name, model_name, type_context, filtered_text)
+                        attributes = extract_attributes(mfr_name, model_name, type_context, filtered_text, master_name=master_name)
                         
                         # Save to DB
                         if db and model_id and attributes:
@@ -206,7 +206,7 @@ def run(models_data: dict, db: Session = None, check_cancel=None) -> list[dict]:
 
         # -- Step 3: Assemble final record ----------------------
         record = {
-            "compressor_type":    ctype,
+            "equipment_type":     ctype,
             "manufacturer":       mfr_name,
             "manufacturer_info":  mfr_info,
             "model":              model_name,

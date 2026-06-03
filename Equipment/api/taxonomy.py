@@ -207,7 +207,10 @@ def get_taxonomy_tree(db: Session = Depends(get_db)):
 
 @router.get("/compressors")
 def get_compressors_tree_compatibility(db: Session = Depends(get_db)):
-    """Tree API for backward compatibility with the frontend. Returns flattened Types list."""
+    """[BACKWARD COMPATIBILITY] Flat Types list formerly used by the compressor-only frontend.
+    Returns ALL equipment types across all masters (Pump, Compressor, Valve, etc.).
+    Prefer /taxonomy/tree for new integrations as it includes the full Master->Type->Subtype hierarchy.
+    """
     types = db.query(EquipmentType).all()
     tree = []
     for t in types:

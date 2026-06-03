@@ -34,7 +34,7 @@ def get_crawl_history(
                     "started_at": h.started_at.isoformat() if h.started_at else None,
                     "completed_at": h.completed_at.isoformat() if h.completed_at else None,
                     "status": h.status,
-                    "compressor_type": h.compressor_type,  # Categorization target name
+                    "target_category": h.target_category,  # Generic equipment category name
                     "new_manufacturers_count": h.new_manufacturers_count,
                     "new_models_count": h.new_models_count,
                     "total_specs_enriched": h.total_specs_enriched,
@@ -51,7 +51,7 @@ def get_crawl_history(
                 "started_at": h.started_at.isoformat() if h.started_at else None,
                 "completed_at": h.completed_at.isoformat() if h.completed_at else None,
                 "status": h.status,
-                "compressor_type": h.compressor_type,  # Categorization target name
+                "target_category": h.target_category,  # Generic equipment category name
                 "new_manufacturers_count": h.new_manufacturers_count,
                 "new_models_count": h.new_models_count,
                 "total_specs_enriched": h.total_specs_enriched,

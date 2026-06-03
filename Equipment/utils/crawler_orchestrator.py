@@ -13,7 +13,7 @@ import stages.stage3_attributes    as stage3
 
 CRAWL_PROGRESS = {
     "active": False,
-    "compressor_type": None,  # Keep category name compatible with frontend
+    "equipment_type": None,  # Generic equipment category name for progress tracking
     "stage": "idle",
     "percent": 0,
     "status_msg": "System idle",
@@ -99,12 +99,12 @@ def run_manufacturer_discovery_background(
         master = db.query(EquipmentMaster).filter(EquipmentMaster.id == equipment_master_id).first()
         if master:
             target_name = f"All {master.name} types"
-    CRAWL_PROGRESS["compressor_type"] = target_name
+    CRAWL_PROGRESS["equipment_type"] = target_name
 
     history_record = CrawlHistory(
         started_at=datetime.now(),
         status="active",
-        compressor_type=target_name,
+        target_category=target_name,
         log_message="Manufacturer discovery background task started (Stage 1)."
     )
     db.add(history_record)
@@ -144,11 +144,11 @@ def run_manufacturer_discovery_background(
                 "Go to the Taxonomy tab and ensure equipment types exist under this master category."
             )
 
-        # Assemble list of category dicts mimicking compressors.json
-        compressors_list = []
+        # Assemble list of equipment category dicts for Stage 1
+        equipment_list = []
         for et in etype_objs:
             subtypes = [sub.name for sub in et.subtypes]
-            compressors_list.append({
+            equipment_list.append({
                 "id": et.id,
                 "type": et.name,
                 "equipment_master_id": et.equipment_master_id,
@@ -157,13 +157,13 @@ def run_manufacturer_discovery_background(
             })
 
         # ── Stage 1 Run ──
-        _update_progress("Stage 1: Manufacturers", 50, f"Discovering manufacturers for {[c['type'] for c in compressors_list]}")
+        _update_progress("Stage 1: Manufacturers", 50, f"Discovering manufacturers for {[c['type'] for c in equipment_list]}")
         
         # Override config limits
         import config
         config.MAX_MANUFACTURERS_PER_TYPE = settings["max_mfrs"]
         
-        mfrs_data = stage1.run(compressors_list, db=db, check_cancel=check_cancel)
+        mfrs_data = stage1.run(equipment_list, db=db, check_cancel=check_cancel)
         total_mfrs = sum(len(v) for v in mfrs_data.values())
 
         CRAWL_PROGRESS["completed_at"] = datetime.now().isoformat()
@@ -213,7 +213,7 @@ def run_model_discovery_background(
     _CRAWL_STOP_REQUESTED = False
 
     CRAWL_PROGRESS["active"] = True
-    CRAWL_PROGRESS["compressor_type"] = "Approved Manufacturers"
+    CRAWL_PROGRESS["equipment_type"] = "Approved Manufacturers"
     CRAWL_PROGRESS["started_at"] = datetime.now().isoformat()
     CRAWL_PROGRESS["completed_at"] = None
     CRAWL_PROGRESS["discovered_manufacturers"] = 0
@@ -225,7 +225,7 @@ def run_model_discovery_background(
     history_record = CrawlHistory(
         started_at=datetime.now(),
         status="active",
-        compressor_type="Approved Manufacturers",
+        target_category="Approved Manufacturers",
         log_message="Approved model lineup discovery background task started (Stage 2)."
     )
     db.add(history_record)
@@ -343,7 +343,7 @@ def run_specs_harvester_background(
     _CRAWL_STOP_REQUESTED = False
 
     CRAWL_PROGRESS["active"] = True
-    CRAWL_PROGRESS["compressor_type"] = "Approved Manufacturers"
+    CRAWL_PROGRESS["equipment_type"] = "Approved Manufacturers"
     CRAWL_PROGRESS["started_at"] = datetime.now().isoformat()
     CRAWL_PROGRESS["completed_at"] = None
     CRAWL_PROGRESS["discovered_manufacturers"] = 0
@@ -355,7 +355,7 @@ def run_specs_harvester_background(
     history_record = CrawlHistory(
         started_at=datetime.now(),
         status="active",
-        compressor_type="Approved Manufacturers",
+        target_category="Approved Manufacturers",
         log_message="Approved specifications harvester background task started (Stages 2 & 3)."
     )
     db.add(history_record)
@@ -488,7 +488,7 @@ def run_specs_harvester_background(
             
             if mfr_name not in models_data:
                 models_data[mfr_name] = {
-                    "compressor_type": ctype_name,
+                    "equipment_type": ctype_name,
                     "manufacturer_info": {
                         "id": mo.manufacturer.id,
                         "name": mfr_name,

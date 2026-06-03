@@ -1,7 +1,7 @@
 """
 stages/stage2_models.py
 ----------------------------------------------------------------
-Stage 2: For each manufacturer, discover their compressor models
+Stage 2: For each manufacturer, discover their equipment models
 via web search + scraping + Gemini extraction.
 Supports pgvector RAG similarity deduplication.
 
@@ -19,13 +19,13 @@ from utils.genai_extractor import extract_models, embed_text
 from database.models import EquipmentType
 
 
-def _build_model_query(manufacturer: str, compressor_type: str, master_name: str = "compressor", subtype_name: str | None = None) -> str:
+def _build_model_query(manufacturer: str, equipment_type: str, master_name: str = "equipment", subtype_name: str | None = None) -> str:
     master_lower = master_name.lower()
-    type_str = f"{subtype_name} {compressor_type}" if subtype_name else compressor_type
+    type_str = f"{subtype_name} {equipment_type}" if subtype_name else equipment_type
     return f'{manufacturer} official {type_str} product models lineup specifications site:{manufacturer.lower().replace(" ","")}.com OR {manufacturer} {type_str} {master_lower} models datasheet'
 
 
-def _find_product_page(manufacturer: str, website: str, compressor_type: str, master_name: str = "compressor") -> str | None:
+def _find_product_page(manufacturer: str, website: str, equipment_type: str, master_name: str = "equipment") -> str | None:
     """
     Try to find the direct product catalog URL for a manufacturer.
     Returns the URL string or None.
@@ -34,7 +34,7 @@ def _find_product_page(manufacturer: str, website: str, compressor_type: str, ma
         return None
     master_lower = master_name.lower()
     master_plural = master_lower + "s" if not master_lower.endswith("s") else master_lower
-    query = f'site:{website} {compressor_type} products {master_plural}'
+    query = f'site:{website} {equipment_type} products {master_plural}'
     results = search(query, max_results=5)
 
     # Prefer URLs with 'product', 'catalog', or keyword matching master name in path
@@ -54,12 +54,12 @@ def run(manufacturers_data: dict, db: Session = None, check_cancel=None, equipme
 
     Args:
         manufacturers_data: output from Stage 1
-            {compressor_type: [{"name", "country", "website"}, ...]}
+            {equipment_type: [{"name", "country", "website"}, ...]}
         db: SQLAlchemy DB Session (optional)
         check_cancel: Function to check if task was cancelled (optional)
 
     Returns:
-        dict: {manufacturer_name: {"compressor_type": str, "models": [...]}}
+        dict: {manufacturer_name: {"equipment_type": str, "models": [...]}}
     """
     results = {}
 
@@ -87,7 +87,7 @@ def run(manufacturers_data: dict, db: Session = None, check_cancel=None, equipme
 
         # Fetch subtype names for Gemini classification guidance and parent master name
         subtype_names = []
-        master_name = "compressor"
+        master_name = "equipment"  # Neutral fallback; overridden by DB lookup below
         target_subtype_name = None
         if db:
             type_obj = db.query(EquipmentType).filter(EquipmentType.name == ctype).first()
@@ -243,7 +243,7 @@ def run(manufacturers_data: dict, db: Session = None, check_cancel=None, equipme
                 db.commit()
 
         results[mfr_name] = {
-            "compressor_type": ctype,
+            "equipment_type": ctype,
             "manufacturer_info": mfr,
             "models": models,
         }

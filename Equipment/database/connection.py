@@ -8,7 +8,7 @@ load_dotenv()
 # Fallback database URL matches docker-compose services
 DATABASE_URL = os.getenv(
     "DATABASE_URL", 
-    "postgresql+psycopg://postgres:postgres_password@localhost:5432/compressors_db"
+    "postgresql+psycopg://postgres:postgres_password@localhost:5432/equipment_db"
 )
 
 engine = create_engine(
@@ -79,6 +79,15 @@ def init_db():
             if res.scalar():
                 print("[Migration] Renaming table compressor_subtypes -> equipment_subtypes...")
                 conn.execute(text("ALTER TABLE compressor_subtypes RENAME TO equipment_subtypes;"))
+
+            # Rename crawl_history.compressor_type -> target_category (equipment-agnostic field)
+            res = conn.execute(text("SELECT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='crawl_history' AND column_name='compressor_type');"))
+            if res.scalar():
+                print("[Migration] Renaming crawl_history.compressor_type -> target_category...")
+                conn.execute(text("ALTER TABLE crawl_history RENAME COLUMN compressor_type TO target_category;"))
+
+            # Ensure target_category column exists (for DBs that never had compressor_type)
+            conn.execute(text("ALTER TABLE crawl_history ADD COLUMN IF NOT EXISTS target_category VARCHAR(100);"))
                 
             # Rename type_id column in models to equipment_type_id
             res = conn.execute(text("SELECT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='models' AND column_name='type_id');"))
@@ -132,12 +141,13 @@ def init_db():
                     "('Valve', 'Flow control valve systems');"
                 ))
             
-            # Map orphaned type / model rows to first master category (Compressor)
-            res_comp = conn.execute(text("SELECT id FROM equipment_master WHERE name = 'Compressor';")).first()
-            if res_comp:
-                comp_id = res_comp[0]
-                conn.execute(text("UPDATE equipment_type SET equipment_master_id = :comp_id WHERE equipment_master_id IS NULL;").bindparams(comp_id=comp_id))
-                conn.execute(text("UPDATE models SET equipment_master_id = :comp_id WHERE equipment_master_id IS NULL;").bindparams(comp_id=comp_id))
+            # Map orphaned type / model rows to the first available master category
+            # (historically Compressor, but any master is fine as a fallback)
+            res_first_master = conn.execute(text("SELECT id FROM equipment_master ORDER BY id ASC LIMIT 1;")).first()
+            if res_first_master:
+                first_master_id = res_first_master[0]
+                conn.execute(text("UPDATE equipment_type SET equipment_master_id = :m_id WHERE equipment_master_id IS NULL;").bindparams(m_id=first_master_id))
+                conn.execute(text("UPDATE models SET equipment_master_id = :m_id WHERE equipment_master_id IS NULL;").bindparams(m_id=first_master_id))
                 
             try:
                 conn.execute(text("ALTER TABLE equipment_type ALTER COLUMN equipment_master_id SET NOT NULL;"))

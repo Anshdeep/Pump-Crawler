@@ -59,7 +59,7 @@ def duckduckgo_search(query: str, max_results: int = 5) -> list[dict]:
 
     url = "https://html.duckduckgo.com/html/"
     params = {"q": query}
-    headers = {"User-Agent": "Mozilla/5.0 (compatible; CompressorBot/1.0)"}
+    headers = {"User-Agent": "Mozilla/5.0 (compatible; EquipmentCrawlerBot/1.0)"}
 
     response = httpx.post(url, data=params, headers=headers, timeout=10)
     response.raise_for_status()

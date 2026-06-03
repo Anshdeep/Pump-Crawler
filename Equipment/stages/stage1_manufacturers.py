@@ -19,7 +19,7 @@ from utils.genai_extractor import extract_manufacturers, enrich_manufacturer_inf
 
 
 
-def _build_query(equipment: dict, master_name: str = "pump") -> str:
+def _build_query(equipment: dict, master_name: str = "equipment") -> str:
     """Build an effective search query for this equipment type."""
     ctype = equipment["type"]
     subtypes = equipment.get("subtypes", [])
@@ -89,7 +89,7 @@ def run(equipments: list[dict], db: Session = None, check_cancel=None) -> dict:
 
         print(f"\n>  {ctype}")
 
-        master_name = "Pump"
+        master_name = "equipment"  # Neutral fallback; overridden by DB master lookup below
         # -- DB Init Category -----------------------------------
         if db:
             import database.crud as crud

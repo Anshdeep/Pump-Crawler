@@ -33,7 +33,7 @@ def test_crawl_history_pagination():
             started_at=base_time - timedelta(hours=i),
             completed_at=base_time - timedelta(hours=i) + timedelta(minutes=15),
             status="completed",
-            compressor_type=f"Test Type {i % 3}",
+            target_category=f"Test Type {i % 3}",
             new_manufacturers_count=i,
             new_models_count=i * 2,
             total_specs_enriched=i * 5,

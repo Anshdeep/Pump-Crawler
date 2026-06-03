@@ -122,7 +122,7 @@ class CrawlHistory(Base):
     started_at = Column(DateTime(timezone=True), server_default=func.now())
     completed_at = Column(DateTime(timezone=True), nullable=True)
     status = Column(String(50), nullable=False) # "active", "completed", "failed"
-    compressor_type = Column(String(100), nullable=True)  # Retain name for schema compatibility
+    target_category = Column(String(100), nullable=True)  # Generic equipment category name (e.g. "Pump", "All Compressor types")
     new_manufacturers_count = Column(Integer, default=0)
     new_models_count = Column(Integer, default=0)
     total_specs_enriched = Column(Integer, default=0)

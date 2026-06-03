@@ -1,149 +1,91 @@
 [
   {
-    "compressor_type": "Piston",
-    "manufacturer": "Moog Inc.",
+    "equipment_type": "Plunger",
+    "manufacturer": "Cat Pumps",
     "manufacturer_info": {
-      "id": 91,
-      "name": "Moog Inc.",
+      "id": 123,
+      "name": "Cat Pumps",
       "country": "United States",
-      "website": "moog.com",
-      "description": ""
+      "website": "catpumps.com",
+      "description": "Specializes in high-pressure triplex plunger and piston pumps known for extreme durability and long service life."
     },
-    "model": "Infinity",
-    "series": "Enteral Feeding Systems",
-    "product_url": null,
-    "attributes": {}
-  },
-  {
-    "compressor_type": "Piston",
-    "manufacturer": "Moog Inc.",
-    "manufacturer_info": {
-      "id": 91,
-      "name": "Moog Inc.",
-      "country": "United States",
-      "website": "moog.com",
-      "description": ""
-    },
-    "model": "D952-2026/C",
-    "series": "RKP-II",
+    "model": "1061X",
+    "series": null,
     "product_url": null,
     "attributes": {
-      "phase": null,
-      "voltage": null,
-      "power_hp": null,
-      "power_kw": null,
-      "weight_kg": null,
-      "drive_type": null,
-      "duty_cycle": null,
-      "motor_type": null,
-      "weight_lbs": null,
-      "stage_count": null,
-      "capacity_cfm": null,
-      "cooling_type": null,
-      "frequency_hz": null,
-      "pressure_bar": null,
-      "pressure_psi": null,
-      "dimensions_mm": null,
-      "capacity_m3_hr": null,
-      "certifications": null,
-      "noise_level_db": null,
-      "warranty_years": null,
-      "inlet_size_inch": null,
-      "motor_speed_rpm": null,
-      "pump_life_hours": null,
-      "lubrication_type": null,
-      "outlet_size_inch": null,
-      "tank_size_liters": null,
-      "tank_size_gallons": null,
-      "efficiency_percent": null,
-      "oil_capacity_liters": null,
-      "operating_temp_max_c": null,
-      "operating_temp_min_c": null
+      "inlet_size_inch": 0.75,
+      "oil_capacity_liters": 1.26
     }
   },
   {
-    "compressor_type": "Piston",
-    "manufacturer": "Moog Inc.",
+    "equipment_type": "Plunger",
+    "manufacturer": "Cat Pumps",
     "manufacturer_info": {
-      "id": 91,
-      "name": "Moog Inc.",
+      "id": 123,
+      "name": "Cat Pumps",
       "country": "United States",
-      "website": "moog.com",
-      "description": ""
+      "website": "catpumps.com",
+      "description": "Specializes in high-pressure triplex plunger and piston pumps known for extreme durability and long service life."
     },
-    "model": "RKP",
-    "series": "Radial Piston Pump",
+    "model": "1CX05ELS.MIST",
+    "series": null,
     "product_url": null,
     "attributes": {
-      "weight_kg": 236,
-      "weight_lbs": 521,
-      "pressure_bar": 350,
-      "pressure_psi": 5000,
-      "motor_speed_rpm": 2900,
-      "operating_temp_max_c": 60,
-      "operating_temp_min_c": -15
+      "flow_rate_gpm": 0.25,
+      "max_pressure_psi": 1000,
+      "pump_speed_rpm": 1725,
+      "suction_size_inch": 0.375,
+      "discharge_size_inch": 0.25,
+      "drive_type": "direct-coupled"
     }
   },
   {
-    "compressor_type": "Piston",
-    "manufacturer": "Moog Inc.",
+    "equipment_type": "Plunger",
+    "manufacturer": "Cat Pumps",
     "manufacturer_info": {
-      "id": 91,
-      "name": "Moog Inc.",
+      "id": 123,
+      "name": "Cat Pumps",
       "country": "United States",
-      "website": "moog.com",
-      "description": ""
+      "website": "catpumps.com",
+      "description": "Specializes in high-pressure triplex plunger and piston pumps known for extreme durability and long service life."
     },
-    "model": "RKP-D",
-    "series": "Radial Piston Pump",
+    "model": "1731",
+    "series": null,
     "product_url": null,
     "attributes": {
-      "weight_kg": 236,
-      "weight_lbs": 521,
-      "pressure_bar": 350,
-      "pressure_psi": 5000,
-      "motor_speed_rpm": 2900,
-      "operating_temp_max_c": 60,
-      "operating_temp_min_c": -15
+      "flow_rate_lpm": 59.8,
+      "flow_rate_gpm": 15.8,
+      "max_pressure_psi": 1500,
+      "pump_speed_rpm": 1750,
+      "suction_size_inch": 1,
+      "discharge_size_inch": 0.75,
+      "casing_material": "forged brass",
+      "drive_type": "direct drive, clutch or belt drive"
     }
   },
   {
-    "compressor_type": "Piston",
-    "manufacturer": "Moog Inc.",
+    "equipment_type": "Plunger",
+    "manufacturer": "Cat Pumps",
     "manufacturer_info": {
-      "id": 91,
-      "name": "Moog Inc.",
+      "id": 123,
+      "name": "Cat Pumps",
       "country": "United States",
-      "website": "moog.com",
-      "description": ""
+      "website": "catpumps.com",
+      "description": "Specializes in high-pressure triplex plunger and piston pumps known for extreme durability and long service life."
     },
-    "model": "CURLIN",
-    "series": "Ambulatory Infusion Pumps",
+    "model": "1061XD",
+    "series": null,
     "product_url": null,
     "attributes": {
-      "weight_kg": 0.513,
-      "dimensions_mm": "130 x 102 x 64"
-    }
-  },
-  {
-    "compressor_type": "Piston",
-    "manufacturer": "Moog Inc.",
-    "manufacturer_info": {
-      "id": 91,
-      "name": "Moog Inc.",
-      "country": "United States",
-      "website": "moog.com",
-      "description": ""
-    },
-    "model": "AXP",
-    "series": "Axial Piston Pump",
-    "product_url": null,
-    "attributes": {
-      "weight_kg": 48.9,
-      "weight_lbs": 107.8,
-      "stage_count": 15,
-      "pressure_bar": 350,
-      "pressure_psi": 5000
+      "flow_rate_lpm": 46.6,
+      "flow_rate_gpm": 12.3,
+      "max_pressure_psi": 1800,
+      "pump_speed_rpm": 1180,
+      "suction_size_inch": 0.75,
+      "discharge_size_inch": 0.5,
+      "casing_material": "316 stainless steel",
+      "impeller_material": null,
+      "seal_type": "X-Series high-pressure packing"
     }
   }
 ]
