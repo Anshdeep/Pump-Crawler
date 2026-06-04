@@ -69,6 +69,16 @@ def _get_db_settings():
     finally:
         db.close()
 
+def _apply_db_settings(settings: dict, no_cache: bool):
+    """Apply dynamic configuration settings to the config module."""
+    import config
+    config.CACHE_ENABLED = False if no_cache else settings["cache_on"]
+    config.MAX_MANUFACTURERS_PER_TYPE = settings["max_mfrs"]
+    config.MAX_MODELS_PER_MANUFACTURER = settings["max_models"]
+    config.REQUEST_DELAY_SECONDS = settings["delay"]
+    config.GEMINI_MODEL = settings["model_name"]
+    config.RAG_SIMILARITY_THRESHOLD = settings["similarity"]
+
 # ── Background Process Operations ──────────────────────────────────────────
 
 def run_manufacturer_discovery_background(
@@ -116,8 +126,7 @@ def run_manufacturer_discovery_background(
     try:
         # Load configurable database settings
         settings = _get_db_settings()
-        import config
-        config.CACHE_ENABLED = False if no_cache else settings["cache_on"]
+        _apply_db_settings(settings, no_cache)
         
         # Pull only the equipment types belonging to the requested master/type.
         # Always apply master filter first so a stale type_id can't pull in
@@ -158,10 +167,6 @@ def run_manufacturer_discovery_background(
 
         # ── Stage 1 Run ──
         _update_progress("Stage 1: Manufacturers", 50, f"Discovering manufacturers for {[c['type'] for c in equipment_list]}")
-        
-        # Override config limits
-        import config
-        config.MAX_MANUFACTURERS_PER_TYPE = settings["max_mfrs"]
         
         mfrs_data = stage1.run(equipment_list, db=db, check_cancel=check_cancel)
         total_mfrs = sum(len(v) for v in mfrs_data.values())
@@ -237,9 +242,7 @@ def run_model_discovery_background(
     try:
         # Load settings
         settings = _get_db_settings()
-        import config
-        config.CACHE_ENABLED = False if no_cache else settings["cache_on"]
-        config.MAX_MODELS_PER_MANUFACTURER = settings["max_models"]
+        _apply_db_settings(settings, no_cache)
         
         # Load all approved manufacturers from PostgreSQL
         mfr_query = db.query(Manufacturer).filter(Manufacturer.is_approved == True)
@@ -367,9 +370,7 @@ def run_specs_harvester_background(
     try:
         # Load settings
         settings = _get_db_settings()
-        import config
-        config.CACHE_ENABLED = False if no_cache else settings["cache_on"]
-        config.MAX_MODELS_PER_MANUFACTURER = settings["max_models"]
+        _apply_db_settings(settings, no_cache)
         
         if model_ids:
             # Bypass manufacturer queries and load the targeted models directly

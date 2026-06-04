@@ -36,4 +36,5 @@ MODELS_JSON         = os.path.join(OUTPUT_DIR, "models.json")
 FINAL_OUTPUT_JSON   = os.path.join(OUTPUT_DIR, "equipment_data.json")
 
 # -- Gemini Model -----------------------------------------------------------
-GEMINI_MODEL = "gemini-3.1-flash-lite"
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+RAG_SIMILARITY_THRESHOLD = float(os.getenv("RAG_SIMILARITY_THRESHOLD", 0.92))

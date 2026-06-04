@@ -1,84 +1,29 @@
 {
   "Piston": [
     {
-      "name": "Flowserve Corporation",
+      "name": "National Oilwell Varco",
       "country": "United States",
-      "website": "flowserve.com",
-      "description": "A global leader in fluid motion control, providing high-performance industrial pump solutions including reciprocating piston designs."
-    },
-    {
-      "name": "Bosch Rexroth AG",
-      "country": "Germany",
-      "website": "boschrexroth.com",
-      "description": "A premier manufacturer of hydraulic systems and high-precision axial piston pumps for industrial and mobile applications."
+      "website": "nov.com"
     },
     {
       "name": "Gardner Denver",
       "country": "United States",
-      "website": "gardnerdenver.com",
-      "description": "Renowned for industrial flow control equipment, including specialized piston pump technology for demanding applications."
+      "website": "gardnerdenver.com"
     },
     {
-      "name": "HAWE Hydraulik SE",
-      "country": "Germany",
-      "website": "hawe.com",
-      "description": "Specializes in high-pressure hydraulic components, including robust radial piston pumps for industrial machinery."
-    },
-    {
-      "name": "Danfoss A/S",
-      "country": "Denmark",
-      "website": "danfoss.com",
-      "description": "A global leader in hydraulic power solutions, offering a wide range of high-efficiency axial piston pumps."
-    },
-    {
-      "name": "Parker Hannifin Corporation",
+      "name": "Kerr Pumps",
       "country": "United States",
-      "website": "parker.com",
-      "description": "A major manufacturer of motion and control technologies, widely recognized for their industrial piston pump product lines."
+      "website": "kerrpumps.com"
     },
     {
-      "name": "Nachi-Fujikoshi Corp.",
-      "country": "Japan",
-      "website": "nachi-fujikoshi.co.jp",
-      "description": "A leading manufacturer of hydraulic equipment, known for high-quality piston pumps used in industrial automation."
-    },
-    {
-      "name": "Yuken Kogyo Co., Ltd.",
-      "country": "Japan",
-      "website": "yuken.co.jp",
-      "description": "A well-established manufacturer of hydraulic components, including reliable piston pumps for various industrial sectors."
-    }
-  ],
-  "Plunger": [
-    {
-      "name": "Flowserve Corporation",
-      "country": "USA",
-      "website": "flowserve.com",
-      "description": "A global leader in industrial pump solutions, including high-pressure reciprocating plunger pumps for oil, gas, and chemical processing."
+      "name": "Weatherford International",
+      "country": "United States",
+      "website": "weatherford.com"
     },
     {
       "name": "Cat Pumps",
-      "country": "USA",
-      "website": "catpumps.com",
-      "description": "Renowned for high-quality, long-lasting triplex plunger pumps used in demanding industrial cleaning and fluid transfer applications."
-    },
-    {
-      "name": "Pratissoli Pompe",
-      "country": "Italy",
-      "website": "pratissoli.it",
-      "description": "A specialized manufacturer of high-pressure plunger pumps known for robust engineering in industrial and heavy-duty cleaning sectors."
-    },
-    {
-      "name": "Kamat GmbH & Co. KG",
-      "country": "Germany",
-      "website": "kamat.de",
-      "description": "A premier manufacturer of high-pressure plunger pumps and systems, recognized for modular designs and extreme durability."
-    },
-    {
-      "name": "Wanner Engineering, Inc.",
-      "country": "USA",
-      "website": "hydra-cell.com",
-      "description": "Manufacturer of Hydra-Cell pumps, which include high-performance plunger and diaphragm technology for challenging industrial fluids."
+      "country": "United States",
+      "website": "catpumps.com"
     }
   ]
 }

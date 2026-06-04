@@ -3,7 +3,7 @@ utils/web_search.py -- Tavily search API wrapper with fallback to DuckDuckGo
 """
 import httpx
 from tenacity import retry, stop_after_attempt, wait_exponential
-from config import TAVILY_API_KEY
+import config
 from utils import cache
 
 TAVILY_ENDPOINT = "https://api.tavily.com/search"
@@ -21,7 +21,7 @@ def tavily_search(query: str, max_results: int = 5) -> list[dict]:
 
     headers = {"Content-Type": "application/json"}
     payload = {
-        "api_key": TAVILY_API_KEY,
+        "api_key": config.TAVILY_API_KEY,
         "query": query,
         "search_depth": "basic",
         "max_results": max_results,
@@ -83,7 +83,7 @@ def search(query: str, max_results: int = 5) -> list[dict]:
     """
     Unified search: tries Tavily first, falls back to DuckDuckGo.
     """
-    if TAVILY_API_KEY:
+    if config.TAVILY_API_KEY:
         try:
             return tavily_search(query, max_results)
         except Exception as e:

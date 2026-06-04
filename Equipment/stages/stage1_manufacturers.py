@@ -24,7 +24,6 @@ def _build_query(equipment: dict, master_name: str = "equipment") -> str:
     ctype = equipment["type"]
     subtypes = equipment.get("subtypes", [])
     apps = equipment.get("applications", [])
-    part_item = "It is required to search leading manufacturers of industrial grade " + equipment["type"]
 
     # If ctype doesn't end with master_name, append plural master_name to query for precision
     kw_suffix = ""
@@ -33,13 +32,20 @@ def _build_query(equipment: dict, master_name: str = "equipment") -> str:
         kw_suffix = f" {master_lower}s" if not master_lower.endswith("s") else f" {master_lower}"
 
     parts = []
-    parts.append(part_item)
-    parts += [f'"{ctype}"{kw_suffix} manufacturers companies']
+    # Core search term
+    parts.append(f'"{ctype}{kw_suffix}" manufacturers')
+    
+    # Add subtypes or applications if present
+    extra_terms = []
     if subtypes:
-        parts.append(" ".join(subtypes[:2]))
+        extra_terms.extend(subtypes[:2])
     if apps:
-        parts.append(apps[0])
-    parts.append("top global list")
+        extra_terms.append(apps[0])
+        
+    if extra_terms:
+        parts.append(" ".join(extra_terms))
+        
+    parts.append("companies list")
 
     return " ".join(parts)
 
@@ -123,21 +129,9 @@ def run(equipments: list[dict], db: Session = None, check_cancel=None) -> dict:
         # -- Step 4: Fallback -- ask Gemini from knowledge -------
         if not manufacturers:
             print(f"   🤖 No results from web -- using Gemini knowledge fallback...")
-            
-            # Ensure query includes master category keyword suffix for precision
-            master_lower = master_name.lower()
-            query_suffix = ""
-            if not any(kw in ctype.lower() for kw in [master_lower, master_lower + "s"]):
-                query_suffix = f" {master_name}"
-                
-            fallback_query = (
-                f"List the top 15 major manufacturers of {ctype}{query_suffix}. "
-                f"Subtypes: {', '.join(subtypes) if subtypes else 'general'}"
-            )
-            fallback_results = search(fallback_query, max_results=3)
-            fallback_text    = scrape_search_results(fallback_results, max_chars=4000)
             try:
-                manufacturers = extract_manufacturers(master_name, ctype, subtypes, fallback_text)
+                from utils.genai_extractor import extract_manufacturers_from_knowledge
+                manufacturers = extract_manufacturers_from_knowledge(master_name, ctype, subtypes)
             except Exception as e:
                 print(f"   [ERROR] Fallback also failed: {e}")
                 manufacturers = []

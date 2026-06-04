@@ -4,17 +4,17 @@ utils/cache.py -- Simple file-based JSON cache to avoid re-crawling pages
 import os
 import json
 import hashlib
-from config import CACHE_DIR, CACHE_ENABLED
+import config
 
 
 def _cache_path(key: str) -> str:
     hashed = hashlib.md5(key.encode()).hexdigest()
-    return os.path.join(CACHE_DIR, f"{hashed}.json")
+    return os.path.join(config.CACHE_DIR, f"{hashed}.json")
 
 
 def get(key: str):
     """Return cached value or None."""
-    if not CACHE_ENABLED:
+    if not config.CACHE_ENABLED:
         return None
     path = _cache_path(key)
     if os.path.exists(path):
@@ -25,7 +25,7 @@ def get(key: str):
 
 def set(key: str, value):
     """Store value in cache."""
-    if not CACHE_ENABLED:
+    if not config.CACHE_ENABLED:
         return
     path = _cache_path(key)
     with open(path, "w", encoding="utf-8") as f:

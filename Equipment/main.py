@@ -104,12 +104,18 @@ def run_cli_pipeline(args):
     max_mfrs = crud.get_setting_typed(db, "MAX_MANUFACTURERS_PER_TYPE", 3)
     max_models = crud.get_setting_typed(db, "MAX_MODELS_PER_MANUFACTURER", 5)
     cache_on = False if args.no_cache else crud.get_setting_typed(db, "CACHE_ENABLED", True)
+    delay = crud.get_setting_typed(db, "REQUEST_DELAY_SECONDS", 1.5)
+    model_name = crud.get_setting(db, "GEMINI_MODEL", "gemini-2.5-flash")
+    similarity = crud.get_setting_typed(db, "RAG_SIMILARITY_THRESHOLD", 0.92)
 
     # Override config values in stages
     import config
     config.CACHE_ENABLED = cache_on
     config.MAX_MANUFACTURERS_PER_TYPE = max_mfrs
     config.MAX_MODELS_PER_MANUFACTURER = max_models
+    config.REQUEST_DELAY_SECONDS = delay
+    config.GEMINI_MODEL = model_name
+    config.RAG_SIMILARITY_THRESHOLD = similarity
 
     # Fetch equipment types matching user filter
     query_etypes = db.query(EquipmentType)

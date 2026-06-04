@@ -196,11 +196,14 @@ def run(manufacturers_data: dict, db: Session = None, check_cancel=None, equipme
                 embedding = embed_text(text_to_embed)
 
                 # RAG Deduplication Vector Match
+                similarity_threshold = getattr(config, "RAG_SIMILARITY_THRESHOLD", 0.92)
+                distance_threshold = 1.0 - similarity_threshold
                 similar_model = crud.find_similar_model(
                     db,
                     equipment_type_id=type_obj.id,
                     manufacturer_id=mfr_obj.id,
                     query_embedding=embedding,
+                    distance_threshold=distance_threshold,
                     model_name=model_name
                 )
 

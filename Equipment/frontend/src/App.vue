@@ -882,6 +882,9 @@
                         Manufacturer
                         <v-icon :icon="mfrSortDesc ? 'mdi-arrow-down' : 'mdi-arrow-up'" size="14" class="ml-1" v-if="mfrSortBy === 'name'"></v-icon>
                       </th>
+                      <th class="text-left font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4" style="user-select: none;">
+                        Equipment Category
+                      </th>
                       <th class="text-left font-weight-bold outfit-font text-subtitle-2 text-medium-emphasis py-4 cursor-pointer" style="user-select: none;" @click="changeMfrSorting('country')">
                         HQ Country
                         <v-icon :icon="mfrSortDesc ? 'mdi-arrow-down' : 'mdi-arrow-up'" size="14" class="ml-1" v-if="mfrSortBy === 'country'"></v-icon>
@@ -919,6 +922,27 @@
                         ></v-checkbox-btn>
                       </td>
                       <td class="text-white py-4 font-weight-bold text-subtitle-1">{{ mfr.name }}</td>
+                      <td class="py-4">
+                        <div v-if="mfr.equipment_masters && mfr.equipment_masters.length > 0">
+                          <div class="d-flex flex-wrap gap-1 mb-1">
+                            <v-chip
+                              v-for="cat in mfr.equipment_masters"
+                              :key="cat"
+                              size="x-small"
+                              color="cyan-accent-3"
+                              variant="flat"
+                              class="font-weight-black text-uppercase outfit-font"
+                              style="color: #000 !important; font-size: 9px;"
+                            >
+                              {{ cat }}
+                            </v-chip>
+                          </div>
+                          <div class="text-caption text-medium-emphasis font-italic text-truncate" style="max-width: 180px;" v-if="mfr.equipment_types && mfr.equipment_types.length > 0" :title="mfr.equipment_types.join(', ')">
+                            {{ mfr.equipment_types.join(', ') }}
+                          </div>
+                        </div>
+                        <span class="text-disabled" v-else>—</span>
+                      </td>
                       <td class="text-medium-emphasis py-4">{{ mfr.country || 'Global HQ' }}</td>
                       <td class="py-4">
                         <a v-if="mfr.website" :href="'https://' + mfr.website" target="_blank" class="text-secondary font-weight-bold text-decoration-none d-flex align-center">

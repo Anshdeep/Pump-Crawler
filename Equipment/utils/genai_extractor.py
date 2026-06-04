@@ -16,9 +16,15 @@ from google import genai
 from google.genai import types
 from google.genai import errors as genai_errors
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception
-from config import GEMINI_API_KEY, GEMINI_MODEL
+import config
 
-_client = genai.Client(api_key=GEMINI_API_KEY)
+_client = None
+
+def get_genai_client():
+    global _client
+    if _client is None:
+        _client = genai.Client(api_key=config.GEMINI_API_KEY)
+    return _client
 
 # Delay between Gemini calls to avoid rate limiting (free tier = 15 RPM)
 _CALL_DELAY = 2.0
@@ -30,15 +36,14 @@ _MAX_INPUT_CHARS = 6000
 
 class ManufacturerSchema(BaseModel):
     name: str = Field(description="The formal manufacturer name")
-    country: Optional[str] = Field("", description="The country of headquarters, or empty if unknown")
-    website: Optional[str] = Field("", description="The website homepage domain name only (e.g. atlascopco.com)")
-    description: Optional[str] = Field("", description="Reputation note or concise sentence on why they are reputable for this specific equipment")
+    country: str = Field("", description="The country of headquarters, or empty if unknown")
+    website: str = Field("", description="The website homepage domain name only (e.g. atlascopco.com)")
 
 class ModelSchema(BaseModel):
     model_name: str = Field(description="The model number or alphanumeric identifier")
-    series: Optional[str] = Field("", description="The series/product lineage name (e.g. GA Series)")
-    product_url: Optional[str] = Field("", description="The direct URL link to this model page if found")
-    subtype: Optional[str] = Field("", description="The classified equipment subtype/technology from the page text (e.g., Rotary Screw, Centrifugal, Scroll, Simplex, Duplex)")
+    series: str = Field("", description="The series/product lineage name (e.g. GA Series)")
+    product_url: str = Field("", description="The direct URL link to this model page if found")
+    subtype: str = Field("", description="The classified equipment subtype/technology from the page text (e.g., Rotary Screw, Centrifugal, Scroll, Simplex, Duplex)")
 
 class ManufacturerListSchema(BaseModel):
     manufacturers: List[ManufacturerSchema] = Field(description="List of discovered manufacturers")
@@ -214,7 +219,7 @@ def _clean_json(raw: str) -> str:
 
 def _should_retry(exc: Exception) -> bool:
     """Return True for transient errors worth retrying."""
-    if isinstance(exc, genai_errors.ClientError):
+    if isinstance(exc, (genai_errors.APIError, genai_errors.ClientError, genai_errors.ServerError)):
         msg = str(exc).lower()
         return any(k in msg for k in ["429", "rate", "quota", "resource_exhausted",
                                        "503", "500", "unavailable"])
@@ -229,16 +234,19 @@ def _should_retry(exc: Exception) -> bool:
 def generate_json(prompt: str, schema=None) -> dict | list:
     """Call Gemini with Pydantic response schema guidance, clean response, parse, and return."""
     time.sleep(_CALL_DELAY)  # polite rate-limit buffer
+    client = get_genai_client()
+    raw_text = None
+    response = None
     try:
-        response = _client.models.generate_content(
-            model=GEMINI_MODEL,
+        response = client.models.generate_content(
+            model=config.GEMINI_MODEL,
             contents=prompt,
-            config=types.GenerateContentConfig(
-                temperature=0.1,
-                max_output_tokens=2048,
-                response_mime_type="application/json",
-                response_schema=schema,
-            ),
+            config={
+                "temperature": 0.1,
+                "max_output_tokens": 2048,
+                "response_mime_type": "application/json",
+                "response_schema": schema,
+            },
         )
         raw_text = response.text
         cleaned = _clean_json(raw_text)
@@ -246,6 +254,8 @@ def generate_json(prompt: str, schema=None) -> dict | list:
     except Exception as e:
         if isinstance(e, json.JSONDecodeError):
             print(f"  [Gemini JSON Error] Failed to parse JSON: {e}")
+            if response and response.candidates:
+                print(f"  [Gemini Finish Reason]: {response.candidates[0].finish_reason}")
             print(f"  [Gemini Raw Text Debug]:\n{raw_text}\n-------------------")
         else:
             print(f"  [Gemini API Error] {type(e).__name__}: {e}")
@@ -258,11 +268,6 @@ def _truncate(text: str) -> str:
 
 
 def extract_manufacturers(equipment_master: str, equipment_type: str, subtypes: list, text: str) -> list[dict]:
-    print("equipment_master:", equipment_master)
-    print("equipment_type:", equipment_type)
-    print("subtypes:", subtypes)
-    print("text:", text)
-    
     """
     Extract manufacturer list from scraped text using schema guides.
     """
@@ -290,6 +295,38 @@ def extract_manufacturers(equipment_master: str, equipment_type: str, subtypes: 
 
     Scraped Text:
     {_truncate(text)}"""
+
+    res = generate_json(prompt, schema=ManufacturerListSchema)
+    return res.get("manufacturers", []) if isinstance(res, dict) else []
+
+
+def extract_manufacturers_from_knowledge(equipment_master: str, equipment_type: str, subtypes: list) -> list[dict]:
+    """
+    Extract manufacturer list directly from Gemini's internal knowledge without web search/scrape.
+    Useful as a clean, robust fallback.
+    """
+    subtype_str = ", ".join(subtypes) if subtypes else "general"
+
+    prompt = f"""You are an expert in industrial equipment and global manufacturing.
+
+    Return a list of reputable, well-established industrial manufacturers for the following equipment:
+
+    Equipment Master : {equipment_master}
+    Equipment Type   : {equipment_type}
+    Sub-Type         : {subtype_str}
+
+    IMPORTANT: Only return manufacturers that specifically make {equipment_master}s of the "{equipment_type}" type.
+    Do NOT return manufacturers for other equipment categories.
+
+    Requirements:
+    - Only include manufacturers known for industrial-grade products (not consumer or light commercial).
+    - Manufacturers must have a strong global or regional reputation for quality, reliability, and after-sales support.
+    - Include only genuine, real-world manufacturers.
+    - For each manufacturer provide:
+    1. Name — Full official company name
+    2. Country of Origin — Headquarters country
+    3. Website — Official website URL
+    """
 
     res = generate_json(prompt, schema=ManufacturerListSchema)
     return res.get("manufacturers", []) if isinstance(res, dict) else []
@@ -377,7 +414,8 @@ def embed_text(text: str) -> list[float] | None:
     Used for semantic deduplication (RAG).
     """
     try:
-        response = _client.models.embed_content(
+        client = get_genai_client()
+        response = client.models.embed_content(
             model="text-embedding-004",
             contents=text,
         )

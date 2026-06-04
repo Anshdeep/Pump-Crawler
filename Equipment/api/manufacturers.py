@@ -88,6 +88,28 @@ def list_manufacturers(
     # Secondary order to keep pagination deterministic
     query = query.order_by(Manufacturer.id.asc())
 
+    # Query distinct equipment masters and types associated with the models
+    from database.models import EquipmentMaster, EquipmentType
+    from collections import defaultdict
+
+    categories_query = db.query(
+        Model.manufacturer_id,
+        EquipmentMaster.name.label("master_name"),
+        EquipmentType.name.label("type_name")
+    ).join(
+        EquipmentType, Model.equipment_type_id == EquipmentType.id
+    ).join(
+        EquipmentMaster, EquipmentType.equipment_master_id == EquipmentMaster.id
+    ).distinct().all()
+
+    mfr_masters = defaultdict(set)
+    mfr_types = defaultdict(set)
+    for row in categories_query:
+        if row.master_name:
+            mfr_masters[row.manufacturer_id].add(row.master_name)
+        if row.type_name:
+            mfr_types[row.manufacturer_id].add(row.type_name)
+
     if page is not None:
         total = query.count()
         mfrs = query.offset((page - 1) * limit).limit(limit).all()
@@ -103,7 +125,9 @@ def list_manufacturers(
                 "is_harvested": row.Manufacturer.is_harvested,
                 "model_count": row.model_count,
                 "created_at": row.Manufacturer.created_at,
-                "updated_at": row.Manufacturer.updated_at
+                "updated_at": row.Manufacturer.updated_at,
+                "equipment_masters": sorted(list(mfr_masters[row.Manufacturer.id])),
+                "equipment_types": sorted(list(mfr_types[row.Manufacturer.id]))
             }
             for row in mfrs
         ]
@@ -127,7 +151,9 @@ def list_manufacturers(
                 "is_harvested": row.Manufacturer.is_harvested,
                 "model_count": row.model_count,
                 "created_at": row.Manufacturer.created_at,
-                "updated_at": row.Manufacturer.updated_at
+                "updated_at": row.Manufacturer.updated_at,
+                "equipment_masters": sorted(list(mfr_masters[row.Manufacturer.id])),
+                "equipment_types": sorted(list(mfr_types[row.Manufacturer.id]))
             }
             for row in mfrs
         ]

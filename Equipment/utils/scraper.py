@@ -10,7 +10,7 @@ import time
 import httpx
 from bs4 import BeautifulSoup
 from tenacity import retry, stop_after_attempt, wait_exponential
-from config import REQUEST_DELAY_SECONDS
+import config
 from utils import cache
 
 HEADERS = {
@@ -88,7 +88,7 @@ def fetch_static(url: str, max_chars: int = 8000) -> str:
     if cached:
         return cached
 
-    time.sleep(REQUEST_DELAY_SECONDS)
+    time.sleep(config.REQUEST_DELAY_SECONDS)
 
     response = httpx.get(url, headers=HEADERS, timeout=6, follow_redirects=True)
     response.raise_for_status()

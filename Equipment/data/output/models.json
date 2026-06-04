@@ -1,93 +1,48 @@
 {
-  "Cat Pumps": {
-    "equipment_type": "Plunger",
+  "National Oilwell Varco": {
+    "equipment_type": "Piston",
     "manufacturer_info": {
-      "id": 123,
-      "name": "Cat Pumps",
+      "id": 26,
+      "name": "National Oilwell Varco",
       "country": "United States",
-      "website": "catpumps.com",
-      "description": "Specializes in high-pressure triplex plunger and piston pumps known for extreme durability and long service life."
+      "website": "nov.com",
+      "description": ""
     },
     "models": [
       {
-        "model_name": "6835",
-        "series": null,
-        "product_url": null,
-        "subtype": null,
+        "model_name": "National",
+        "series": "National Reciprocating Pumps",
+        "subtype": "Triplex",
         "is_duplicate": false,
-        "model_id": 962
+        "model_id": 73
       },
       {
-        "model_name": "3810",
-        "series": null,
-        "product_url": null,
-        "subtype": null,
+        "model_name": "Oilwell",
+        "series": "Oilwell Reciprocating Pumps",
+        "subtype": "Triplex",
         "is_duplicate": false,
-        "model_id": 963
+        "model_id": 74
       },
       {
-        "model_name": "1731",
-        "series": null,
-        "product_url": null,
-        "subtype": null,
+        "model_name": "Wheatley",
+        "series": "Wheatley Reciprocating Pumps",
+        "subtype": "Triplex",
         "is_duplicate": false,
-        "model_id": 964
+        "model_id": 75
       },
       {
-        "model_name": "4DX03ELR",
-        "series": null,
-        "product_url": null,
-        "subtype": null,
+        "model_name": "Gaso",
+        "series": "Gaso Reciprocating Pumps",
+        "subtype": "Triplex",
         "is_duplicate": false,
-        "model_id": 965
+        "model_id": 76
       },
       {
-        "model_name": "2SFX30GES",
-        "series": null,
-        "product_url": null,
-        "subtype": null,
+        "model_name": "Bear",
+        "series": "Bear Reciprocating Pumps",
+        "subtype": "Triplex",
         "is_duplicate": false,
-        "model_id": 966
-      },
-      {
-        "model_name": "2SFQ25SEEL",
-        "series": null,
-        "product_url": null,
-        "subtype": null,
-        "is_duplicate": false,
-        "model_id": 967
-      },
-      {
-        "model_name": "5CPQ6241CS",
-        "series": null,
-        "product_url": null,
-        "subtype": null,
-        "is_duplicate": false,
-        "model_id": 968
-      },
-      {
-        "model_name": "1061X",
-        "series": null,
-        "product_url": null,
-        "subtype": null,
-        "is_duplicate": false,
-        "model_id": 969
-      },
-      {
-        "model_name": "1061XD",
-        "series": null,
-        "product_url": null,
-        "subtype": null,
-        "is_duplicate": false,
-        "model_id": 970
-      },
-      {
-        "model_name": "1CX05ELS.MIST",
-        "series": null,
-        "product_url": null,
-        "subtype": null,
-        "is_duplicate": false,
-        "model_id": 971
+        "model_id": 77
       }
     ]
   }
